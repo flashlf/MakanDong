@@ -16,7 +16,7 @@ import javax.swing.JOptionPane;
  * @author REDHAT
  */
 public class Login extends javax.swing.JFrame {
-private static Login logInstance = null;
+    //private static Login logInstance = null;
     private static String USERNAME, PASSWORD;
     Connection CONN;
     Database db = new Database();
@@ -38,7 +38,7 @@ private static Login logInstance = null;
     /**
      * Creates new form Login
      */
-    private Login() {
+    public Login() {
         db.setDB_HOST("localhost");
         db.setDB_NAME("makandong");
         db.setDB_PASS("123456");
@@ -53,11 +53,11 @@ private static Login logInstance = null;
         this.setLocationRelativeTo(null);
 
     }
-    public static Login getInstance() {
-        if(logInstance == null)
-            logInstance = new Login();
-        return logInstance;
-    }
+//    public static Login getInstance() {
+//        if(logInstance == null)
+//            logInstance = new Login();
+//        return logInstance;
+//    }
     void clear() {
         this.txPassword.setText("");
         this.txUser.setText("");
