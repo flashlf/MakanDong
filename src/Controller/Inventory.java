@@ -6,6 +6,7 @@
 package Controller;
 
 import Model.HandlerComponent;
+import Model.Database;
 import java.sql.SQLException;
 /**
  *
@@ -13,6 +14,7 @@ import java.sql.SQLException;
  */
 public class Inventory extends javax.swing.JFrame {
     HandlerComponent handlerComp;
+    Database db = new Database();
     public String SQL;
     // changing to master branch
     /**
@@ -26,7 +28,7 @@ public class Inventory extends javax.swing.JFrame {
                     "WHERE material.mCode = inventory.mCode\n" +
                     "ORDER BY Bahan";
             handlerComp = new HandlerComponent();
-            handlerComp.initTable(tableInvent, SQL);
+            handlerComp.initTable(tableInvent, SQL, db);
         } catch (SQLException ex) {
             ex.printStackTrace();
         }

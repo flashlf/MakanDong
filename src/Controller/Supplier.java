@@ -5,17 +5,29 @@
  */
 package Controller;
 
+import Model.HandlerComponent;
+import Model.Database;
+import java.sql.SQLException;
 /**
  *
  * @author REDHAT
  */
 public class Supplier extends javax.swing.JFrame {
-
+    HandlerComponent handlerComp;
+    Database db = new Database();
+    public String SQL;
     /**
      * Creates new form Supplier
      */
     public Supplier() {
         initComponents();
+        try {
+            SQL = "SELECT * FROM Supplier";
+            handlerComp = new HandlerComponent();
+            handlerComp.initTable(tableSupplier, SQL, db);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
     }
 
     /**
@@ -32,10 +44,10 @@ public class Supplier extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txSearch = new javax.swing.JTextField();
         btnSearch = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tableSupplier = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
         txSCode = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
@@ -45,7 +57,7 @@ public class Supplier extends javax.swing.JFrame {
         txMCode = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        txAddress = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -63,11 +75,11 @@ public class Supplier extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Segoe UI Semibold", 0, 18)); // NOI18N
         jLabel1.setText("Supplier");
 
-        jTextField1.setText("jTextField1");
+        txSearch.setText("jTextField1");
 
         btnSearch.setText("Search");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tableSupplier.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -78,7 +90,7 @@ public class Supplier extends javax.swing.JFrame {
                 "No", "mCode", "Desc", "Stock"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tableSupplier);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -89,7 +101,7 @@ public class Supplier extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addComponent(jTextField1)
+                            .addComponent(txSearch)
                             .addGap(18, 18, 18)
                             .addComponent(btnSearch))
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -103,7 +115,7 @@ public class Supplier extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnSearch))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -139,10 +151,10 @@ public class Supplier extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel6.setText("Material Code");
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jTextArea1.setRows(5);
-        jScrollPane2.setViewportView(jTextArea1);
+        txAddress.setColumns(20);
+        txAddress.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txAddress.setRows(5);
+        jScrollPane2.setViewportView(txAddress);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -263,11 +275,11 @@ public class Supplier extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTable tableSupplier;
+    private javax.swing.JTextArea txAddress;
     private javax.swing.JTextField txDesc;
     private javax.swing.JTextField txMCode;
     private javax.swing.JTextField txSCode;
+    private javax.swing.JTextField txSearch;
     // End of variables declaration//GEN-END:variables
 }
