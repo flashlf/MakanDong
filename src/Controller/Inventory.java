@@ -5,17 +5,32 @@
  */
 package Controller;
 
+import Model.HandlerComponent;
+import java.sql.SQLException;
 /**
  *
  * @author REDHAT
  */
 public class Inventory extends javax.swing.JFrame {
+    HandlerComponent handlerComp;
+    public String SQL;
     // changing to master branch
     /**
      * Creates new form Inventory
      */
     public Inventory() {
         initComponents();
+        try {
+            SQL =   "SELECT material.Deskripsi as Bahan, inventory.stock, inventory.needRestock, material.Harga \n" +
+                    "FROM material,inventory\n" +
+                    "WHERE material.mCode = inventory.mCode\n" +
+                    "ORDER BY Bahan";
+            handlerComp = new HandlerComponent();
+            handlerComp.initTable(tableInvent, SQL);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        
     }
 
     /**
@@ -28,7 +43,7 @@ public class Inventory extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tableInvent = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
@@ -38,7 +53,7 @@ public class Inventory extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tableInvent.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
                 {null, null, null},
@@ -49,7 +64,7 @@ public class Inventory extends javax.swing.JFrame {
                 "mCode", "Desc", "Qty"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tableInvent);
 
         jButton1.setText("Add");
 
@@ -149,7 +164,7 @@ public class Inventory extends javax.swing.JFrame {
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JTable tableInvent;
     // End of variables declaration//GEN-END:variables
 }
