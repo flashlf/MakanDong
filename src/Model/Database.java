@@ -24,7 +24,11 @@ public class Database {
     public PreparedStatement PREP;
     
     public Database() {
-        
+        Database.setDB_HOST("localhost");
+        Database.setDB_NAME("makandong");
+        Database.setDB_USER("root");
+        Database.setDB_PASS("123456");
+        Database.setDB_PORT("3306");
     }
     
     public Database(String db_name, String user, String pass) {
