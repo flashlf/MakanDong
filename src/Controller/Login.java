@@ -20,6 +20,7 @@ public class Login extends javax.swing.JFrame {
     private static String USERNAME, PASSWORD;
     Connection CONN;
     Database db = new Database();
+    MainMenu mm = new MainMenu();
     public static String getUSERNAME() {
         return USERNAME;
     }
@@ -143,6 +144,7 @@ public class Login extends javax.swing.JFrame {
             SQL = db.getSQL();
             if(SQL.first()) {
                 lblUser.setText("Logged in with UID : "+SQL.getString(1));
+                mm.setVisible(true);
             } else {
                 JOptionPane.showMessageDialog(null, "Username atau Password\ntidak terdaftar", "Warning", 1);
             }
