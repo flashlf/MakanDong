@@ -67,7 +67,7 @@ public class Supplier extends javax.swing.JFrame {
         txDesc.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txDesc.setText("jTextField2");
 
-        jLabel5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
         jLabel5.setText("Address");
 
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -122,13 +122,13 @@ public class Supplier extends javax.swing.JFrame {
                 .addGap(76, 76, 76))
         );
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
         jLabel2.setText("Supplier Code");
 
         txSCode.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txSCode.setText("jTextField2");
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
         jLabel3.setText("Description");
 
         jButton1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -148,7 +148,7 @@ public class Supplier extends javax.swing.JFrame {
         txMCode.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txMCode.setText("jTextField2");
 
-        jLabel6.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel6.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
         jLabel6.setText("Material Code");
 
         txAddress.setColumns(20);

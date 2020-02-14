@@ -92,8 +92,7 @@ public class Database {
      * e.g. "<i>SELECT * FROM <b>namaTable</b></i>"<br> atau "<i>SELECT * FROM <b>namaTable</b> WHERE <b>kolom</b> = "<u>kondisi</u>"</i>"
      * @return ResultSet executeQuery();
      * @throws SQLException 
-     */
-    
+     */ 
     public ResultSet getSQL(String Query) throws SQLException {
         //checkConnection();
         STM = Database.config.createStatement();
@@ -104,6 +103,31 @@ public class Database {
         return (RES = STM.executeQuery(Query));
     }
     
+    public int insertSQL(Object[] DATA) throws SQLException {
+        PREP = Database.config.prepareStatement(STMT);
+        String typedata = "";
+        int pointer = 0;
+        for (Object temp : DATA) {
+            typedata = temp.getClass().getSimpleName();
+            System.out.println(temp.getClass().getSimpleName()+" : "+DATA[pointer]);
+            switch (typedata) {
+                case "String" :
+                    PREP.setString(pointer+1, DATA[pointer].toString());
+                    break;
+                case "Integer" :
+                    PREP.setInt(pointer+1, Integer.parseInt(DATA[pointer].toString()));
+                    break;
+                case "Float" :
+                    PREP.setFloat(pointer+1, Float.parseFloat(DATA[pointer].toString()));
+                    break;
+                case "Double" :
+                    PREP.setDouble(pointer+1,Double.parseDouble(DATA[pointer].toString()));
+                    break;
+            }
+            pointer++;
+        }
+        return (PREP.executeUpdate());
+    }
     public static Connection inisiasiDB() throws SQLException {
         if ((Database.DB_NAME == null) || (Database.DB_USER == null) || (Database.DB_PASS == null) || (Database.DB_PORT == null) || (Database.DB_HOST == null)) {
             JOptionPane.showMessageDialog(null,"Database Belum disetting");

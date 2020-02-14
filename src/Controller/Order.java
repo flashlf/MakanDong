@@ -5,17 +5,55 @@
  */
 package Controller;
 
+import Model.*;
+import Model.HandlerComponent.LimitInput;
+
+import java.awt.event.ItemEvent;
+import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.text.AbstractDocument;
 /**
  *
  * @author REDHAT
  */
 public class Order extends javax.swing.JFrame {
-
+    Boolean status = false;
+    Database db = new Database();
+    Date date = new Date();
+    DateFormat df;
+    LimitInput LI;
+    DefaultTableModel tbModOrder;
+    HandlerComponent handlerComp;
+    public String SQL;
+    public static String[] DATAF = new String[50], DATAB = new String[50];
+    public int noOrder=1;
     /**
      * Creates new form Order
      */
     public Order() {
         initComponents();
+        df = new SimpleDateFormat("yyyy-MM-dd");
+        dtChooser.setDateFormat(df);
+        dtChooser.setText(date.getYear()+"-"+(date.getMonth()+1)+"-"+date.getDate());
+        ((AbstractDocument) txOrderCode.getDocument()).setDocumentFilter(new HandlerComponent.LimitInput(4));
+        try {
+            SQL = "SELECT *\n"+
+                  "FROM foodbeve \n"+
+                  "WHERE fbCode like 'F%'";
+            handlerComp = new HandlerComponent();
+            handlerComp.initComboBox(cbMenuFood, SQL, db, DATAF);
+            SQL = "SELECT *\n"+
+                  "FROM foodbeve \n"+
+                  "WHERE fbCode like 'D%'";
+            handlerComp.initComboBox(cbMenuBeve, SQL, db, DATAB);
+            status = true;
+            System.out.println(date.toString());
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
     }
 
     /**
@@ -33,7 +71,7 @@ public class Order extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         cbMenuFood = new javax.swing.JComboBox<>();
         jLabel5 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
+        btnAddFood = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
         lPriceFood = new javax.swing.JLabel();
         pnlDrink = new javax.swing.JPanel();
@@ -41,175 +79,221 @@ public class Order extends javax.swing.JFrame {
         cbMenuBeve = new javax.swing.JComboBox<>();
         lMenuBeve = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        btnAddBeve = new javax.swing.JButton();
         txQtyBeve = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         lPriceBeve = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        txOrder = new javax.swing.JTextField();
+        txOrderCode = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblOrder = new javax.swing.JTable();
         btnRemoveItem = new javax.swing.JButton();
         btnConfirmItem = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
-        dateChooserCombo1 = new datechooser.beans.DateChooserCombo();
+        dtChooser = new datechooser.beans.DateChooserCombo();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        txOrderName = new javax.swing.JTextField();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
 
         pnlFood.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
 
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel1.setText("Qty");
 
-        txQtyFood.setText("jTextField1");
+        txQtyFood.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        txQtyFood.setText("0");
+        txQtyFood.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txQtyFoodActionPerformed(evt);
+            }
+        });
 
+        jLabel3.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel3.setText("Menu");
+        jLabel3.setPreferredSize(new java.awt.Dimension(45, 20));
 
-        cbMenuFood.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbMenuFood.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        cbMenuFood.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbMenuFoodItemStateChanged(evt);
+            }
+        });
 
         jLabel5.setFont(new java.awt.Font("Segoe UI Semibold", 0, 18)); // NOI18N
         jLabel5.setText("Food");
 
-        jButton2.setText("Add");
+        btnAddFood.setText("Add");
+        btnAddFood.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddFoodActionPerformed(evt);
+            }
+        });
 
-        jLabel8.setText("Price");
+        jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel8.setText("Rp.");
 
-        lPriceFood.setText("Price");
+        lPriceFood.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        lPriceFood.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lPriceFood.setText("5000.0");
 
         javax.swing.GroupLayout pnlFoodLayout = new javax.swing.GroupLayout(pnlFood);
         pnlFood.setLayout(pnlFoodLayout);
         pnlFoodLayout.setHorizontalGroup(
             pnlFoodLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlFoodLayout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(16, 16, 16)
                 .addGroup(pnlFoodLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlFoodLayout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(txQtyFood, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(pnlFoodLayout.createSequentialGroup()
-                        .addGroup(pnlFoodLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton2)
-                            .addGroup(pnlFoodLayout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(cbMenuFood, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel5)
-                            .addGroup(pnlFoodLayout.createSequentialGroup()
-                                .addComponent(jLabel8)
-                                .addGap(18, 18, 18)
-                                .addComponent(lPriceFood)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(pnlFoodLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(pnlFoodLayout.createSequentialGroup()
+                            .addGap(2, 2, 2)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(18, 18, 18)
+                            .addComponent(txQtyFood, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnAddFood))
+                        .addComponent(cbMenuFood, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlFoodLayout.createSequentialGroup()
+                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(18, 18, 18)
+                            .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(lPriceFood, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
         pnlFoodLayout.setVerticalGroup(
             pnlFoodLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlFoodLayout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(16, 16, 16)
                 .addComponent(jLabel5)
-                .addGap(18, 18, 18)
+                .addGap(32, 32, 32)
                 .addGroup(pnlFoodLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(cbMenuFood, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(pnlFoodLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel8)
                     .addComponent(lPriceFood))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cbMenuFood, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlFoodLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(txQtyFood, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
-                .addComponent(jButton2)
-                .addGap(20, 20, 20))
+                    .addComponent(txQtyFood, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnAddFood))
+                .addContainerGap(60, Short.MAX_VALUE))
         );
 
         pnlDrink.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
 
-        jLabel2.setText("Price");
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel2.setText("Rp.");
 
-        cbMenuBeve.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbMenuBeve.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        cbMenuBeve.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbMenuBeveItemStateChanged(evt);
+            }
+        });
 
+        lMenuBeve.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
+        lMenuBeve.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lMenuBeve.setText("Menu");
 
         jLabel6.setFont(new java.awt.Font("Segoe UI Semibold", 0, 18)); // NOI18N
         jLabel6.setText("Beverage");
 
-        jButton1.setText("Add");
+        btnAddBeve.setText("Add");
+        btnAddBeve.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddBeveActionPerformed(evt);
+            }
+        });
 
-        txQtyBeve.setText("jTextField1");
+        txQtyBeve.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        txQtyBeve.setText("0");
 
+        jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel7.setText("Qty");
 
-        lPriceBeve.setText("Price");
+        lPriceBeve.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        lPriceBeve.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lPriceBeve.setText("3000.0");
 
         javax.swing.GroupLayout pnlDrinkLayout = new javax.swing.GroupLayout(pnlDrink);
         pnlDrink.setLayout(pnlDrinkLayout);
         pnlDrinkLayout.setHorizontalGroup(
             pnlDrinkLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlDrinkLayout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(16, 16, 16)
                 .addGroup(pnlDrinkLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel6)
+                    .addComponent(cbMenuBeve, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(pnlDrinkLayout.createSequentialGroup()
-                        .addGap(36, 36, 36)
-                        .addComponent(jButton1))
+                        .addGroup(pnlDrinkLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel6)
+                            .addGroup(pnlDrinkLayout.createSequentialGroup()
+                                .addComponent(lMenuBeve, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(lPriceBeve, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 20, Short.MAX_VALUE))
                     .addGroup(pnlDrinkLayout.createSequentialGroup()
-                        .addComponent(lMenuBeve)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(cbMenuBeve, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(pnlDrinkLayout.createSequentialGroup()
-                        .addComponent(jLabel2)
+                        .addGap(2, 2, 2)
+                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(lPriceBeve))
-                    .addGroup(pnlDrinkLayout.createSequentialGroup()
-                        .addComponent(jLabel7)
-                        .addGap(18, 18, 18)
-                        .addComponent(txQtyBeve, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(25, Short.MAX_VALUE))
+                        .addComponent(txQtyBeve, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnAddBeve)))
+                .addGap(16, 16, 16))
         );
         pnlDrinkLayout.setVerticalGroup(
             pnlDrinkLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlDrinkLayout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(16, 16, 16)
                 .addComponent(jLabel6)
-                .addGap(18, 18, 18)
+                .addGap(32, 32, 32)
                 .addGroup(pnlDrinkLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lMenuBeve)
-                    .addComponent(cbMenuBeve, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(pnlDrinkLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(lPriceBeve))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cbMenuBeve, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlDrinkLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
-                    .addComponent(txQtyBeve, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addGap(20, 20, 20))
+                    .addComponent(txQtyBeve, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnAddBeve))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel4.setText("Order No");
 
-        txOrder.setText("jTextField3");
+        txOrderCode.setColumns(4);
+        txOrderCode.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
 
         tblOrder.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Item No", "Desc", "Qty", "Price"
+                "No", "Desc", "Qty", "Price", "Total"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class, java.lang.Object.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, true, false
+                false, false, true, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -220,70 +304,269 @@ public class Order extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tblOrder.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(tblOrder);
+        if (tblOrder.getColumnModel().getColumnCount() > 0) {
+            tblOrder.getColumnModel().getColumn(0).setResizable(false);
+            tblOrder.getColumnModel().getColumn(0).setPreferredWidth(20);
+            tblOrder.getColumnModel().getColumn(2).setMinWidth(25);
+            tblOrder.getColumnModel().getColumn(2).setPreferredWidth(30);
+            tblOrder.getColumnModel().getColumn(2).setMaxWidth(40);
+        }
 
         btnRemoveItem.setText("Remove");
+        btnRemoveItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRemoveItemActionPerformed(evt);
+            }
+        });
 
         btnConfirmItem.setText("Confirm");
+        btnConfirmItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConfirmItemActionPerformed(evt);
+            }
+        });
 
+        jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel9.setText("Date");
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnRemoveItem)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnConfirmItem)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(pnlFood, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(pnlDrink, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(19, 19, 19)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel9))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(dateChooserCombo1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txOrder, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(35, 35, 35)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(txOrder, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(dateChooserCombo1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel9))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(pnlDrink, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(pnlFood, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnRemoveItem)
-                    .addComponent(btnConfirmItem))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+        dtChooser.setCurrentView(new datechooser.view.appearance.AppearancesList("Light",
+            new datechooser.view.appearance.ViewAppearance("custom",
+                new datechooser.view.appearance.swing.SwingCellAppearance(new java.awt.Font("Tahoma", java.awt.Font.PLAIN, 11),
+                    new java.awt.Color(0, 0, 0),
+                    new java.awt.Color(0, 0, 255),
+                    false,
+                    true,
+                    new datechooser.view.appearance.swing.ButtonPainter()),
+                new datechooser.view.appearance.swing.SwingCellAppearance(new java.awt.Font("Tahoma", java.awt.Font.PLAIN, 11),
+                    new java.awt.Color(0, 0, 0),
+                    new java.awt.Color(0, 0, 255),
+                    true,
+                    true,
+                    new datechooser.view.appearance.swing.ButtonPainter()),
+                new datechooser.view.appearance.swing.SwingCellAppearance(new java.awt.Font("Tahoma", java.awt.Font.PLAIN, 11),
+                    new java.awt.Color(0, 0, 255),
+                    new java.awt.Color(0, 0, 255),
+                    false,
+                    true,
+                    new datechooser.view.appearance.swing.ButtonPainter()),
+                new datechooser.view.appearance.swing.SwingCellAppearance(new java.awt.Font("Tahoma", java.awt.Font.PLAIN, 11),
+                    new java.awt.Color(128, 128, 128),
+                    new java.awt.Color(0, 0, 255),
+                    false,
+                    true,
+                    new datechooser.view.appearance.swing.LabelPainter()),
+                new datechooser.view.appearance.swing.SwingCellAppearance(new java.awt.Font("Tahoma", java.awt.Font.PLAIN, 11),
+                    new java.awt.Color(0, 0, 0),
+                    new java.awt.Color(0, 0, 255),
+                    false,
+                    true,
+                    new datechooser.view.appearance.swing.LabelPainter()),
+                new datechooser.view.appearance.swing.SwingCellAppearance(new java.awt.Font("Tahoma", java.awt.Font.PLAIN, 11),
+                    new java.awt.Color(0, 0, 0),
+                    new java.awt.Color(255, 0, 0),
+                    false,
+                    false,
+                    new datechooser.view.appearance.swing.ButtonPainter()),
+                (datechooser.view.BackRenderer)null,
+                false,
+                true)));
+    dtChooser.setCalendarPreferredSize(new java.awt.Dimension(250, 200));
+    try {
+        dtChooser.setForbiddenPeriods(new datechooser.model.multiple.PeriodSet());
+    } catch (datechooser.model.exeptions.IncompatibleDataExeption e1) {
+        e1.printStackTrace();
+    }
+    dtChooser.setLocale(new java.util.Locale("in", "ID", ""));
+    dtChooser.setMinDate(new java.util.GregorianCalendar(date.getYear(), date.getMonth(), date.getDate()));
+    dtChooser.setNavigateFont(new java.awt.Font("Segoe UI", java.awt.Font.PLAIN, 11));
+    dtChooser.setShowOneMonth(true);
 
-        pack();
+    jLabel10.setFont(new java.awt.Font("Segoe UI Semibold", 0, 18)); // NOI18N
+    jLabel10.setText("Order Form");
+
+    jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+    jLabel11.setText("Order Name");
+
+    txOrderName.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+
+    jLabel12.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+    jLabel12.setText("Total Cost");
+
+    jLabel13.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+    jLabel13.setText("Rp.");
+
+    jLabel14.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+    jLabel14.setText("1.234.567,00");
+    jLabel14.setMaximumSize(new java.awt.Dimension(90, 16));
+    jLabel14.setMinimumSize(new java.awt.Dimension(90, 16));
+    jLabel14.setPreferredSize(new java.awt.Dimension(90, 16));
+
+    javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+    getContentPane().setLayout(layout);
+    layout.setHorizontalGroup(
+        layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(layout.createSequentialGroup()
+            .addGap(32, 32, 32)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addComponent(jLabel10)
+                    .addGap(0, 0, Short.MAX_VALUE))
+                .addGroup(layout.createSequentialGroup()
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jLabel4)
+                        .addComponent(jLabel9)
+                        .addComponent(jLabel11)
+                        .addComponent(txOrderCode, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(dtChooser, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                            .addComponent(txOrderName, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE))
+                        .addComponent(jLabel12)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addComponent(btnRemoveItem)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnConfirmItem))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addComponent(pnlFood, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(pnlDrink, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+            .addGap(32, 32, 32))
+    );
+    layout.setVerticalGroup(
+        layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(layout.createSequentialGroup()
+            .addGap(32, 32, 32)
+            .addComponent(jLabel10)
+            .addGap(18, 18, 18)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addComponent(pnlFood, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createSequentialGroup()
+                    .addComponent(jLabel4)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(txOrderCode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(18, 18, 18)
+                    .addComponent(jLabel11)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(txOrderName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(18, 18, 18)
+                    .addComponent(jLabel9)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(dtChooser, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(pnlDrink, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGap(15, 15, 15)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addComponent(jLabel12)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel13)
+                        .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnRemoveItem)
+                        .addComponent(btnConfirmItem)))
+                .addGroup(layout.createSequentialGroup()
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
+            .addContainerGap(51, Short.MAX_VALUE))
+    );
+
+    pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void cbMenuFoodItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbMenuFoodItemStateChanged
+       if (evt.getStateChange() == ItemEvent.SELECTED && status == true) {
+            int pointer = cbMenuFood.getSelectedIndex();
+            System.out.println("Selected : "+DATAF[pointer]);
+            String Query = "SELECT * FROM foodbeve\n"
+                    + "WHERE fbCode='"+DATAF[pointer]+"'";
+            try {
+                java.sql.ResultSet HASIL = db.getSQL(Query);
+                HASIL.first();
+                lPriceFood.setText(""+HASIL.getDouble("harga")); 
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            
+       }
+    }//GEN-LAST:event_cbMenuFoodItemStateChanged
+
+    private void cbMenuBeveItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbMenuBeveItemStateChanged
+        if (evt.getStateChange() == ItemEvent.SELECTED && status == true) {
+            int pointer = cbMenuBeve.getSelectedIndex();
+            System.out.println("Selected : "+DATAB[pointer]);
+            String Query = "SELECT * FROM foodbeve\n"
+                    + "WHERE fbCode='"+DATAB[pointer]+"'";
+            try {
+                java.sql.ResultSet HASIL = db.getSQL(Query);
+                HASIL.first();
+                lPriceBeve.setText(""+HASIL.getDouble("harga")); 
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            
+       }
+    }//GEN-LAST:event_cbMenuBeveItemStateChanged
+
+    private void btnAddFoodActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddFoodActionPerformed
+        Object[] container = new Object[5];
+        container[0] = noOrder;
+        container[1] = cbMenuFood.getSelectedItem();
+        container[2] = txQtyFood.getText();
+        container[3] = lPriceFood.getText();
+        container[4] = (Double.parseDouble(lPriceFood.getText().trim())) * (Double.parseDouble(txQtyFood.getText().trim()));
+        tbModOrder = (DefaultTableModel)tblOrder.getModel();
+        tbModOrder.addRow(container);
+        noOrder++;
+    }//GEN-LAST:event_btnAddFoodActionPerformed
+
+    private void btnAddBeveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddBeveActionPerformed
+        Object[] container = new Object[5];
+        container[0] = noOrder;
+        container[1] = cbMenuBeve.getSelectedItem();
+        container[2] = txQtyBeve.getText();
+        container[3] = lPriceBeve.getText();
+        container[4] = (Double.parseDouble(lPriceBeve.getText().trim())) * (Double.parseDouble(txQtyBeve.getText().trim()));
+        tbModOrder = (DefaultTableModel)tblOrder.getModel();
+        tbModOrder.addRow(container);
+        noOrder++;
+    }//GEN-LAST:event_btnAddBeveActionPerformed
+
+    private void btnRemoveItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveItemActionPerformed
+        int pointer = tblOrder.getSelectedRow();
+        tbModOrder.removeRow(pointer);
+        System.out.println("data : "+tbModOrder.getValueAt(0, 0));
+    }//GEN-LAST:event_btnRemoveItemActionPerformed
+
+    private void txQtyFoodActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txQtyFoodActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txQtyFoodActionPerformed
+
+    private void btnConfirmItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmItemActionPerformed
+        SQL = "INSERT INTO orderhead VALUES(?, ?, ?, ?, ?, ?)";
+        Object[] container = new Object[6];
+        container[0] = txOrderCode.getText().trim();
+        container[1] = "Normal";
+        container[2] = txOrderName.getText().trim();
+        container[3] = dtChooser.getText();
+        container[4] = 4.0;
+        container[5] = 10000.0;
+        try {
+            db.setSTMT(SQL);
+            db.insertSQL(container);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }//GEN-LAST:event_btnConfirmItemActionPerformed
 
     /**
      * @param args the command line arguments
@@ -321,14 +604,19 @@ public class Order extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAddBeve;
+    private javax.swing.JButton btnAddFood;
     private javax.swing.JButton btnConfirmItem;
     private javax.swing.JButton btnRemoveItem;
     private javax.swing.JComboBox<String> cbMenuBeve;
     private javax.swing.JComboBox<String> cbMenuFood;
-    private datechooser.beans.DateChooserCombo dateChooserCombo1;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private datechooser.beans.DateChooserCombo dtChooser;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -344,7 +632,8 @@ public class Order extends javax.swing.JFrame {
     private javax.swing.JPanel pnlDrink;
     private javax.swing.JPanel pnlFood;
     private javax.swing.JTable tblOrder;
-    private javax.swing.JTextField txOrder;
+    private javax.swing.JTextField txOrderCode;
+    private javax.swing.JTextField txOrderName;
     private javax.swing.JTextField txQtyBeve;
     private javax.swing.JTextField txQtyFood;
     // End of variables declaration//GEN-END:variables
