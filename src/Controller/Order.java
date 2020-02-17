@@ -562,7 +562,7 @@ public class Order extends javax.swing.JFrame {
         container[5] = 10000.0;
         try {
             db.setSTMT(SQL);
-            db.insertSQL(container);
+            db.insertSQL(container,"orderhead","orderID");
         } catch (SQLException ex) {
             ex.printStackTrace();
         }

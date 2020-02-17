@@ -67,6 +67,20 @@ public class Database {
     public Connection getConfig() {
         return config;
     }
+    
+    protected String getLog() {
+        return LOG;
+    }
+    protected void setLog(String Description)  {
+        Database.LOG = ("\nQuery Performed :"+Description+" =========================================\n"
+                + Database.STMT
+                + "\n========================================================\n");
+    }
+    protected void setLog(String Description, String SQL)  {
+        Database.LOG = ("\nQuery Performed :"+Description+" =========================================\n"
+                + SQL
+                + "\n========================================================\n");
+    }
     /**
      * Query Select untuk SQL 
      * dengan syarat harus memberikan query pada property STMT
@@ -80,9 +94,8 @@ public class Database {
         STM = Database.config.createStatement();
         LOG = Database.STMT;
         RES = STM.executeQuery(Database.STMT);
-        System.out.println("\n\nQuery Performed for MySQL =========================================\n"
-                + LOG
-                + "\n========================================================\n");
+        setLog("Getting Data");
+        System.out.println(getLog());
         return RES;
     }
     
@@ -95,39 +108,93 @@ public class Database {
      */ 
     public ResultSet getSQL(String Query) throws SQLException {
         //checkConnection();
-        STM = Database.config.createStatement();
-        LOG = Query;
-        System.out.println("\n\nQuery Performed for MySQL =========================================\n"
-                + LOG
-                + "\n============================================================\n");
+        STM = Database.config.createStatement();;
+        setLog("Getting Data", Query);
+        System.out.println(getLog());
         return (RES = STM.executeQuery(Query));
     }
     
-    public int insertSQL(Object[] DATA) throws SQLException {
-        PREP = Database.config.prepareStatement(STMT);
-        String typedata = "";
-        int pointer = 0;
-        for (Object temp : DATA) {
-            typedata = temp.getClass().getSimpleName();
-            System.out.println(temp.getClass().getSimpleName()+" : "+DATA[pointer]);
-            switch (typedata) {
-                case "String" :
-                    PREP.setString(pointer+1, DATA[pointer].toString());
-                    break;
-                case "Integer" :
-                    PREP.setInt(pointer+1, Integer.parseInt(DATA[pointer].toString()));
-                    break;
-                case "Float" :
-                    PREP.setFloat(pointer+1, Float.parseFloat(DATA[pointer].toString()));
-                    break;
-                case "Double" :
-                    PREP.setDouble(pointer+1,Double.parseDouble(DATA[pointer].toString()));
-                    break;
+    public int insertSQL(Object[] DATA, String TABLE, String ID) throws SQLException {
+        String[] SQL = Database.STMT.split("\\s");
+        int result = 0;
+        if( (searchIndexDB(DATA[0].toString(),ID,TABLE) == -1)
+            || (SQL[0].equalsIgnoreCase("UPDATE"))) {
+            //System.out.println("Data ["+DATA[0]+"] belum ada di DB");
+            PREP = Database.config.prepareStatement(STMT);
+            String typedata = "";
+            int pointer = 0;
+            if(SQL[0].equalsIgnoreCase("UPDATE")){
+                setLog("Update Data");
+                result = 2;
             }
-            pointer++;
+            else {
+                setLog("Insert Data");
+                result = 1;
+            }
+            System.out.println(getLog());
+            for (Object temp : DATA) {
+                typedata = temp.getClass().getSimpleName();
+                System.out.println(temp.getClass().getSimpleName()+" : "+DATA[pointer]);
+                switch (typedata) {
+                    case "String" :
+                        PREP.setString(pointer+1, DATA[pointer].toString());
+                        break;
+                    case "Integer" :
+                        PREP.setInt(pointer+1, Integer.parseInt(DATA[pointer].toString()));
+                        break;
+                    case "Float" :
+                        PREP.setFloat(pointer+1, Float.parseFloat(DATA[pointer].toString()));
+                        break;
+                    case "Double" :
+                        PREP.setDouble(pointer+1,Double.parseDouble(DATA[pointer].toString()));
+                        break;
+                }
+                pointer++;
+            }
+            PREP.executeUpdate();
+            return result;
+        }else{  
+            System.out.println("Data ["+DATA[0]+"] Sudah ada di DB\n"
+                            + "Silahkan Gunakan fitur Update");
+            JOptionPane.showMessageDialog(null, "Ooppss!. Data tersebut sudah ada\n"
+                    + "Silahkan gunakan Fitur UPDATE","Warning",1);
+            return result;
         }
+    }
+    
+    public int deleteSQL(String KEY) throws SQLException{
+        checkConnection();
+        PREP = Database.config.prepareStatement(STMT);
+        PREP.setString(1, KEY);
+        setLog("Delete Data");
+        System.out.println(getLog());
         return (PREP.executeUpdate());
     }
+    public int deleteSQL(String KEY, String SQL) throws SQLException{
+        checkConnection();
+        setSTMT(SQL);
+        setLog("Delete Data");
+        System.out.println(getLog());
+        PREP = Database.config.prepareStatement(STMT);
+        PREP.setString(1, KEY);
+        return (PREP.executeUpdate());
+    }
+    public int searchIndexDB(String SEARCH, String FIELD, String TABLE) throws SQLException {
+        int index = -1, i = 0;
+        //Database.setSTMT("SELECT "+FIELD+" FROM "+TABLE+" ORDER BY "+FIELD+" ASC");
+        RES = getSQL("SELECT "+FIELD+" FROM "+TABLE+" ORDER BY "+FIELD+" ASC");
+        while (RES.next()) {
+            if(true == RES.getString(1).equalsIgnoreCase(SEARCH)) {                
+                index = i;
+                break;
+            }
+            i++;
+        }
+        setLog("Search Index");
+        System.out.println(getLog());
+        return index;
+    }
+    
     public static Connection inisiasiDB() throws SQLException {
         if ((Database.DB_NAME == null) || (Database.DB_USER == null) || (Database.DB_PASS == null) || (Database.DB_PORT == null) || (Database.DB_HOST == null)) {
             JOptionPane.showMessageDialog(null,"Database Belum disetting");
@@ -158,5 +225,19 @@ public class Database {
         if(getConfig() == null) {
             setConfig(inisiasiDB());
         }
+    }
+    
+    public int lastInventID(){
+        int result= -1;
+        try {
+            checkConnection(); 
+            setSTMT("SELECT no FROM inventory ORDER BY no ASC");
+            RES = getSQL(); RES.last();
+            result = RES.getInt(1);
+            result++;
+        } catch (SQLException ex){
+            ex.printStackTrace();
+        }
+        return result;
     }
 }

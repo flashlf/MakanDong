@@ -5,10 +5,12 @@
         <group>
             <file>file:/F:/IMAM/RPL/PEMROGRAMMAN%20VISUAL/MakanDong/src/Controller/Login.java</file>
             <file>file:/F:/IMAM/RPL/PEMROGRAMMAN%20VISUAL/MakanDong/src/Controller/Inventory.java</file>
+            <file>file:/F:/IMAM/RPL/PEMROGRAMMAN%20VISUAL/MakanDong/src/Model/HandlerComponent.java</file>
             <file>file:/F:/IMAM/RPL/PEMROGRAMMAN%20VISUAL/MakanDong/src/Controller/Order.java</file>
             <file>file:/F:/IMAM/RPL/PEMROGRAMMAN%20VISUAL/MakanDong/src/Controller/Supplier.java</file>
             <file>file:/F:/IMAM/RPL/PEMROGRAMMAN%20VISUAL/MakanDong/src/Controller/Recipe.java</file>
             <file>file:/F:/IMAM/RPL/PEMROGRAMMAN%20VISUAL/MakanDong/src/Model/Database.java</file>
+            <file>file:/F:/IMAM/RPL/PEMROGRAMMAN%20VISUAL/MakanDong/src/Controller/MainMenu.java</file>
         </group>
     </open-files>
 </project-private>

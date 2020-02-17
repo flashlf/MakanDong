@@ -7,24 +7,39 @@ package Controller;
 
 import Model.HandlerComponent;
 import Model.Database;
+import java.awt.event.ItemEvent;
 import java.sql.SQLException;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.text.AbstractDocument;
+import javax.swing.text.Document;
 /**
  *
  * @author REDHAT
  */
 public class Supplier extends javax.swing.JFrame {
+    Document SCDoc;
+    DefaultTableModel tabmode;
     HandlerComponent handlerComp;
+    HandlerComponent.LimitInput LI;
     Database db = new Database();
+    Boolean status = false;
     public String SQL;
+    public static String[] MCODE = new String[50];
     /**
      * Creates new form Supplier
      */
     public Supplier() {
         initComponents();
+        ((AbstractDocument) txSCode.getDocument()).setDocumentFilter(new HandlerComponent.LimitInput(4));
         try {
             SQL = "SELECT * FROM Supplier";
             handlerComp = new HandlerComponent();
-            handlerComp.initTable(tableSupplier, SQL, db);
+            tabmode = handlerComp.initTable(tableSupplier, SQL, db, tabmode);
+            SQL = "SELECT *\n"+
+                  "FROM material";
+            handlerComp.initComboBox(cbMCode, SQL, db, MCODE);
+            status = true;
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
@@ -39,7 +54,6 @@ public class Supplier extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton4 = new javax.swing.JButton();
         txDesc = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
@@ -51,21 +65,21 @@ public class Supplier extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         txSCode = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        txMCode = new javax.swing.JTextField();
+        btnAdd = new javax.swing.JButton();
+        btnDelete = new javax.swing.JButton();
+        btnUpdate = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         txAddress = new javax.swing.JTextArea();
+        jLabel4 = new javax.swing.JLabel();
+        txTelephone = new javax.swing.JTextField();
+        cbMCode = new javax.swing.JComboBox<>();
+        txMCode = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jButton4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jButton4.setText("Save");
-
         txDesc.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        txDesc.setText("jTextField2");
+        txDesc.setText("Lorem Ipsum");
 
         jLabel5.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
         jLabel5.setText("Address");
@@ -75,22 +89,50 @@ public class Supplier extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Segoe UI Semibold", 0, 18)); // NOI18N
         jLabel1.setText("Supplier");
 
-        txSearch.setText("jTextField1");
+        txSearch.setText("Search Value......");
 
         btnSearch.setText("Search");
+        btnSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSearchActionPerformed(evt);
+            }
+        });
 
         tableSupplier.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "No", "mCode", "Desc", "Stock"
+                "sCode", "Supplier", "mCode", "Alamat", "Telephone"
             }
-        ));
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tableSupplier.setShowHorizontalLines(false);
+        tableSupplier.getTableHeader().setReorderingAllowed(false);
+        tableSupplier.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableSupplierMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tableSupplier);
+        tableSupplier.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        if (tableSupplier.getColumnModel().getColumnCount() > 0) {
+            tableSupplier.getColumnModel().getColumn(0).setResizable(false);
+        }
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -113,7 +155,7 @@ public class Supplier extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(32, 32, 32)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnSearch))
@@ -126,35 +168,62 @@ public class Supplier extends javax.swing.JFrame {
         jLabel2.setText("Supplier Code");
 
         txSCode.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        txSCode.setText("jTextField2");
+        txSCode.setText("S001");
 
         jLabel3.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
         jLabel3.setText("Description");
 
-        jButton1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jButton1.setText("Add");
-
-        jButton2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jButton2.setText("Delete");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnAdd.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
+        btnAdd.setText("Add");
+        btnAdd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnAddActionPerformed(evt);
             }
         });
 
-        jButton3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jButton3.setText("Update");
+        btnDelete.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
+        btnDelete.setText("Delete");
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteActionPerformed(evt);
+            }
+        });
 
-        txMCode.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        txMCode.setText("jTextField2");
+        btnUpdate.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
+        btnUpdate.setText("Update");
+        btnUpdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUpdateActionPerformed(evt);
+            }
+        });
 
         jLabel6.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
         jLabel6.setText("Material Code");
 
         txAddress.setColumns(20);
         txAddress.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txAddress.setLineWrap(true);
         txAddress.setRows(5);
+        txAddress.setText("Lorem ipsum dolor sit amet, consectetur adipiscing elit. \nSed sit amet urna consequat, pellentesque quam quis, pulvinar ipsum. \nAliquam dapibus augue vitae ex mattis, quis consequat lectus accumsan. \nMaecenas ultrices sem libero. Pellentesque a dignissim libero. \nPhasellus risus mi, commodo vitae dui vitae, porta cursus odio. \nAenean rutrum nisi interdum arcu tincidunt vehicula. \nSed cursus augue a sagittis ultrices. \nInteger congue erat efficitur, efficitur arcu non, lacinia tellus.");
+        txAddress.setWrapStyleWord(true);
+        txAddress.setMaximumSize(new java.awt.Dimension(244, 104));
         jScrollPane2.setViewportView(txAddress);
+
+        jLabel4.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
+        jLabel4.setText("Telephone");
+
+        txTelephone.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txTelephone.setText("081234567890");
+
+        cbMCode.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbMCodeItemStateChanged(evt);
+            }
+        });
+
+        txMCode.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
+        txMCode.setForeground(new java.awt.Color(0, 153, 153));
+        txMCode.setText("M001");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -162,69 +231,175 @@ public class Supplier extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton4)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton3))
+                .addGap(27, 27, 27)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txDesc)
+                    .addComponent(jScrollPane2)
+                    .addComponent(txTelephone)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(txSCode, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txMCode, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(txDesc)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel6)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(txMCode))
+                            .addComponent(cbMCode, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton1)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton2))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(37, 37, 37))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnAdd)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnDelete)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnUpdate)))
+                .addGap(32, 32, 32))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel6)
+                    .addComponent(txMCode))
+                .addGap(7, 7, 7)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txSCode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txMCode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel3)
+                        .addComponent(txSCode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(13, 13, 13)
+                        .addComponent(jLabel3))
+                    .addComponent(cbMCode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txDesc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txTelephone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(43, 43, 43)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton4)
-                    .addComponent(jButton3))
-                .addGap(59, 59, 59))
+                    .addComponent(btnAdd)
+                    .addComponent(btnDelete)
+                    .addComponent(btnUpdate))
+                .addGap(18, 18, 18))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+        SQL = "DELETE FROM supplier WHERE sCode = ?;";
+        int ch = JOptionPane.showConfirmDialog(this,"Data akan Dihapus ?","Hapus Data",JOptionPane.YES_NO_OPTION,JOptionPane.INFORMATION_MESSAGE);
+        if (ch == 0){
+            try {
+                int delrow = db.searchIndexDB(txSCode.getText(),"sCode","supplier");
+                db.setSTMT(SQL);
+                int del = db.deleteSQL(txSCode.getText());
+                if(del == 1) {
+                    tabmode.removeRow(delrow);
+                    System.out.println("Baris "+(delrow+1)+" Berhasil Dihapus");
+                }
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            
+        }
+    }//GEN-LAST:event_btnDeleteActionPerformed
+
+    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
+        SQL = "INSERT INTO supplier VALUES(?, ?, ?, ?, ?)";
+        Object[] container = new Object[5];
+        container[0] = txSCode.getText().trim();
+        container[1] = txDesc.getText().trim();
+        container[2] = txMCode.getText().trim();
+        container[3] = txAddress.getText();
+        container[4] = txTelephone.getText();
+        try {
+            db.setSTMT(SQL);
+            db.insertSQL(container,"supplier","sCode");
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }//GEN-LAST:event_btnAddActionPerformed
+
+    private void cbMCodeItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbMCodeItemStateChanged
+        if (evt.getStateChange() == ItemEvent.SELECTED && status == true) {
+            int pointer = cbMCode.getSelectedIndex();
+            System.out.println("Selected : "+MCODE[pointer]);
+            String Query = "SELECT * FROM material\n"
+                    + "WHERE mCode='"+MCODE[pointer]+"'";
+            try {
+                java.sql.ResultSet HASIL = db.getSQL(Query);
+                HASIL.first();
+                txMCode.setText(HASIL.getString(1)); 
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            
+       }
+    }//GEN-LAST:event_cbMCodeItemStateChanged
+
+    private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
+        SQL = "UPDATE supplier SET sCode=?, Deskripsi=?, mCode=?,Alamat=?,Telephone=? WHERE sCode=? AND mCode=?";
+        Object[] container = new Object[7];
+        container[0] = txSCode.getText().trim();
+        container[1] = txDesc.getText().trim();
+        container[2] = txMCode.getText().trim();
+        container[3] = txAddress.getText();
+        container[4] = txTelephone.getText();
+        container[5] = txSCode.getText().trim();
+        container[6] = txMCode.getText().trim();
+        try {            
+            int y = db.searchIndexDB(txSCode.getText(), "sCode", "supplier");
+            db.setSTMT(SQL);
+            db.insertSQL(container,"supplier","sCode");
+            tableSupplier.setValueAt(txSCode.getText(), y, 0);
+            tableSupplier.setValueAt(txDesc.getText(), y, 1);
+            tableSupplier.setValueAt(txMCode.getText(), y, 2);
+            tableSupplier.setValueAt(txAddress.getText(), y, 3);
+            tableSupplier.setValueAt(txTelephone.getText(), y, 4);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }//GEN-LAST:event_btnUpdateActionPerformed
+
+    private void tableSupplierMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableSupplierMouseClicked
+        if(evt.getClickCount() == 2 && !evt.isConsumed()) {
+            txSCode.setText(tableSupplier.getValueAt(tableSupplier.getSelectedRow(),0).toString());
+            txDesc.setText(tableSupplier.getValueAt(tableSupplier.getSelectedRow(),1).toString());
+            txMCode.setText(tableSupplier.getValueAt(tableSupplier.getSelectedRow(),2).toString());
+            txAddress.setText(tableSupplier.getValueAt(tableSupplier.getSelectedRow(),3).toString());
+            txTelephone.setText(tableSupplier.getValueAt(tableSupplier.getSelectedRow(),4).toString());
+            int pointer = Integer.parseInt(txMCode.getText().substring(1));
+            cbMCode.setSelectedIndex(pointer-1); 
+        }
+    }//GEN-LAST:event_tableSupplierMouseClicked
+
+    private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
+        String cari = txSearch.getText();
+        try {
+            SQL = "SELECT * FROM Supplier WHERE sCode like '%"+cari+"%' "
+                    + "OR mCode like '%"+cari+"%' "
+                    + "OR Deskripsi like '%"+cari+"%' "
+                    + "OR Alamat like '%"+cari+"%' "
+                    + "OR Telephone like '%"+cari+"%' ";
+            tabmode.setRowCount(0);
+            tabmode = handlerComp.initTable(tableSupplier, SQL, db, tabmode);
+        } catch(Exception ex) {
+            ex.printStackTrace();
+        }
+    }//GEN-LAST:event_btnSearchActionPerformed
 
     /**
      * @param args the command line arguments
@@ -262,14 +437,15 @@ public class Supplier extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAdd;
+    private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnSearch;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
+    private javax.swing.JButton btnUpdate;
+    private javax.swing.JComboBox<String> cbMCode;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
@@ -278,8 +454,9 @@ public class Supplier extends javax.swing.JFrame {
     private javax.swing.JTable tableSupplier;
     private javax.swing.JTextArea txAddress;
     private javax.swing.JTextField txDesc;
-    private javax.swing.JTextField txMCode;
+    private javax.swing.JLabel txMCode;
     private javax.swing.JTextField txSCode;
     private javax.swing.JTextField txSearch;
+    private javax.swing.JTextField txTelephone;
     // End of variables declaration//GEN-END:variables
 }

@@ -28,6 +28,8 @@ import javax.swing.text.DocumentFilter;
 public class HandlerComponent {
     protected Connection CONN;
     protected ResultSet HANDLER_RES;
+    public String[] COLUMN_TYPE, COLUMN_NAME;
+    public Object[] RES_OBJ;
     
     public HandlerComponent() throws SQLException{
         CONN = new Database().inisiasiDB();
@@ -36,8 +38,7 @@ public class HandlerComponent {
     
     // The Old Way to Initiate Table
     /*
-        Object[] baris = {"ID Supplier", "Nama Supplier", "Alamat"
-                ,"No. Telepon"}; //buat di tabel form
+        Object[] baris = {"ID Supplier", "Nama Supplier", "Alamat","No. Telepon"}; //buat di tabel form
         tabmode = new DefaultTableModel(null, baris);
         tabelsup.setModel(tabmode);
         String sql = "select * from datasup";
@@ -45,7 +46,7 @@ public class HandlerComponent {
             java.sql.Statement stat = conn.createStatement();
             ResultSet hasil = stat.executeQuery (sql);
             while (hasil.next()){
-                String skd = hasil.getString("id_sup"); //isi tabel database
+                String skd = hasil.getString("id_sup"); 
                 String snm = hasil.getString("nm_sup");
                 String smerk = hasil.getString("almt_sup");
                 String sharga = hasil.getString("no_telp");
@@ -55,29 +56,100 @@ public class HandlerComponent {
         } catch (Exception e){
         }
     */
-    public void initTable(JTable TABLE, String SQL, Database DBClass) {
-        DefaultTableModel tbModel;
+    public DefaultTableModel initTable(JTable TABLE, String SQL, Database DBClass,DefaultTableModel MODEL) {
         try {
             HANDLER_RES = DBClass.getSQL(SQL);
             int count = HANDLER_RES.getMetaData().getColumnCount();
-            Object[] namaCol = new Object[count];
+            COLUMN_NAME = new String[count];
+            COLUMN_TYPE = new String[count];
+            RES_OBJ = new Object[count];
             for(int x=0; x<count; x++) {
-                namaCol[x] = HANDLER_RES.getMetaData().getColumnName(x+1);
-                System.out.println("Nama Kolom "+(x+1)+" : "+namaCol[x]);
+                COLUMN_NAME[x] = HANDLER_RES.getMetaData().getColumnName(x+1);
+                COLUMN_TYPE[x] = HANDLER_RES.getMetaData().getColumnTypeName(x+1);
+                System.out.println("Nama Kolom "+(x+1)+" : "+COLUMN_NAME[x]+"\t| Tipe : "+COLUMN_TYPE[x]);
             }
-            tbModel = new DefaultTableModel(null, namaCol);
-            TABLE.setModel(tbModel);
+            MODEL = (DefaultTableModel) TABLE.getModel();
+            TABLE.setModel(MODEL);
             while(HANDLER_RES.next())  {
-                String[] data = new String[count];
                 for(int y=0; y<count; y++) {
-                    data[y] = HANDLER_RES.getString(y+1);
+                    switch(COLUMN_TYPE[y]) {
+                        case "INT" :
+                            RES_OBJ[y] = HANDLER_RES.getInt(y+1);
+                            break;
+                        case "DOUBLE" :
+                            RES_OBJ[y] = HANDLER_RES.getDouble(y+1);
+                            break;
+                        case "FLOAT" :
+                            RES_OBJ[y] = HANDLER_RES.getFloat(y+1);
+                            break;
+                        case "VARCHAR" :
+                            RES_OBJ[y] = HANDLER_RES.getString(y+1);
+                            break;
+                        case "TEXT" :
+                            RES_OBJ[y] = HANDLER_RES.getString(y+1);
+                            break;
+                        case "DATE" :
+                            RES_OBJ[y] = HANDLER_RES.getString(y+1);
+                            break;
+                        default :
+                            RES_OBJ[y] = "GAGAL (HandlerComponent.Java)";
+                            break;
+                    }
                 }
-                tbModel.addRow(data);
+                MODEL.addRow(RES_OBJ);
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-        
+        return MODEL;
+    }
+    
+    public void initTable(JTable TABLE, String SQL, Database DBClass) {
+        DefaultTableModel MODEL;
+        try {
+            HANDLER_RES = DBClass.getSQL(SQL);
+            int count = HANDLER_RES.getMetaData().getColumnCount();
+            COLUMN_NAME = new String[count];
+            COLUMN_TYPE = new String[count];
+            RES_OBJ = new Object[count];
+            for(int x=0; x<count; x++) {
+                COLUMN_NAME[x] = HANDLER_RES.getMetaData().getColumnName(x+1);
+                COLUMN_TYPE[x] = HANDLER_RES.getMetaData().getColumnTypeName(x+1);
+                System.out.println("Nama Kolom "+(x+1)+" : "+COLUMN_NAME[x]+"\t| Tipe : "+COLUMN_TYPE[x]);
+            }
+            MODEL = new DefaultTableModel(null, COLUMN_NAME);
+            TABLE.setModel(MODEL);
+            while(HANDLER_RES.next())  {
+                for(int y=0; y<count; y++) {
+                    switch(COLUMN_TYPE[y]) {
+                        case "INT" :
+                            RES_OBJ[y] = HANDLER_RES.getInt(y+1);
+                            break;
+                        case "DOUBLE" :
+                            RES_OBJ[y] = HANDLER_RES.getDouble(y+1);
+                            break;
+                        case "FLOAT" :
+                            RES_OBJ[y] = HANDLER_RES.getFloat(y+1);
+                            break;
+                        case "VARCHAR" :
+                            RES_OBJ[y] = HANDLER_RES.getString(y+1);
+                            break;
+                        case "TEXT" :
+                            RES_OBJ[y] = HANDLER_RES.getString(y+1);
+                            break;
+                        case "DATE" :
+                            RES_OBJ[y] = HANDLER_RES.getString(y+1);
+                            break;
+                        default :
+                            RES_OBJ[y] = "GAGAL (HandlerComponent.Java)";
+                            break;
+                    }
+                }
+                MODEL.addRow(RES_OBJ);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
     }
     
     public void initComboBox(JComboBox JCOMBO, String SQL, Database DBClass, String[] DATA) {

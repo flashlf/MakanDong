@@ -7,14 +7,22 @@ package Controller;
 
 import Model.HandlerComponent;
 import Model.Database;
+import com.sun.glass.events.KeyEvent;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.text.AbstractDocument;
 /**
  *
  * @author REDHAT
  */
 public class Inventory extends javax.swing.JFrame {
-    HandlerComponent handlerComp;
+    DefaultTableModel tabmode;
     Database db = new Database();
+    HandlerComponent handlerComp;
+    HandlerComponent.LimitInput LI;
+    ResultSet RSET;
     public String SQL;
     // changing to master branch
     /**
@@ -22,19 +30,34 @@ public class Inventory extends javax.swing.JFrame {
      */
     public Inventory() {
         initComponents();
+        ((AbstractDocument) txMCode.getDocument()).setDocumentFilter(new HandlerComponent.LimitInput(3));
         try {
-            SQL =   "SELECT material.Deskripsi as Bahan, inventory.stock, inventory.needRestock, material.Harga \n" +
+            SQL =   "SELECT inventory.no as Nomor, material.Deskripsi as Bahan, inventory.stock, inventory.needRestock, material.Harga \n" +
                     "FROM material,inventory\n" +
                     "WHERE material.mCode = inventory.mCode\n" +
-                    "ORDER BY Bahan";
+                    "ORDER BY No";
             handlerComp = new HandlerComponent();
-            handlerComp.initTable(tableInvent, SQL, db);
+            tabmode = handlerComp.initTable(tableInvent, SQL, db, tabmode);
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
         
     }
-
+    
+    void clearComponent() {
+        txDesc.setText("");
+        txHarga.setText("");
+        txMCode.setText("");
+        cbSatuan.setSelectedIndex(0);
+    }
+    private void tableRefresh() throws SQLException {
+        SQL = "SELECT inventory.no as Nomor, material.Deskripsi as Bahan, inventory.stock, inventory.needRestock, material.Harga \n" +
+                "FROM material,inventory\n" +
+                "WHERE material.mCode = inventory.mCode\n" +
+                "ORDER BY No";
+        tabmode.setRowCount(0);
+        tabmode = handlerComp.initTable(tableInvent, SQL, db, tabmode);  
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -44,85 +67,403 @@ public class Inventory extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
+        btnSearch = new javax.swing.JButton();
+        txSearch = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tableInvent = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
-        btnSearch = new javax.swing.JButton();
+        btnUpdateTable = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        btnModPanel = new javax.swing.JToggleButton();
+        btnUpdate = new javax.swing.JButton();
+        btnDeleteMateria = new javax.swing.JButton();
+        btnAddMateria = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+        txMCode = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        txDesc = new javax.swing.JTextField();
+        cbSatuan = new javax.swing.JComboBox<>();
+        jLabel6 = new javax.swing.JLabel();
+        txHarga = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
+        prefixMCode = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setMaximumSize(new java.awt.Dimension(732, 510));
+        setMinimumSize(new java.awt.Dimension(447, 510));
+        setPreferredSize(new java.awt.Dimension(447, 507));
+        setResizable(false);
+        setSize(new java.awt.Dimension(447, 510));
+
+        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        btnSearch.setText("Search");
+
+        txSearch.setText("Search Value....");
+
+        jLabel2.setFont(new java.awt.Font("Segoe UI Semibold", 0, 18)); // NOI18N
+        jLabel2.setText("Inventory");
 
         tableInvent.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+
             },
             new String [] {
-                "mCode", "Desc", "Qty"
+                "No", "Material", "Stock", "minimumStock"
             }
-        ));
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.Double.class, java.lang.Double.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, true, true
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tableInvent.getTableHeader().setReorderingAllowed(false);
+        tableInvent.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableInventMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tableInvent);
+        if (tableInvent.getColumnModel().getColumnCount() > 0) {
+            tableInvent.getColumnModel().getColumn(0).setMinWidth(30);
+            tableInvent.getColumnModel().getColumn(0).setPreferredWidth(30);
+            tableInvent.getColumnModel().getColumn(0).setMaxWidth(30);
+            tableInvent.getColumnModel().getColumn(2).setResizable(false);
+            tableInvent.getColumnModel().getColumn(2).setPreferredWidth(10);
+            tableInvent.getColumnModel().getColumn(3).setResizable(false);
+            tableInvent.getColumnModel().getColumn(3).setPreferredWidth(10);
+        }
 
-        jButton1.setText("Add");
+        btnUpdateTable.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
+        btnUpdateTable.setText("Update Table");
+        btnUpdateTable.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUpdateTableActionPerformed(evt);
+            }
+        });
 
-        jButton2.setText("Delete");
+        jLabel3.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
+        jLabel3.setText("Modifying Panel");
 
-        jButton3.setText("Update");
+        btnModPanel.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
+        btnModPanel.setText("OFF");
+        btnModPanel.setMultiClickThreshhold(2L);
+        btnModPanel.setName(""); // NOI18N
+        btnModPanel.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                btnModPanelItemStateChanged(evt);
+            }
+        });
 
-        jButton4.setText("Save");
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(32, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addComponent(jLabel3)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(btnModPanel)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnUpdateTable))
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addComponent(txSearch)
+                            .addGap(18, 18, 18)
+                            .addComponent(btnSearch))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(32, 32, 32))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(32, 32, 32)
+                .addComponent(jLabel2)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSearch))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnUpdateTable)
+                    .addComponent(jLabel3)
+                    .addComponent(btnModPanel))
+                .addGap(32, 32, 32))
+        );
 
-        jTextField1.setText("jTextField1");
+        btnUpdate.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
+        btnUpdate.setText("Update");
+        btnUpdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUpdateActionPerformed(evt);
+            }
+        });
 
-        btnSearch.setText("Search");
+        btnDeleteMateria.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
+        btnDeleteMateria.setText("Delete");
+        btnDeleteMateria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteMateriaActionPerformed(evt);
+            }
+        });
+
+        btnAddMateria.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
+        btnAddMateria.setText("Add");
+        btnAddMateria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddMateriaActionPerformed(evt);
+            }
+        });
+
+        jLabel4.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
+        jLabel4.setText("Material Code");
+
+        txMCode.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        txMCode.setText("003");
+        txMCode.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txMCodeKeyTyped(evt);
+            }
+        });
+
+        jLabel5.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
+        jLabel5.setText("Description");
+
+        txDesc.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txDesc.setText("Lorem Ipsum");
+
+        cbSatuan.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ikat", "Kg", "Potong", "Unit" }));
+
+        jLabel6.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
+        jLabel6.setText("Harga");
+
+        txHarga.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txHarga.setText("S001");
+
+        jLabel7.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
+        jLabel7.setText("Satuan");
+
+        prefixMCode.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
+        prefixMCode.setForeground(new java.awt.Color(0, 153, 153));
+        prefixMCode.setText("M");
+        prefixMCode.setToolTipText("Awalan Kode Material");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton1)
+                        .addComponent(btnAddMateria)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton2)
+                        .addComponent(btnDeleteMateria)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton4))
+                        .addComponent(btnUpdate))
+                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txDesc)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel6)
+                            .addComponent(txHarga, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel7)
+                            .addComponent(cbSatuan, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(jTextField1)
-                            .addGap(18, 18, 18)
-                            .addComponent(btnSearch))
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(15, Short.MAX_VALUE))
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                            .addComponent(prefixMCode)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(txMCode))
+                        .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING)))
+                .addContainerGap(32, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnSearch))
-                .addGap(18, 18, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                    .addComponent(txMCode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(prefixMCode))
+                .addGap(12, 12, 12)
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txDesc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2)
-                    .addComponent(jButton3)
-                    .addComponent(jButton4))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabel6)
+                    .addComponent(jLabel7))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txHarga, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbSatuan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAddMateria)
+                    .addComponent(btnDeleteMateria)
+                    .addComponent(btnUpdate))
+                .addGap(32, 32, 32))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnModPanelItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_btnModPanelItemStateChanged
+        if(btnModPanel.isSelected())  {
+            btnModPanel.setText("ON");
+            this.setSize(732, this.getHeight());
+        } else {
+            btnModPanel.setText("OFF");
+            this.setSize(447, this.getHeight());
+            clearComponent();
+        }
+    }//GEN-LAST:event_btnModPanelItemStateChanged
+
+    private void txMCodeKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txMCodeKeyTyped
+        char vchar = evt.getKeyChar();
+        if(!(Character.isDigit(vchar))
+            || (vchar == KeyEvent.VK_BACKSPACE)
+            || (vchar == KeyEvent.VK_DELETE))
+            evt.consume();
+    }//GEN-LAST:event_txMCodeKeyTyped
+
+    private void btnAddMateriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddMateriaActionPerformed
+        Object[] container = new Object[4];
+        container[0] = prefixMCode.getText()+txMCode.getText().trim();
+        container[1] = txDesc.getText().trim();
+        container[2] = cbSatuan.getSelectedItem().toString();
+        container[3] = Double.parseDouble(txHarga.getText());
+        try {
+            // masukin ke material karna blom ada
+            SQL = "INSERT INTO material VALUES(?, ?, ?, ?)";
+            db.setSTMT(SQL);
+            if(db.insertSQL(container,"material","mCode") == 1) {
+                // Masukin ke invent
+                container[0] = db.lastInventID();
+                container[1] = prefixMCode.getText()+txMCode.getText().trim();
+                container[2] = 0.0;
+                container[3] = 0.0;
+                SQL = "INSERT INTO inventory VALUES(?, ?, ?, ?)";
+                db.setSTMT(SQL);
+                db.insertSQL(container,"inventory","no");
+                container[1] = container[1] = txDesc.getText().trim();
+                tabmode.addRow(container);
+            } 
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }//GEN-LAST:event_btnAddMateriaActionPerformed
+
+    private void btnDeleteMateriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteMateriaActionPerformed
+        SQL = "DELETE FROM material WHERE mCode = ?;";
+        int ch = JOptionPane.showConfirmDialog(this,"Data yang akan dihapus tidak bisa\n"
+                + "dikembalikan lagi. Apakah anda yakin?\n*note : Data yang berkaitan juga akan terhapus\n"
+                + "\tdari table Inventory yang ada disamping ini.","Hapus Data",JOptionPane.YES_NO_OPTION,JOptionPane.INFORMATION_MESSAGE);
+        if (ch == 0){
+            try {                
+                db.setSTMT(SQL);
+                int del = db.deleteSQL("M"+txMCode.getText());
+                if(del == 1) {
+                    tableRefresh();                    
+                }
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            
+        }
+    }//GEN-LAST:event_btnDeleteMateriaActionPerformed
+
+    private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
+        SQL = "UPDATE material SET mCode=?, deskripsi=?, satuan=?, harga=? WHERE mCode=?";
+        Object[] container = new Object[5];
+        container[0] = "M"+txMCode.getText().trim();
+        container[1] = txDesc.getText().trim();
+        container[2] = cbSatuan.getSelectedItem().toString();
+        container[3] = Double.parseDouble(txHarga.getText());
+        container[4] = "M"+txMCode.getText();
+        try {            
+            int y = db.searchIndexDB(txMCode.getText(), "no", "inventory");
+            db.setSTMT(SQL);
+            db.insertSQL(container,"material","mCode");            
+            tableRefresh();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }//GEN-LAST:event_btnUpdateActionPerformed
+
+    private void tableInventMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableInventMouseClicked
+        if(evt.getClickCount() == 2 && !evt.isConsumed()) {
+           String cari = tableInvent.getValueAt(tableInvent.getSelectedRow(),1).toString(); 
+           SQL = "SELECT * FROM material WHERE Deskripsi = '"+cari+"'";
+           try {
+               RSET = db.getSQL(SQL);
+               RSET.first();               
+               txMCode.setText(RSET.getString(1).substring(1));
+               txDesc.setText(RSET.getString(2));
+               txHarga.setText(""+RSET.getDouble(4));
+               switch(RSET.getString(3)) {
+                    case "Ikat" :
+                        cbSatuan.setSelectedIndex(0);
+                        break;
+                    case "Kg" :
+                        cbSatuan.setSelectedIndex(1);
+                        break;
+                    case "Potong" :
+                        cbSatuan.setSelectedIndex(2);
+                        break;
+                    case "Unit" :
+                        cbSatuan.setSelectedIndex(3);
+                        break;
+                    default :
+                        cbSatuan.setSelectedIndex(0);
+                        break;
+               }
+               btnModPanel.setSelected(true);
+           } catch(SQLException ex) {
+               ex.printStackTrace();
+           }
+           
+        }
+    }//GEN-LAST:event_tableInventMouseClicked
+
+    private void btnUpdateTableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateTableActionPerformed
+        SQL = "UPDATE inventory SET stock=?, needRestock=? WHERE `no`=?";
+        int totalRow = tabmode.getRowCount();
+        for(int x=0; x<totalRow; x++) {
+            try {
+                Object[] container = new Object[3];
+                container[0] = tabmode.getValueAt(x, 2);
+                container[1] = tabmode.getValueAt(x, 3);
+                container[2] = x+1;
+                db.setSTMT(SQL);
+                db.insertSQL(container, "inventory", "no");
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+        JOptionPane.showMessageDialog(this, "Update Table Berhasil");
+    }//GEN-LAST:event_btnUpdateTableActionPerformed
 
     /**
      * @param args the command line arguments
@@ -160,13 +501,26 @@ public class Inventory extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAddMateria;
+    private javax.swing.JButton btnDeleteMateria;
+    private javax.swing.JToggleButton btnModPanel;
     private javax.swing.JButton btnSearch;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
+    private javax.swing.JButton btnUpdate;
+    private javax.swing.JButton btnUpdateTable;
+    private javax.swing.JComboBox<String> cbSatuan;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JLabel prefixMCode;
     private javax.swing.JTable tableInvent;
+    private javax.swing.JTextField txDesc;
+    private javax.swing.JTextField txHarga;
+    private javax.swing.JTextField txMCode;
+    private javax.swing.JTextField txSearch;
     // End of variables declaration//GEN-END:variables
 }
