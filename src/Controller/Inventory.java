@@ -23,12 +23,15 @@ public class Inventory extends javax.swing.JFrame {
     HandlerComponent handlerComp;
     HandlerComponent.LimitInput LI;
     ResultSet RSET;
+    
     public String SQL;
+    public static boolean getData = false;
+    private static Inventory invInstance = null;
     // changing to master branch
     /**
      * Creates new form Inventory
      */
-    public Inventory() {
+    private Inventory() {
         initComponents();
         ((AbstractDocument) txMCode.getDocument()).setDocumentFilter(new HandlerComponent.LimitInput(3));
         try {
@@ -41,9 +44,13 @@ public class Inventory extends javax.swing.JFrame {
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-        
+        this.setLocationRelativeTo(rootPane);
     }
-    
+    public static Inventory getInstance() {
+        if(invInstance == null)
+            invInstance = new Inventory();
+        return invInstance;
+    }
     void clearComponent() {
         txDesc.setText("");
         txHarga.setText("");
@@ -89,12 +96,19 @@ public class Inventory extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         prefixMCode = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("MakanDong | Inventory");
         setMaximumSize(new java.awt.Dimension(732, 510));
         setMinimumSize(new java.awt.Dimension(447, 510));
+        setName("frmInvent"); // NOI18N
         setPreferredSize(new java.awt.Dimension(447, 507));
         setResizable(false);
         setSize(new java.awt.Dimension(447, 510));
+        addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                formKeyTyped(evt);
+            }
+        });
 
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
@@ -254,7 +268,12 @@ public class Inventory extends javax.swing.JFrame {
         jLabel6.setText("Harga");
 
         txHarga.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        txHarga.setText("S001");
+        txHarga.setText("0.0");
+        txHarga.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txHargaKeyTyped(evt);
+            }
+        });
 
         jLabel7.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
         jLabel7.setText("Satuan");
@@ -288,12 +307,11 @@ public class Inventory extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel7)
                             .addComponent(cbSatuan, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                            .addComponent(prefixMCode)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(txMCode))
-                        .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(prefixMCode)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txMCode))
+                    .addComponent(jLabel4))
                 .addContainerGap(32, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -414,15 +432,15 @@ public class Inventory extends javax.swing.JFrame {
 
     private void tableInventMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableInventMouseClicked
         if(evt.getClickCount() == 2 && !evt.isConsumed()) {
-           String cari = tableInvent.getValueAt(tableInvent.getSelectedRow(),1).toString(); 
-           SQL = "SELECT * FROM material WHERE Deskripsi = '"+cari+"'";
-           try {
-               RSET = db.getSQL(SQL);
-               RSET.first();               
-               txMCode.setText(RSET.getString(1).substring(1));
-               txDesc.setText(RSET.getString(2));
-               txHarga.setText(""+RSET.getDouble(4));
-               switch(RSET.getString(3)) {
+            String cari = tableInvent.getValueAt(tableInvent.getSelectedRow(),1).toString(); 
+            SQL = "SELECT * FROM material WHERE Deskripsi = '"+cari+"'";
+            try {
+                RSET = db.getSQL(SQL);
+                RSET.first();               
+                txMCode.setText(RSET.getString(1).substring(1));
+                txDesc.setText(RSET.getString(2));
+                txHarga.setText(""+RSET.getDouble(4));
+                switch(RSET.getString(3)) {
                     case "Ikat" :
                         cbSatuan.setSelectedIndex(0);
                         break;
@@ -439,9 +457,9 @@ public class Inventory extends javax.swing.JFrame {
                         cbSatuan.setSelectedIndex(0);
                         break;
                }
-               btnModPanel.setSelected(true);
+                btnModPanel.setSelected(true);
            } catch(SQLException ex) {
-               ex.printStackTrace();
+                ex.printStackTrace();
            }
            
         }
@@ -464,6 +482,19 @@ public class Inventory extends javax.swing.JFrame {
         }
         JOptionPane.showMessageDialog(this, "Update Table Berhasil");
     }//GEN-LAST:event_btnUpdateTableActionPerformed
+
+    private void formKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyTyped
+
+    }//GEN-LAST:event_formKeyTyped
+
+    private void txHargaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txHargaKeyTyped
+        char vchar = evt.getKeyChar();
+        if(!(Character.isDigit(vchar))
+            || (vchar == KeyEvent.VK_BACKSPACE)
+            || (vchar == KeyEvent.VK_DELETE)
+            || (vchar == KeyEvent.VK_PERIOD))
+            evt.consume();
+    }//GEN-LAST:event_txHargaKeyTyped
 
     /**
      * @param args the command line arguments

@@ -1,0 +1,81 @@
+TN satu
+Table pembelian
+Time AFTER
+Event INSERT
+
+begin
+update databarang set jumlah = jumlah + new.jumlah where kd_barang = new.kd_barang;
+end
+
+Definer root@localhost
+
+
+
+coba lah
+UPDATE inventory 
+SET inventory.stock = inventory.stock - new.Qty
+WHERE orderdetail.fbCode = recipe.fbCode
+AND recipe.mCode = inventory.mCode;
+
+
+
+DELIMITER //
+
+CREATE DEFINER=`root`@`localhost` 
+TRIGGER `Coba` 
+BEFORE INSERT ON `orderdetail` 
+FOR EACH ROW 
+BEGIN
+    UPDATE inventory 
+    SET inventory.stock = inventory.stock - new.Qty
+    WHERE new.fbCode = recipe.fbCode
+    AND recipe.mCode = inventory.mCode;
+END//
+
+
+COBA LAGI DONG REV ==========
+DELIMITER //
+
+CREATE DEFINER=`root`@`localhost` 
+TRIGGER `Coba` 
+BEFORE INSERT ON `orderdetail` FOR EACH ROW 
+BEGIN
+	DECLARE cmCode varchar(4);
+	DECLARE cQty double;
+	DECLARE matCode CURSOR FOR SELECT mCode, Qty FROM recipe WHERE recipe.fbCode = new.fbCode;
+
+	OPEN matCode;
+		lop : LOOP
+			FETCH matCode INTO cmCode, cQty;
+			IF done THEN
+				LEAVE lop;
+			END IF;
+			UPDATE inventory SET inventory.stock = inventory.stock - (new.Qty * cQty)
+			WHERE inventory.mCode = cmCode;
+		END LOOP;
+	CLOSE matCode;
+END//
+
+FINAL
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` 
+TRIGGER `Coba` 
+BEFORE INSERT ON `orderdetail` FOR EACH ROW 
+BEGIN
+	DECLARE done INT DEFAULT FALSE;
+	DECLARE cmCode varchar(4);
+	DECLARE cQty double;
+	DECLARE matCode CURSOR FOR SELECT mCode, Qty FROM recipe WHERE recipe.fbCode = new.fbCode;
+	DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
+    
+	OPEN matCode;
+		ins_loop: LOOP
+			FETCH matCode INTO cmCode, cQty;
+			IF DONE THEN
+				LEAVE ins_loop;
+			END IF;
+			UPDATE inventory SET inventory.stock = inventory.stock - (new.Qty * cQty) WHERE inventory.mCode = cmCode;
+		END LOOP;
+	CLOSE matCode;
+END$$
+DELIMITER ;

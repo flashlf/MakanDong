@@ -27,7 +27,7 @@ public class Database {
         Database.setDB_HOST("localhost");
         Database.setDB_NAME("makandong");
         Database.setDB_USER("root");
-        Database.setDB_PASS("123456");
+        Database.setDB_PASS("");
         Database.setDB_PORT("3306");
     }
     
@@ -114,11 +114,14 @@ public class Database {
         return (RES = STM.executeQuery(Query));
     }
     
-    public int insertSQL(Object[] DATA, String TABLE, String ID) throws SQLException {
+    public int insertSQL(Object[] DATA, String TABLE, String PRIMARY_KEY) throws SQLException {
         String[] SQL = Database.STMT.split("\\s");
         int result = 0;
-        if( (searchIndexDB(DATA[0].toString(),ID,TABLE) == -1)
-            || (SQL[0].equalsIgnoreCase("UPDATE"))) {
+        // pengecualian table cek
+        if( (searchIndexDB(DATA[0].toString(),PRIMARY_KEY,TABLE) == -1)
+            || (SQL[0].equalsIgnoreCase("UPDATE"))
+            || (TABLE.equalsIgnoreCase("orderdetail"))
+            || (TABLE.equalsIgnoreCase("recipe"))) {
             //System.out.println("Data ["+DATA[0]+"] belum ada di DB");
             PREP = Database.config.prepareStatement(STMT);
             String typedata = "";
@@ -179,6 +182,17 @@ public class Database {
         PREP.setString(1, KEY);
         return (PREP.executeUpdate());
     }
+    
+    /**
+     * Metode untuk mencari adanya data dalam DB
+     * e.g. searchIndexDB(<u>textField.getText(), "kolom", "table"</u>) atau<br>
+     * searchIndexDB(<u>txID.getText(), "id", "user"</u>)
+     * @param SEARCH data yang ingin dicari
+     * @param FIELD kolom field yang dicari
+     * @param TABLE table yang dicari
+     * @return mengembalikan tipedata Integer, bernilai -1 jika tidak ditemukan,<br>dan akan mengembalikan nilai index jika ditemukan dalam DB;
+     * @throws SQLException 
+     */ 
     public int searchIndexDB(String SEARCH, String FIELD, String TABLE) throws SQLException {
         int index = -1, i = 0;
         //Database.setSTMT("SELECT "+FIELD+" FROM "+TABLE+" ORDER BY "+FIELD+" ASC");

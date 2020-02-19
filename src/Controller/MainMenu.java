@@ -10,7 +10,12 @@ package Controller;
  * @author REDHAT
  */
 public class MainMenu extends javax.swing.JFrame {
-
+    Inventory frmInvent;
+    Recipe frmRecipe;
+    Order frmOrder;
+    Supplier frmSupplier;
+    
+            
     /**
      * Creates new form MainMenu
      */
@@ -27,21 +32,117 @@ public class MainMenu extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        btnOrderMenu = new javax.swing.JButton();
+        btnInventMenu = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        btnRecipeMenu = new javax.swing.JButton();
+        btnSupplierMenu = new javax.swing.JButton();
+        btnReportMenu = new javax.swing.JButton();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("MakanDong | Main Menu");
+        setResizable(false);
+
+        btnOrderMenu.setText("Order");
+        btnOrderMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnOrderMenuActionPerformed(evt);
+            }
+        });
+
+        btnInventMenu.setText("Inventory");
+        btnInventMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnInventMenuActionPerformed(evt);
+            }
+        });
+
+        jButton3.setText("jButton1");
+
+        btnRecipeMenu.setText("Recipe");
+        btnRecipeMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRecipeMenuActionPerformed(evt);
+            }
+        });
+
+        btnSupplierMenu.setText("Supplier");
+        btnSupplierMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSupplierMenuActionPerformed(evt);
+            }
+        });
+
+        btnReportMenu.setText("Laporan");
+        btnReportMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnReportMenuActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 799, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(203, 203, 203)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton3)
+                    .addComponent(btnInventMenu)
+                    .addComponent(btnOrderMenu))
+                .addGap(38, 38, 38)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnRecipeMenu)
+                    .addComponent(btnSupplierMenu)
+                    .addComponent(btnReportMenu))
+                .addContainerGap(252, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 605, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(136, 136, 136)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnRecipeMenu)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnSupplierMenu)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnReportMenu))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnOrderMenu)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnInventMenu)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton3)))
+                .addContainerGap(300, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnOrderMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOrderMenuActionPerformed
+        frmOrder = new Order();
+        frmOrder.setVisible(true);
+    }//GEN-LAST:event_btnOrderMenuActionPerformed
+
+    private void btnRecipeMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRecipeMenuActionPerformed
+        frmRecipe = new Recipe();
+        frmRecipe.setVisible(true);
+    }//GEN-LAST:event_btnRecipeMenuActionPerformed
+
+    private void btnInventMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInventMenuActionPerformed
+        frmInvent = Inventory.getInstance();
+        frmInvent.setVisible(true);
+    }//GEN-LAST:event_btnInventMenuActionPerformed
+
+    private void btnSupplierMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSupplierMenuActionPerformed
+        frmSupplier = new Supplier();
+        frmSupplier.setVisible(true);
+    }//GEN-LAST:event_btnSupplierMenuActionPerformed
+
+    private void btnReportMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReportMenuActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnReportMenuActionPerformed
 
     /**
      * @param args the command line arguments
@@ -79,5 +180,11 @@ public class MainMenu extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnInventMenu;
+    private javax.swing.JButton btnOrderMenu;
+    private javax.swing.JButton btnRecipeMenu;
+    private javax.swing.JButton btnReportMenu;
+    private javax.swing.JButton btnSupplierMenu;
+    private javax.swing.JButton jButton3;
     // End of variables declaration//GEN-END:variables
 }
