@@ -27,6 +27,7 @@ public class Recipe extends javax.swing.JFrame {
     HandlerComponent.LimitInput LIMITER;
     ResultSet RSET;
     RecipeMaterial RMDialog;
+    RecipeList RLDialog;
     Inventory FrmInvent;
     
     public static Double SPrice = 0.0;
@@ -38,6 +39,7 @@ public class Recipe extends javax.swing.JFrame {
         initComponents();
         ((AbstractDocument) txFCode.getDocument()).setDocumentFilter(new HandlerComponent.LimitInput(4));
         RMDialog = new RecipeMaterial(this, true);
+        RLDialog = new RecipeList(this, true);
     }
     
     public void hitungCost() {
@@ -50,6 +52,34 @@ public class Recipe extends javax.swing.JFrame {
             }
             lblSPrice.setText(""+SPrice);
         }
+    }
+    protected void lookupFBCode() {
+        SQL = "SELECT material.mCode, material.deskripsi, recipe.qty, material.harga \n"
+            + "FROM recipe, material, foodbeve \n"
+            + "WHERE recipe.fbCode ='"+txFCode.getText()+"' \n"
+            + "AND recipe.fbCode = foodbeve.fbCode \n"
+            + "AND recipe.mCode = material.mCode \n"
+            + "ORDER BY recipe.mCode ASC"; 
+            try {
+                hComp = new HandlerComponent();
+                tabmode = hComp.initTable(tblMateria, SQL, db, tabmode); 
+                System.out.println("Resep "+txFCode.getText()+" : description here...");
+                txFCode.setEnabled(false);
+                lblSelectedCode.setText(txFCode.getText());
+                if(db.searchIndexDB(txFCode.getText(), "fbCode", "foodbeve") != -1)
+                    updateState = true;
+                if(updateState) {
+                    SQL = "SELECT * FROM foodbeve \n"
+                        + "WHERE fbCode ='"+txFCode.getText()+"'";
+                    RSET = db.getSQL(SQL);
+                    RSET.first();
+                    txDesc.setText(RSET.getString(2));
+                    txPrice.setText(String.valueOf(RSET.getDouble(3)));  
+                    hitungCost();
+                }
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -79,6 +109,7 @@ public class Recipe extends javax.swing.JFrame {
         lblSelectedCode = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         lblSPrice = new javax.swing.JLabel();
+        btnList = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("MakanDong | Recipe Form");
@@ -141,11 +172,6 @@ public class Recipe extends javax.swing.JFrame {
         tblMateria.setShowVerticalLines(false);
         tblMateria.getTableHeader().setResizingAllowed(false);
         tblMateria.getTableHeader().setReorderingAllowed(false);
-        tblMateria.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-            public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                tblMateriaPropertyChange(evt);
-            }
-        });
         jScrollPane1.setViewportView(tblMateria);
         if (tblMateria.getColumnModel().getColumnCount() > 0) {
             tblMateria.getColumnModel().getColumn(0).setMinWidth(20);
@@ -226,26 +252,39 @@ public class Recipe extends javax.swing.JFrame {
         lblSPrice.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lblSPrice.setText(SPrice.toString());
 
+        btnList.setText("List");
+        btnList.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnListActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(32, 32, 32)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel6)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(sugestPrice)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(lblSPrice))
-                    .addComponent(jLabel2)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txPrice, javax.swing.GroupLayout.DEFAULT_SIZE, 147, Short.MAX_VALUE)
                     .addComponent(txDesc, javax.swing.GroupLayout.DEFAULT_SIZE, 147, Short.MAX_VALUE)
-                    .addComponent(jLabel1)
-                    .addComponent(txFCode, javax.swing.GroupLayout.DEFAULT_SIZE, 147, Short.MAX_VALUE)
-                    .addComponent(jLabel5)
-                    .addComponent(btnConfirmRecipe, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                    .addComponent(btnConfirmRecipe, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(txFCode, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnList, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel6)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(sugestPrice)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(lblSPrice))
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel5))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(btnAddMateria)
@@ -277,10 +316,11 @@ public class Recipe extends javax.swing.JFrame {
                         .addComponent(btnClearRecipe)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblSelectedDescription, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(txFCode)
-                    .addComponent(lblSelectedCode, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
+                    .addComponent(lblSelectedDescription, javax.swing.GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE)
+                    .addComponent(lblSelectedCode, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnList, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txFCode))
+                .addGap(16, 16, 16)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
@@ -303,7 +343,7 @@ public class Recipe extends javax.swing.JFrame {
                         .addComponent(btnAddMateria)
                         .addComponent(btnRemoveMateria))
                     .addComponent(btnConfirmRecipe))
-                .addContainerGap(32, Short.MAX_VALUE))
+                .addGap(32, 32, 32))
         );
 
         bindingGroup.bind();
@@ -323,52 +363,36 @@ public class Recipe extends javax.swing.JFrame {
 //            FrmInvent.setVisible(true);            
 //        }
         RMDialog.setVisible(true);
-        addMateriaToTable(RMDialog.DATA);
+        if(RMDialog.DATA == null) {
+            System.out.println("Gak jadi masukin");
+            RMDialog.resetAll();
+        }else {
+            addMateriaToTable(RMDialog.DATA);
+            RMDialog.dispose();
+            RMDialog.resetAll();
+        }
     }//GEN-LAST:event_btnAddMateriaActionPerformed
 
     private void btnClearRecipeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearRecipeActionPerformed
         tabmode = (DefaultTableModel) tblMateria.getModel();
         tblMateria.setModel(tabmode);
         tabmode.setRowCount(0);
-        txFCode.setText("");
+        txFCode.setEnabled(true);
+        txFCode.setText("\r");
         lblSelectedCode.setText("");
         lblSelectedDescription.setText("");
         txDesc.setText("");
         txPrice.setText("");
-        txFCode.setEnabled(true);
         txDesc.setEnabled(true);
         txPrice.setEnabled(true);
+        btnList.setEnabled(true);
         updateState = false;
     }//GEN-LAST:event_btnClearRecipeActionPerformed
 
     private void txFCodeKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txFCodeKeyTyped
         char vchar = evt.getKeyChar();
         if(vchar == KeyEvent.VK_ENTER) {            
-            SQL = "SELECT material.mCode, material.deskripsi, recipe.qty, material.harga \n"
-                + "FROM recipe, material, foodbeve \n"
-                + "WHERE recipe.fbCode ='"+txFCode.getText()+"' \n"
-                + "AND recipe.fbCode = foodbeve.fbCode \n"
-                + "AND recipe.mCode = material.mCode ";
-            try {
-                hComp = new HandlerComponent();
-                tabmode = hComp.initTable(tblMateria, SQL, db, tabmode); 
-                System.out.println("Resep "+txFCode.getText()+" : description here...");
-                txFCode.setEnabled(false);
-                lblSelectedCode.setText(txFCode.getText());
-                if(db.searchIndexDB(txFCode.getText(), "fbCode", "foodbeve") != -1)
-                    updateState = true;
-                if(updateState) {
-                    SQL = "SELECT * FROM foodbeve \n"
-                        + "WHERE fbCode ='"+txFCode.getText()+"'";
-                    RSET = db.getSQL(SQL);
-                    RSET.first();
-                    txDesc.setText(RSET.getString(2));
-                    txPrice.setText(String.valueOf(RSET.getDouble(3)));  
-                    hitungCost();
-                }
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
+            lookupFBCode();
         }        
     }//GEN-LAST:event_txFCodeKeyTyped
 
@@ -380,6 +404,7 @@ public class Recipe extends javax.swing.JFrame {
 
     private void txDescKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txDescKeyTyped
         if(evt.getKeyChar() == KeyEvent.VK_ENTER) {
+            lookupFBCode();
             txDesc.setEnabled(false);
         }
     }//GEN-LAST:event_txDescKeyTyped
@@ -415,16 +440,13 @@ public class Recipe extends javax.swing.JFrame {
                     ex.printStackTrace();
                 }
                 System.out.println("Yah di Update dong");
+                RLDialog.initTableView();
                 updateState = false;
             }
         } else {
             System.out.println("Oke data baruuu");
         }
     }//GEN-LAST:event_btnConfirmRecipeActionPerformed
-
-    private void tblMateriaPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_tblMateriaPropertyChange
-        
-    }//GEN-LAST:event_tblMateriaPropertyChange
 
     private void txPriceKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txPriceKeyTyped
         char vchar = evt.getKeyChar();
@@ -434,6 +456,20 @@ public class Recipe extends javax.swing.JFrame {
             || (vchar == KeyEvent.VK_PERIOD))
             evt.consume();
     }//GEN-LAST:event_txPriceKeyTyped
+
+    private void btnListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListActionPerformed
+        RLDialog.setVisible(true);
+        if(RLDialog.DATA == null) {
+            System.out.println("Gak jadi masukin");            
+        }else {            
+            txFCode.setText(RLDialog.DATA[0].toString());
+            lookupFBCode();
+            txFCode.setEnabled(false);
+            btnList.setEnabled(false);
+        }
+        RLDialog.dispose();
+        RLDialog.initTableView();
+    }//GEN-LAST:event_btnListActionPerformed
 
     public void addMateriaToTable(Object[] DATA){
         tabmode.addRow(DATA);
@@ -478,6 +514,7 @@ public class Recipe extends javax.swing.JFrame {
     private javax.swing.JButton btnAddMateria;
     private javax.swing.JButton btnClearRecipe;
     private javax.swing.JButton btnConfirmRecipe;
+    private javax.swing.JButton btnList;
     private javax.swing.JButton btnRemoveMateria;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

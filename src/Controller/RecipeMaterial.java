@@ -27,6 +27,10 @@ public class RecipeMaterial extends javax.swing.JDialog {
     public RecipeMaterial(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        initViewTable();
+        this.setLocationRelativeTo(super.rootPane);
+    }
+    void initViewTable() {
         try {
             String SQL = "SELECT mCode, Deskripsi, Harga From material";
             hComp = new HandlerComponent();
@@ -34,9 +38,12 @@ public class RecipeMaterial extends javax.swing.JDialog {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        this.setLocationRelativeTo(super.rootPane);
     }
-
+    void resetAll(){
+        txPrice.setText(""); txDesc.setText(""); 
+        txMCode.setText(""); txQty.setText("");
+        tblDialMat.clearSelection();
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
