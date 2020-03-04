@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="REP_SUPPLIER" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" whenResourceMissingType="Empty" uuid="e21b7b94-26e8-4369-af7b-781cf9bd3f81">
 	<property name="ireport.zoom" value="1.6528925619834847"/>
-	<property name="ireport.x" value="173"/>
-	<property name="ireport.y" value="405"/>
+	<property name="ireport.x" value="305"/>
+	<property name="ireport.y" value="40"/>
+	<style name="AlternateColor">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 1]]></conditionExpression>
+			<style backcolor="#CCFFFF"/>
+		</conditionalStyle>
+	</style>
 	<queryString language="SQL">
 		<![CDATA[SELECT
      supplier.`sCode` AS Kode_Supplier,
@@ -154,7 +160,7 @@ FROM
 	<detail>
 		<band height="43" splitType="Stretch">
 			<rectangle>
-				<reportElement x="42" y="0" width="513" height="40" forecolor="#FFFFFF" backcolor="#CCFFFF" uuid="5cae3e27-7606-4104-82ac-c01cdce86ac8"/>
+				<reportElement style="AlternateColor" x="42" y="0" width="513" height="40" forecolor="#FFFFFF" uuid="5cae3e27-7606-4104-82ac-c01cdce86ac8"/>
 			</rectangle>
 			<textField>
 				<reportElement x="53" y="0" width="43" height="40" forecolor="#000000" uuid="056a0ce7-fad8-46d2-9837-208ec5f5285d"/>
@@ -190,7 +196,7 @@ FROM
 			<line>
 				<reportElement x="292" y="0" width="6" height="43" forecolor="#FFFFFF" uuid="e949e1b0-4fc3-48bd-b147-d6f00d10f583"/>
 			</line>
-			<line>
+			<line direction="BottomUp">
 				<reportElement x="405" y="0" width="6" height="43" forecolor="#FFFFFF" uuid="a33c38eb-668c-4a80-bd47-6f1ef256b4d3"/>
 			</line>
 		</band>
