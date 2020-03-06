@@ -8,12 +8,14 @@ package Controller;
 import Model.*;
 import Model.HandlerComponent.LimitInput;
 import com.sun.glass.events.KeyEvent;
+import java.awt.Image;
 
 import java.awt.event.ItemEvent;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import javax.swing.ImageIcon;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.AbstractDocument;
 /**
@@ -28,11 +30,21 @@ public class Order extends javax.swing.JFrame {
     LimitInput LI;
     DefaultTableModel tbModOrder;
     HandlerComponent handlerComp;
-    
+    ImageIcon[] food = new ImageIcon[16], beve = new ImageIcon[5];
     public String SQL;
     public static String[] DATAF = new String[50], DATAB = new String[50];
     public int noOrder=1;
     public static Double tCost=0.0;
+    
+    public static String[] 
+        imgFood = {"/Img/nasiPutih.jpg","/Img/ayamGoreng.jpg",
+            "/Img/ayamBakar.jpg","/Img/leleGoreng.jpg","/Img/leleBakar.jpg",
+            "/Img/masGoreng.jpg","/Img/masBakar.jpg","/Img/bawalGoreng.jpg",
+            "/Img/bawalBakar.jpg","/Img/atiAmpela.jpg","/Img/kulitAyam.jpg",
+            "/Img/cekerAyam.jpg","/Img/terongGoreng.jpg","/Img/tahuTempe.jpg",
+            "/Img/cahKangkung.jpg","/Img/ususAyam.jpg"},
+        imgBeve = {"/Img/esTeh.jpg","/Img/esJeruk.jpg","/Img/aquaBotol.jpg",
+            "/Img/freshTea.jpg","/Img/tehBotol.jpg"};
     /**
      * Creates new form Order
      */
@@ -42,6 +54,7 @@ public class Order extends javax.swing.JFrame {
         dtChooser.setDateFormat(df);
         dtChooser.setText(date.getYear()+"-"+(date.getMonth()+1)+"-"+date.getDate());
         ((AbstractDocument) txOrderCode.getDocument()).setDocumentFilter(new HandlerComponent.LimitInput(4));
+        gambarMenu();
         try {
             SQL = "SELECT *\n"+
                   "FROM foodbeve \n"+
@@ -70,6 +83,15 @@ public class Order extends javax.swing.JFrame {
             lblTotalCost.setText(""+tCost);
         }
     }
+    public void gambarMenu() {
+        for(int x=0; x<16; x++) {
+            food[x] = new ImageIcon(new ImageIcon(getClass().getResource(imgFood[x])).getImage().getScaledInstance(fdContainer.getWidth(), fdContainer.getHeight(), Image.SCALE_SMOOTH));
+        }
+        for(int x=0; x<5; x++) {
+            beve[x] = new ImageIcon(new ImageIcon(getClass().getResource(imgBeve[x])).getImage().getScaledInstance(fdContainer.getWidth(), fdContainer.getHeight(), Image.SCALE_SMOOTH));
+        }
+        fdContainer.setIcon(food[0]); bvContainer.setIcon(beve[0]);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -79,6 +101,7 @@ public class Order extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        orderType = new javax.swing.ButtonGroup();
         pnlFood = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         txQtyFood = new javax.swing.JTextField();
@@ -88,6 +111,7 @@ public class Order extends javax.swing.JFrame {
         btnAddFood = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
         lPriceFood = new javax.swing.JLabel();
+        fdContainer = new javax.swing.JLabel();
         pnlDrink = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         cbMenuBeve = new javax.swing.JComboBox<>();
@@ -97,6 +121,7 @@ public class Order extends javax.swing.JFrame {
         txQtyBeve = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         lPriceBeve = new javax.swing.JLabel();
+        bvContainer = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         txOrderCode = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -111,6 +136,11 @@ public class Order extends javax.swing.JFrame {
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         lblTotalCost = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        normal = new javax.swing.JRadioButton();
+        catering = new javax.swing.JRadioButton();
+        jLabel15 = new javax.swing.JLabel();
+        txDownPayment = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -123,11 +153,6 @@ public class Order extends javax.swing.JFrame {
 
         txQtyFood.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         txQtyFood.setText("0");
-        txQtyFood.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txQtyFoodActionPerformed(evt);
-            }
-        });
         txQtyFood.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txQtyFoodKeyTyped(evt);
@@ -164,49 +189,55 @@ public class Order extends javax.swing.JFrame {
         lPriceFood.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lPriceFood.setText("5000.0");
 
+        fdContainer.setIconTextGap(0);
+
         javax.swing.GroupLayout pnlFoodLayout = new javax.swing.GroupLayout(pnlFood);
         pnlFood.setLayout(pnlFoodLayout);
         pnlFoodLayout.setHorizontalGroup(
             pnlFoodLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlFoodLayout.createSequentialGroup()
-                .addGap(16, 16, 16)
-                .addGroup(pnlFoodLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addContainerGap(13, Short.MAX_VALUE)
+                .addGroup(pnlFoodLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(pnlFoodLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(pnlFoodLayout.createSequentialGroup()
-                            .addGap(2, 2, 2)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(18, 18, 18)
-                            .addComponent(txQtyFood, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnAddFood))
-                        .addComponent(cbMenuFood, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlFoodLayout.createSequentialGroup()
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(18, 18, 18)
-                            .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(lPriceFood, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(16, Short.MAX_VALUE))
+                    .addGroup(pnlFoodLayout.createSequentialGroup()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
+                        .addComponent(txQtyFood, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnAddFood, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbMenuFood, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlFoodLayout.createSequentialGroup()
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lPriceFood, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(fdContainer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(13, Short.MAX_VALUE))
         );
         pnlFoodLayout.setVerticalGroup(
             pnlFoodLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlFoodLayout.createSequentialGroup()
                 .addGap(16, 16, 16)
                 .addComponent(jLabel5)
-                .addGap(32, 32, 32)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(fdContainer, javax.swing.GroupLayout.DEFAULT_SIZE, 81, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlFoodLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel8)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lPriceFood))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(6, 6, 6)
                 .addComponent(cbMenuFood, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pnlFoodLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(txQtyFood, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnAddFood))
-                .addContainerGap(60, Short.MAX_VALUE))
+                .addGap(6, 6, 6)
+                .addGroup(pnlFoodLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlFoodLayout.createSequentialGroup()
+                        .addGap(3, 3, 3)
+                        .addComponent(jLabel1))
+                    .addGroup(pnlFoodLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txQtyFood, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnAddFood)))
+                .addContainerGap())
         );
 
         pnlDrink.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
@@ -256,11 +287,12 @@ public class Order extends javax.swing.JFrame {
         pnlDrink.setLayout(pnlDrinkLayout);
         pnlDrinkLayout.setHorizontalGroup(
             pnlDrinkLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlDrinkLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlDrinkLayout.createSequentialGroup()
                 .addGap(16, 16, 16)
-                .addGroup(pnlDrinkLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(cbMenuBeve, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(pnlDrinkLayout.createSequentialGroup()
+                .addGroup(pnlDrinkLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(bvContainer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cbMenuBeve, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlDrinkLayout.createSequentialGroup()
                         .addGroup(pnlDrinkLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel6)
                             .addGroup(pnlDrinkLayout.createSequentialGroup()
@@ -270,7 +302,7 @@ public class Order extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(lPriceBeve, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 20, Short.MAX_VALUE))
-                    .addGroup(pnlDrinkLayout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlDrinkLayout.createSequentialGroup()
                         .addGap(2, 2, 2)
                         .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
@@ -284,7 +316,9 @@ public class Order extends javax.swing.JFrame {
             .addGroup(pnlDrinkLayout.createSequentialGroup()
                 .addGap(16, 16, 16)
                 .addComponent(jLabel6)
-                .addGap(32, 32, 32)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(bvContainer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlDrinkLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lMenuBeve)
                     .addComponent(jLabel2)
@@ -296,7 +330,7 @@ public class Order extends javax.swing.JFrame {
                     .addComponent(jLabel7)
                     .addComponent(txQtyBeve, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnAddBeve))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -422,6 +456,7 @@ public class Order extends javax.swing.JFrame {
     jLabel11.setText("Order Name");
 
     txOrderName.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+    txOrderName.setText("Lorem Ipsum");
 
     jLabel12.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
     jLabel12.setText("Total Cost");
@@ -435,48 +470,82 @@ public class Order extends javax.swing.JFrame {
     lblTotalCost.setMinimumSize(new java.awt.Dimension(90, 16));
     lblTotalCost.setPreferredSize(new java.awt.Dimension(90, 16));
 
+    jLabel14.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+    jLabel14.setText("Order Type");
+
+    orderType.add(normal);
+    normal.setSelected(true);
+    normal.setText("Normal");
+    normal.addChangeListener(new javax.swing.event.ChangeListener() {
+        public void stateChanged(javax.swing.event.ChangeEvent evt) {
+            normalStateChanged(evt);
+        }
+    });
+
+    orderType.add(catering);
+    catering.setText("Catering");
+    catering.addChangeListener(new javax.swing.event.ChangeListener() {
+        public void stateChanged(javax.swing.event.ChangeEvent evt) {
+            cateringStateChanged(evt);
+        }
+    });
+
+    jLabel15.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+    jLabel15.setText("Down Payment");
+
+    txDownPayment.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+    txDownPayment.setText("0.0");
+    txDownPayment.setEnabled(false);
+    txDownPayment.addKeyListener(new java.awt.event.KeyAdapter() {
+        public void keyTyped(java.awt.event.KeyEvent evt) {
+            txDownPaymentKeyTyped(evt);
+        }
+    });
+
     javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
     getContentPane().setLayout(layout);
     layout.setHorizontalGroup(
         layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+            .addGap(32, 32, 32)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
-                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnRemoveItem))
+                    .addComponent(jLabel10)
+                    .addGap(0, 69, Short.MAX_VALUE))
                 .addGroup(layout.createSequentialGroup()
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(32, 32, 32)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(jLabel10)
-                                    .addGap(0, 0, Short.MAX_VALUE))
-                                .addGroup(layout.createSequentialGroup()
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel4)
-                                        .addComponent(jLabel9)
-                                        .addComponent(jLabel11)
-                                        .addComponent(txOrderCode, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                            .addComponent(dtChooser, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                                            .addComponent(txOrderName, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE))
-                                        .addComponent(jLabel12)
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(lblTotalCost, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE))))
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(59, 59, 59)
-                            .addComponent(btnConfirmItem)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                            .addComponent(pnlFood, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(pnlDrink, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(txDownPayment, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel9)
+                            .addComponent(jLabel11)
+                            .addComponent(txOrderCode, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(dtChooser, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                                .addComponent(txOrderName, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE))
+                            .addComponent(jLabel12)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lblTotalCost, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(27, 27, 27)
+                                .addComponent(btnConfirmItem))
+                            .addComponent(jLabel14)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(normal)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(catering))
+                            .addComponent(jLabel15)))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(pnlFood, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(pnlDrink, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addComponent(btnRemoveItem, javax.swing.GroupLayout.Alignment.TRAILING))
             .addGap(32, 32, 32))
     );
     layout.setVerticalGroup(
@@ -491,29 +560,41 @@ public class Order extends javax.swing.JFrame {
                     .addComponent(jLabel4)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                     .addComponent(txOrderCode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(18, 18, 18)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jLabel14)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(normal)
+                        .addComponent(catering))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                     .addComponent(jLabel11)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                     .addComponent(txOrderName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(18, 18, 18)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                     .addComponent(jLabel9)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                     .addComponent(dtChooser, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addComponent(pnlDrink, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGap(15, 15, 15)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
+                    .addGap(4, 4, 4)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnRemoveItem))
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(11, 11, 11)
+                    .addComponent(jLabel15)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txDownPayment, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                     .addComponent(jLabel12)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel13)
                         .addComponent(lblTotalCost, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGap(27, 27, 27)
-                    .addComponent(btnConfirmItem))
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(btnRemoveItem)
-            .addContainerGap(22, Short.MAX_VALUE))
+                    .addComponent(btnConfirmItem)))
+            .addContainerGap(21, Short.MAX_VALUE))
     );
 
     pack();
@@ -532,7 +613,7 @@ public class Order extends javax.swing.JFrame {
             } catch (SQLException ex) {
                 ex.printStackTrace();
             }
-            
+            fdContainer.setIcon(food[cbMenuFood.getSelectedIndex()]);
        }
     }//GEN-LAST:event_cbMenuFoodItemStateChanged
 
@@ -549,7 +630,7 @@ public class Order extends javax.swing.JFrame {
             } catch (SQLException ex) {
                 ex.printStackTrace();
             }
-            
+            bvContainer.setIcon(beve[cbMenuBeve.getSelectedIndex()]);
        }
     }//GEN-LAST:event_cbMenuBeveItemStateChanged
 
@@ -599,18 +680,14 @@ public class Order extends javax.swing.JFrame {
         
     }//GEN-LAST:event_btnRemoveItemActionPerformed
 
-    private void txQtyFoodActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txQtyFoodActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txQtyFoodActionPerformed
-
     private void btnConfirmItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmItemActionPerformed
         SQL = "INSERT INTO orderhead VALUES(?, ?, ?, ?, ?, ?)";
         Object[] CONT_ORDER = new Object[6], CONT_DETAIL = new Object[3];
         CONT_ORDER[0] = txOrderCode.getText().trim();
-        CONT_ORDER[1] = "Normal";
+        CONT_ORDER[1] = (normal.isSelected()) ? "Normal" : "Cathering";
         CONT_ORDER[2] = txOrderName.getText().trim();
         CONT_ORDER[3] = dtChooser.getText();
-        CONT_ORDER[4] = 0.0;
+        CONT_ORDER[4] = (catering.isSelected()) ? Double.valueOf(txDownPayment.getText()) : 0.0;
         CONT_ORDER[5] = tCost;
         try {
             db.setSTMT(SQL);
@@ -657,6 +734,27 @@ public class Order extends javax.swing.JFrame {
             evt.consume();
     }//GEN-LAST:event_txQtyBeveKeyTyped
 
+    private void txDownPaymentKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txDownPaymentKeyTyped
+        char vchar = evt.getKeyChar();
+        if(!(Character.isDigit(vchar))
+            || (vchar == KeyEvent.VK_BACKSPACE)
+            || (vchar == KeyEvent.VK_DELETE)
+            || (vchar == KeyEvent.VK_PERIOD))
+            evt.consume();
+    }//GEN-LAST:event_txDownPaymentKeyTyped
+
+    private void cateringStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_cateringStateChanged
+        if (catering.isSelected())
+            txDownPayment.setEnabled(true);
+    }//GEN-LAST:event_cateringStateChanged
+
+    private void normalStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_normalStateChanged
+        if(normal.isSelected()) {
+            txDownPayment.setText("0.0");
+            txDownPayment.setEnabled(false);            
+        }
+    }//GEN-LAST:event_normalStateChanged
+
     /**
      * @param args the command line arguments
      */
@@ -697,14 +795,19 @@ public class Order extends javax.swing.JFrame {
     private javax.swing.JButton btnAddFood;
     private javax.swing.JButton btnConfirmItem;
     private javax.swing.JButton btnRemoveItem;
+    private javax.swing.JLabel bvContainer;
+    private javax.swing.JRadioButton catering;
     private javax.swing.JComboBox<String> cbMenuBeve;
     private javax.swing.JComboBox<String> cbMenuFood;
     private datechooser.beans.DateChooserCombo dtChooser;
+    private javax.swing.JLabel fdContainer;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -718,9 +821,12 @@ public class Order extends javax.swing.JFrame {
     private javax.swing.JLabel lPriceBeve;
     private javax.swing.JLabel lPriceFood;
     private javax.swing.JLabel lblTotalCost;
+    private javax.swing.JRadioButton normal;
+    private javax.swing.ButtonGroup orderType;
     private javax.swing.JPanel pnlDrink;
     private javax.swing.JPanel pnlFood;
     private javax.swing.JTable tblOrder;
+    private javax.swing.JTextField txDownPayment;
     private javax.swing.JTextField txOrderCode;
     private javax.swing.JTextField txOrderName;
     private javax.swing.JTextField txQtyBeve;
