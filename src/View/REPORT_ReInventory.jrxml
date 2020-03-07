@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="subReport" language="groovy" pageWidth="595" pageHeight="842" whenNoDataType="BlankPage" columnWidth="585" leftMargin="5" rightMargin="5" topMargin="5" bottomMargin="0" whenResourceMissingType="Empty" uuid="dd687c6b-31d4-4c19-9f64-279af4dfc925">
+	<property name="ireport.zoom" value="3.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="AlternateColor" backcolor="#EFEFEF">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2==1]]></conditionExpression>
+			<style backcolor="#F2F2F2"/>
+		</conditionalStyle>
+	</style>
+	<parameter name="supplyCode" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="Tahun" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[2020]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     sr.`date` AS Tanggal,
+     m.`Deskripsi` AS Produk,
+	 sr.`Qty` AS Jumlah,
+     m.`Satuan` AS Satuan,
+     m.`Harga` AS Harga,
+	 IF(sr.`Qty` IS NULL, 0, (sr.`Qty` * m.`Harga`)) AS SubTotal
+FROM
+     supplyrecord AS sr
+LEFT OUTER JOIN supplier s
+	ON sr.sCode = s.sCode
+LEFT OUTER JOIN material m
+	ON s.mCode = m.mCode
+WHERE sr.sCode = $P{supplyCode} AND YEAR(sr.Date) = $P{Tahun} ORDER BY sr.date]]>
+	</queryString>
+	<field name="Tanggal" class="java.sql.Date"/>
+	<field name="Produk" class="java.lang.String"/>
+	<field name="Jumlah" class="java.lang.Integer"/>
+	<field name="Satuan" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Harga" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="SubTotal" class="java.lang.Double"/>
+	<variable name="SubTotal_1" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{SubTotal}]]></variableExpression>
+	</variable>
+	<columnHeader>
+		<band height="20">
+			<staticText>
+				<reportElement mode="Opaque" x="23" y="0" width="60" height="20" forecolor="#FFFFFF" backcolor="#666666" uuid="69458d59-54e1-4685-b95a-1a505388e9fc"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Segoe UI"/>
+					<paragraph leftIndent="3"/>
+				</textElement>
+				<text><![CDATA[Tanggal]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="175" y="0" width="32" height="20" forecolor="#FFFFFF" backcolor="#666666" uuid="107740e7-6c46-4735-ad86-962c9aa4311c"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Segoe UI"/>
+					<paragraph leftIndent="3"/>
+				</textElement>
+				<text><![CDATA[Qty]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="207" y="0" width="51" height="20" forecolor="#FFFFFF" backcolor="#666666" uuid="06332f24-fa82-4803-abef-036d71ed0c65"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Segoe UI"/>
+					<paragraph leftIndent="3"/>
+				</textElement>
+				<text><![CDATA[Satuan]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="258" y="0" width="64" height="20" forecolor="#FFFFFF" backcolor="#666666" uuid="71e004a0-0af3-4664-8053-7ee19af984d9"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Segoe UI"/>
+					<paragraph leftIndent="3"/>
+				</textElement>
+				<text><![CDATA[Harga]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="322" y="0" width="92" height="20" forecolor="#FFFFFF" backcolor="#666666" uuid="51367910-504e-4e40-a70c-4ad18b393ae8"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Segoe UI"/>
+					<paragraph leftIndent="3"/>
+				</textElement>
+				<text><![CDATA[SubTotal]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="23" height="20" forecolor="#FFFFFF" backcolor="#666666" uuid="f99083d8-9350-4af4-a01f-c6eb32f6ce52"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Segoe UI"/>
+					<paragraph leftIndent="3"/>
+				</textElement>
+				<text><![CDATA[No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="83" y="0" width="92" height="20" forecolor="#FFFFFF" backcolor="#666666" uuid="18b5fea5-c356-4a80-bfe6-fb92773d395d"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Segoe UI"/>
+				</textElement>
+				<text><![CDATA[Produk]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField pattern="dd/MM/yyyy">
+				<reportElement style="AlternateColor" mode="Opaque" x="23" y="0" width="60" height="20" uuid="d6d1db75-96b8-4b3f-8c9a-ee6b228fdcc7"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Segoe UI"/>
+					<paragraph leftIndent="3"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Tanggal}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="AlternateColor" mode="Opaque" x="175" y="0" width="32" height="20" uuid="aabe7dda-4618-4dac-85c8-58ed4fe1768c"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Segoe UI"/>
+					<paragraph leftIndent="3"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Jumlah}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="AlternateColor" mode="Opaque" x="207" y="0" width="51" height="20" uuid="48619a39-4b57-4413-a094-8c5aa36228d1"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Segoe UI"/>
+					<paragraph leftIndent="3"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Satuan}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0">
+				<reportElement style="AlternateColor" mode="Opaque" x="258" y="0" width="64" height="20" uuid="f5a7cd0e-d365-47d5-8af5-240a611f5719"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Segoe UI"/>
+					<paragraph leftIndent="3"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Harga}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0">
+				<reportElement style="AlternateColor" mode="Opaque" x="322" y="0" width="92" height="20" uuid="336a59af-754f-4852-9e71-2cd8d9507f65"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Segoe UI"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{SubTotal}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="AlternateColor" mode="Opaque" x="0" y="0" width="23" height="20" uuid="8e762595-33c3-431e-aead-1cd5aa66a947"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Segoe UI"/>
+					<paragraph leftIndent="3"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{COLUMN_COUNT}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="AlternateColor" mode="Opaque" x="83" y="0" width="92" height="20" uuid="3453aa18-2e3f-47d6-a623-18bceac1b111"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Segoe UI"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Produk}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="0" width="414" height="1" uuid="2da0dc86-c245-40c0-b039-f0d248cc2cbb"/>
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+		</band>
+	</detail>
+	<summary>
+		<band height="20">
+			<textField pattern="###0">
+				<reportElement x="322" y="0" width="92" height="20" uuid="fc59872a-9e44-4d18-bff4-9f8086956c5a"/>
+				<textElement>
+					<font fontName="Segoe UI Semibold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{SubTotal_1}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="294" y="0" width="28" height="20" uuid="0e086285-81d3-4d56-8ff2-d89cd00e0136"/>
+				<textElement textAlignment="Right">
+					<font isItalic="true"/>
+					<paragraph rightIndent="5"/>
+				</textElement>
+				<text><![CDATA[Rp.]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>
