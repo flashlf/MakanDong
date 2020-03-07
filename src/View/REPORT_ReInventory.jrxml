@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="subReport" language="groovy" pageWidth="595" pageHeight="842" whenNoDataType="BlankPage" columnWidth="585" leftMargin="5" rightMargin="5" topMargin="5" bottomMargin="0" whenResourceMissingType="Empty" uuid="dd687c6b-31d4-4c19-9f64-279af4dfc925">
-	<property name="ireport.zoom" value="3.0"/>
+	<property name="ireport.zoom" value="1.5394743546921197"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<style name="AlternateColor" backcolor="#EFEFEF">
@@ -47,57 +47,57 @@ WHERE sr.sCode = $P{supplyCode} AND YEAR(sr.Date) = $P{Tahun} ORDER BY sr.date]]
 	<columnHeader>
 		<band height="20">
 			<staticText>
-				<reportElement mode="Opaque" x="23" y="0" width="60" height="20" forecolor="#FFFFFF" backcolor="#666666" uuid="69458d59-54e1-4685-b95a-1a505388e9fc"/>
+				<reportElement mode="Opaque" x="23" y="0" width="60" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="69458d59-54e1-4685-b95a-1a505388e9fc"/>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Segoe UI"/>
+					<font fontName="Segoe UI" isBold="true"/>
 					<paragraph leftIndent="3"/>
 				</textElement>
 				<text><![CDATA[Tanggal]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="175" y="0" width="32" height="20" forecolor="#FFFFFF" backcolor="#666666" uuid="107740e7-6c46-4735-ad86-962c9aa4311c"/>
+				<reportElement mode="Opaque" x="175" y="0" width="32" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="107740e7-6c46-4735-ad86-962c9aa4311c"/>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Segoe UI"/>
+					<font fontName="Segoe UI" isBold="true"/>
 					<paragraph leftIndent="3"/>
 				</textElement>
 				<text><![CDATA[Qty]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="207" y="0" width="51" height="20" forecolor="#FFFFFF" backcolor="#666666" uuid="06332f24-fa82-4803-abef-036d71ed0c65"/>
+				<reportElement mode="Opaque" x="207" y="0" width="51" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="06332f24-fa82-4803-abef-036d71ed0c65"/>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Segoe UI"/>
+					<font fontName="Segoe UI" isBold="true"/>
 					<paragraph leftIndent="3"/>
 				</textElement>
 				<text><![CDATA[Satuan]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="258" y="0" width="64" height="20" forecolor="#FFFFFF" backcolor="#666666" uuid="71e004a0-0af3-4664-8053-7ee19af984d9"/>
+				<reportElement mode="Opaque" x="258" y="0" width="64" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="71e004a0-0af3-4664-8053-7ee19af984d9"/>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Segoe UI"/>
+					<font fontName="Segoe UI" isBold="true"/>
 					<paragraph leftIndent="3"/>
 				</textElement>
 				<text><![CDATA[Harga]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="322" y="0" width="92" height="20" forecolor="#FFFFFF" backcolor="#666666" uuid="51367910-504e-4e40-a70c-4ad18b393ae8"/>
+				<reportElement mode="Opaque" x="322" y="0" width="92" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="51367910-504e-4e40-a70c-4ad18b393ae8"/>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Segoe UI"/>
+					<font fontName="Segoe UI" isBold="true"/>
 					<paragraph leftIndent="3"/>
 				</textElement>
 				<text><![CDATA[SubTotal]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="0" y="0" width="23" height="20" forecolor="#FFFFFF" backcolor="#666666" uuid="f99083d8-9350-4af4-a01f-c6eb32f6ce52"/>
+				<reportElement mode="Opaque" x="0" y="0" width="23" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="f99083d8-9350-4af4-a01f-c6eb32f6ce52"/>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Segoe UI"/>
+					<font fontName="Segoe UI" isBold="true"/>
 					<paragraph leftIndent="3"/>
 				</textElement>
 				<text><![CDATA[No]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="83" y="0" width="92" height="20" forecolor="#FFFFFF" backcolor="#666666" uuid="18b5fea5-c356-4a80-bfe6-fb92773d395d"/>
+				<reportElement mode="Opaque" x="83" y="0" width="92" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="18b5fea5-c356-4a80-bfe6-fb92773d395d"/>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Segoe UI"/>
+					<font fontName="Segoe UI" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Produk]]></text>
 			</staticText>
@@ -170,14 +170,14 @@ WHERE sr.sCode = $P{supplyCode} AND YEAR(sr.Date) = $P{Tahun} ORDER BY sr.date]]
 	<summary>
 		<band height="20">
 			<textField pattern="###0">
-				<reportElement x="322" y="0" width="92" height="20" uuid="fc59872a-9e44-4d18-bff4-9f8086956c5a"/>
+				<reportElement mode="Opaque" x="322" y="0" width="92" height="20" forecolor="#FFFFFF" backcolor="#333333" uuid="fc59872a-9e44-4d18-bff4-9f8086956c5a"/>
 				<textElement>
 					<font fontName="Segoe UI Semibold"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{SubTotal_1}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="294" y="0" width="28" height="20" uuid="0e086285-81d3-4d56-8ff2-d89cd00e0136"/>
+				<reportElement mode="Opaque" x="0" y="0" width="322" height="20" forecolor="#FFFFFF" backcolor="#333333" uuid="0e086285-81d3-4d56-8ff2-d89cd00e0136"/>
 				<textElement textAlignment="Right">
 					<font isItalic="true"/>
 					<paragraph rightIndent="5"/>

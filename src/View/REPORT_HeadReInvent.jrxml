@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="HeadRestockInventory" language="groovy" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" whenResourceMissingType="Empty" uuid="a64fab15-1338-439d-afcb-a6ea95ade6aa">
-	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.zoom" value="1.156629868288595"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="688"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["F:\\IMAM\\RPL\\PEMROGRAMMAN VISUAL\\MakanDong\\src\\View\\"]]></defaultValueExpression>
 	</parameter>
@@ -69,7 +69,7 @@ FROM
 		</band>
 	</pageHeader>
 	<columnHeader>
-		<band height="52">
+		<band height="44">
 			<printWhenExpression><![CDATA[$V{PAGE_NUMBER}==1]]></printWhenExpression>
 			<staticText>
 				<reportElement x="46" y="0" width="88" height="20" uuid="c0b1e427-df36-4b40-9149-30f2f4ba1f07"/>
@@ -102,29 +102,29 @@ FROM
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="132" splitType="Stretch">
+		<band height="137" splitType="Stretch">
 			<rectangle>
-				<reportElement x="81" y="1" width="440" height="51" forecolor="#F2F2F2" backcolor="#EFEFEF" uuid="0a0c6a49-56f9-4333-adc5-1b1a5a4c0edc"/>
+				<reportElement x="81" y="5" width="440" height="127" forecolor="#F2F2F2" backcolor="#EFEFEF" uuid="0a0c6a49-56f9-4333-adc5-1b1a5a4c0edc"/>
 				<graphicElement>
 					<pen lineWidth="0.0"/>
 				</graphicElement>
 			</rectangle>
 			<textField>
-				<reportElement x="340" y="7" width="171" height="40" uuid="1565dd62-7d66-40ee-89ee-25b4a72a0764"/>
+				<reportElement x="340" y="11" width="171" height="40" uuid="1565dd62-7d66-40ee-89ee-25b4a72a0764"/>
 				<textElement textAlignment="Justified">
 					<font fontName="Segoe UI" isItalic="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{supplier_Alamat}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="145" y="27" width="111" height="20" uuid="ae7c4b95-acf6-4cdc-ae74-1e86ead4165a"/>
+				<reportElement x="145" y="31" width="111" height="20" uuid="ae7c4b95-acf6-4cdc-ae74-1e86ead4165a"/>
 				<textElement>
 					<font fontName="Segoe UI"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{supplier_Telephone}.length()==0?"-":$F{supplier_Telephone}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="288" y="7" width="52" height="20" uuid="826600c3-8d3c-4cd3-ab29-828a91a907a1"/>
+				<reportElement x="288" y="11" width="52" height="20" uuid="826600c3-8d3c-4cd3-ab29-828a91a907a1"/>
 				<textElement textAlignment="Right">
 					<font fontName="Segoe UI"/>
 					<paragraph rightIndent="5"/>
@@ -132,14 +132,14 @@ FROM
 				<text><![CDATA[Alamat : ]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="93" y="27" width="52" height="20" uuid="ab9424b3-dc1f-4ce9-99bc-ed1e73274ce1"/>
+				<reportElement x="93" y="31" width="52" height="20" uuid="ab9424b3-dc1f-4ce9-99bc-ed1e73274ce1"/>
 				<textElement>
 					<font fontName="Segoe UI"/>
 				</textElement>
 				<text><![CDATA[Telepon]]></text>
 			</staticText>
 			<subreport>
-				<reportElement x="103" y="57" width="418" height="75" uuid="30e1257b-3e25-4d27-bacf-0f04ca981412"/>
+				<reportElement x="103" y="62" width="418" height="70" uuid="30e1257b-3e25-4d27-bacf-0f04ca981412"/>
 				<subreportParameter name="Tahun">
 					<subreportParameterExpression><![CDATA[$P{Tahun}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -150,17 +150,20 @@ FROM
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "REPORT_ReInventory.jasper"]]></subreportExpression>
 			</subreport>
 			<textField>
-				<reportElement x="93" y="7" width="163" height="20" uuid="7152c969-b411-4c38-8cdb-40e88b63a782"/>
+				<reportElement x="93" y="11" width="163" height="20" uuid="7152c969-b411-4c38-8cdb-40e88b63a782"/>
 				<textElement>
 					<font fontName="Segoe UI" size="12" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{supplier_Deskripsi}]]></textFieldExpression>
 			</textField>
+			<line>
+				<reportElement x="49" y="1" width="474" height="1" uuid="2a1cf11a-fbaa-45a5-b05d-34ae84199cf9"/>
+				<graphicElement>
+					<pen lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
 		</band>
 	</detail>
-	<columnFooter>
-		<band height="45" splitType="Stretch"/>
-	</columnFooter>
 	<pageFooter>
 		<band height="20" splitType="Stretch">
 			<textField>
@@ -173,7 +176,44 @@ FROM
 			</staticText>
 		</band>
 	</pageFooter>
-	<summary>
-		<band height="42" splitType="Stretch"/>
-	</summary>
+	<lastPageFooter>
+		<band height="158">
+			<textField pattern="dd MMMMM yyyy">
+				<reportElement x="439" y="0" width="92" height="20" uuid="558a7009-cf5f-4fef-8b77-ae36641233fc"/>
+				<textElement>
+					<font fontName="Segoe UI" size="12" isBold="false" isItalic="true" isUnderline="false" isStrikeThrough="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="519" y="138" width="35" height="20" uuid="c5b746fc-fb5e-48ec-96cc-845a20a43d3b"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="392" y="98" width="139" height="20" uuid="a7de9028-ad08-456b-9132-9335beff1e36"/>
+				<textElement>
+					<font fontName="Segoe UI" size="12" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Joko Anwar Triadi]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="392" y="0" width="47" height="20" uuid="63ac0c12-899f-447f-aeaa-01a52b01bcd9"/>
+				<textElement>
+					<font fontName="Segoe UI" size="12"/>
+				</textElement>
+				<text><![CDATA[Jakarta,]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="392" y="20" width="139" height="20" uuid="ab876e6d-291e-41e4-b2e9-16991288649b"/>
+				<textElement>
+					<font fontName="Segoe UI" size="12"/>
+				</textElement>
+				<text><![CDATA[Pemilik Usaha]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="496" y="138" width="23" height="20" uuid="400189ca-f518-4276-8d7f-2f08569139bb"/>
+				<text><![CDATA[Hal.]]></text>
+			</staticText>
+		</band>
+	</lastPageFooter>
 </jasperReport>
