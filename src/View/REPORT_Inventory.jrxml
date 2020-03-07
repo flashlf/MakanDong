@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="REP_Inventory" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b8e7868a-bebe-4078-a1d3-f32fed7fc86b">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="135"/>
+	<property name="ireport.y" value="7"/>
 	<style name="AlternativeColor" pattern="">
 		<conditionalStyle>
 			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 1]]></conditionExpression>
@@ -57,9 +57,9 @@ FROM
 		</band>
 	</title>
 	<pageHeader>
-		<band height="61" splitType="Stretch">
+		<band height="34" splitType="Stretch">
 			<staticText>
-				<reportElement x="43" y="13" width="226" height="25" forecolor="#003399" uuid="6359d673-c205-4000-8b31-c1eb66aa2313"/>
+				<reportElement x="43" y="0" width="226" height="25" forecolor="#003399" uuid="6359d673-c205-4000-8b31-c1eb66aa2313"/>
 				<textElement>
 					<font fontName="Segoe UI" size="18" isBold="true"/>
 				</textElement>
@@ -70,7 +70,7 @@ FROM
 	<columnHeader>
 		<band height="35" splitType="Stretch">
 			<rectangle>
-				<reportElement x="43" y="0" width="512" height="35" backcolor="#006666" uuid="a3541fa7-18cb-4a36-8fa1-86c409672661"/>
+				<reportElement x="43" y="0" width="489" height="35" backcolor="#006666" uuid="a3541fa7-18cb-4a36-8fa1-86c409672661"/>
 				<graphicElement>
 					<pen lineWidth="0.0"/>
 				</graphicElement>
@@ -92,7 +92,7 @@ FROM
 				<text><![CDATA[Nama]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="284" y="0" width="49" height="35" forecolor="#FFFFFF" uuid="8d6cc57e-0f53-44b6-bfba-6535396670c8"/>
+				<reportElement x="284" y="0" width="65" height="35" forecolor="#FFFFFF" uuid="8d6cc57e-0f53-44b6-bfba-6535396670c8"/>
 				<textElement verticalAlignment="Middle">
 					<font size="14" isBold="true"/>
 					<paragraph leftIndent="10"/>
@@ -100,7 +100,7 @@ FROM
 				<text><![CDATA[Stok]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="333" y="0" width="111" height="35" forecolor="#FFFFFF" uuid="0ece5924-7258-4101-8658-d2a25260b273"/>
+				<reportElement x="349" y="0" width="76" height="35" forecolor="#FFFFFF" uuid="0ece5924-7258-4101-8658-d2a25260b273"/>
 				<textElement verticalAlignment="Middle">
 					<font size="14" isBold="true"/>
 					<paragraph leftIndent="10"/>
@@ -108,7 +108,7 @@ FROM
 				<text><![CDATA[Satuan]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="444" y="0" width="111" height="35" forecolor="#FFFFFF" uuid="7afb739b-0e0e-4f1d-98e2-9a5e2417281d"/>
+				<reportElement x="425" y="0" width="107" height="35" forecolor="#FFFFFF" uuid="7afb739b-0e0e-4f1d-98e2-9a5e2417281d"/>
 				<textElement verticalAlignment="Middle">
 					<font size="14" isBold="true"/>
 					<paragraph leftIndent="10"/>
@@ -120,7 +120,7 @@ FROM
 	<detail>
 		<band height="25" splitType="Stretch">
 			<textField pattern="">
-				<reportElement style="AlternativeColor" isPrintRepeatedValues="false" mode="Opaque" x="43" y="0" width="68" height="25" forecolor="#333333" backcolor="#FFFFFF" uuid="c9f5b3f9-32e4-4ac5-83c0-8c6729ae1b16"/>
+				<reportElement style="AlternativeColor" isPrintRepeatedValues="false" mode="Opaque" x="43" y="0" width="68" height="25" forecolor="#333333" uuid="c9f5b3f9-32e4-4ac5-83c0-8c6729ae1b16"/>
 				<textElement verticalAlignment="Middle">
 					<font size="12"/>
 					<paragraph leftIndent="10"/>
@@ -128,7 +128,7 @@ FROM
 				<textFieldExpression><![CDATA[$F{inventory_mCode}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="AlternativeColor" mode="Opaque" x="284" y="0" width="49" height="25" forecolor="#333333" backcolor="#FFFFFF" uuid="5980d793-b7c2-4ddb-9284-d4827d1e0f5c"/>
+				<reportElement style="AlternativeColor" mode="Opaque" x="284" y="0" width="65" height="25" forecolor="#333333" uuid="5980d793-b7c2-4ddb-9284-d4827d1e0f5c"/>
 				<textElement verticalAlignment="Middle">
 					<font size="12"/>
 					<paragraph leftIndent="10"/>
@@ -144,21 +144,29 @@ FROM
 				<textFieldExpression><![CDATA[$F{material_Deskripsi}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="AlternativeColor" mode="Opaque" x="333" y="0" width="111" height="25" forecolor="#333333" backcolor="#FFFFFF" uuid="6ae3674f-dd56-42fd-aca9-fa601b66e6a7"/>
+				<reportElement style="AlternativeColor" mode="Opaque" x="349" y="0" width="76" height="25" forecolor="#333333" uuid="6ae3674f-dd56-42fd-aca9-fa601b66e6a7"/>
 				<textElement verticalAlignment="Middle">
 					<font size="12"/>
 					<paragraph leftIndent="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{material_Satuan}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement style="AlternativeColor" mode="Opaque" x="444" y="0" width="111" height="25" forecolor="#333333" backcolor="#FFFFFF" uuid="4a2be934-6402-4c09-8bd4-029655676b1d"/>
+			<textField pattern="#,##0.00">
+				<reportElement style="AlternativeColor" mode="Opaque" x="452" y="0" width="80" height="25" forecolor="#333333" uuid="4a2be934-6402-4c09-8bd4-029655676b1d"/>
 				<textElement verticalAlignment="Middle">
 					<font size="12"/>
-					<paragraph leftIndent="10"/>
+					<paragraph leftIndent="5"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{material_Harga}]]></textFieldExpression>
 			</textField>
+			<staticText>
+				<reportElement style="AlternativeColor" positionType="Float" mode="Opaque" x="425" y="0" width="27" height="25" uuid="f2b8852e-7ffc-4c8f-8e0c-39e402d688c0"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Segoe UI" size="12"/>
+					<paragraph leftIndent="2"/>
+				</textElement>
+				<text><![CDATA[Rp.]]></text>
+			</staticText>
 		</band>
 	</detail>
 	<columnFooter>
@@ -179,28 +187,28 @@ FROM
 	<summary>
 		<band height="151" splitType="Stretch">
 			<staticText>
-				<reportElement x="416" y="23" width="47" height="20" uuid="d4d1602c-d4a5-43e5-ae11-3adad97ec1d0"/>
+				<reportElement x="393" y="33" width="47" height="20" uuid="d4d1602c-d4a5-43e5-ae11-3adad97ec1d0"/>
 				<textElement>
 					<font fontName="Segoe UI" size="12"/>
 				</textElement>
 				<text><![CDATA[Jakarta,]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="416" y="43" width="139" height="20" uuid="8a0eee3a-564d-4e74-bb56-f4958bc7bf43"/>
+				<reportElement x="393" y="53" width="139" height="20" uuid="8a0eee3a-564d-4e74-bb56-f4958bc7bf43"/>
 				<textElement>
 					<font fontName="Segoe UI" size="12"/>
 				</textElement>
 				<text><![CDATA[Pemilik Usaha]]></text>
 			</staticText>
 			<textField pattern="dd MMMMM yyyy">
-				<reportElement x="463" y="23" width="92" height="20" uuid="c7d71171-61fa-494f-b21f-9aba9008b650"/>
+				<reportElement x="440" y="33" width="92" height="20" uuid="c7d71171-61fa-494f-b21f-9aba9008b650"/>
 				<textElement>
 					<font fontName="Segoe UI" size="12" isBold="false" isItalic="true" isUnderline="false" isStrikeThrough="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="416" y="121" width="139" height="20" uuid="202e5581-bc8f-41c1-99d9-f2cb9912213e"/>
+				<reportElement x="393" y="131" width="139" height="20" uuid="202e5581-bc8f-41c1-99d9-f2cb9912213e"/>
 				<textElement>
 					<font fontName="Segoe UI" size="12" isBold="true" isUnderline="true"/>
 				</textElement>

@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="REP_SUPPLIER" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" whenResourceMissingType="Empty" uuid="e21b7b94-26e8-4369-af7b-781cf9bd3f81">
 	<property name="ireport.zoom" value="1.6528925619834847"/>
 	<property name="ireport.x" value="305"/>
-	<property name="ireport.y" value="40"/>
+	<property name="ireport.y" value="114"/>
 	<style name="AlternateColor">
 		<conditionalStyle>
 			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 1]]></conditionExpression>
@@ -53,7 +53,7 @@ FROM
 					<property name="net.sf.jasperreports.export.pdf.tag.h1"/>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Bottom">
-					<font fontName="Andada" size="24" isBold="true"/>
+					<font fontName="Segoe UI" size="24" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Pecel Lele Mas Joko]]></text>
 			</staticText>
@@ -67,7 +67,7 @@ FROM
 		</band>
 	</title>
 	<pageHeader>
-		<band height="113" splitType="Stretch">
+		<band height="100" splitType="Stretch">
 			<staticText>
 				<reportElement x="42" y="14" width="275" height="34" forecolor="#003399" uuid="79063daa-8ac3-4669-855f-27c8b055f8dd"/>
 				<textElement>
@@ -90,7 +90,7 @@ FROM
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement x="42" y="112" width="513" height="1" uuid="f48e5864-c819-466c-9d53-2fe885c1b6d9"/>
+				<reportElement x="42" y="98" width="490" height="1" uuid="f48e5864-c819-466c-9d53-2fe885c1b6d9"/>
 			</line>
 			<staticText>
 				<reportElement x="42" y="48" width="90" height="20" uuid="aa163012-4696-43e7-8849-a051360d2508"/>
@@ -125,7 +125,7 @@ FROM
 	<columnHeader>
 		<band height="38" splitType="Stretch">
 			<rectangle>
-				<reportElement x="42" y="0" width="513" height="35" forecolor="#FFFFFF" backcolor="#006666" uuid="b773be8f-9ce0-4a72-be93-b4e277a2ef47"/>
+				<reportElement x="42" y="0" width="490" height="35" forecolor="#FFFFFF" backcolor="#006666" uuid="b773be8f-9ce0-4a72-be93-b4e277a2ef47"/>
 			</rectangle>
 			<staticText>
 				<reportElement x="305" y="0" width="115" height="35" forecolor="#FFFFFF" uuid="e2110205-d404-4a60-8c6e-b9b8bdccea03"/>
@@ -160,33 +160,33 @@ FROM
 	<detail>
 		<band height="43" splitType="Stretch">
 			<rectangle>
-				<reportElement style="AlternateColor" x="42" y="0" width="513" height="40" forecolor="#FFFFFF" uuid="5cae3e27-7606-4104-82ac-c01cdce86ac8"/>
+				<reportElement style="AlternateColor" x="42" y="0" width="490" height="40" forecolor="#FFFFFF" uuid="5cae3e27-7606-4104-82ac-c01cdce86ac8"/>
 			</rectangle>
 			<textField>
 				<reportElement x="53" y="0" width="43" height="40" forecolor="#000000" uuid="056a0ce7-fad8-46d2-9837-208ec5f5285d"/>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Open Sans" size="12" isBold="true"/>
+					<font fontName="SansSerif" size="12" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{Kode_Supplier}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="107" y="0" width="185" height="40" forecolor="#000000" uuid="b8e39c1d-fbe6-4d3b-8408-476c97ae06ce"/>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Open Sans" size="12"/>
+					<font fontName="SansSerif" size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{Nama_Supplier}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="305" y="0" width="100" height="40" forecolor="#000000" uuid="4c4827d2-b04f-45b5-87b1-5c6f2916a3c7"/>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Open Sans" size="12"/>
+					<font fontName="SansSerif" size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{Telephone}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="420" y="0" width="100" height="40" forecolor="#000000" uuid="79090592-0264-492c-957b-de3bc7825b29"/>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Open Sans" size="12"/>
+					<font fontName="SansSerif" size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{Material}]]></textFieldExpression>
 			</textField>
@@ -196,42 +196,13 @@ FROM
 			<line>
 				<reportElement x="292" y="0" width="6" height="43" forecolor="#FFFFFF" uuid="e949e1b0-4fc3-48bd-b147-d6f00d10f583"/>
 			</line>
-			<line direction="BottomUp">
+			<line>
 				<reportElement x="405" y="0" width="6" height="43" forecolor="#FFFFFF" uuid="a33c38eb-668c-4a80-bd47-6f1ef256b4d3"/>
 			</line>
 		</band>
 	</detail>
 	<columnFooter>
-		<band height="139" splitType="Stretch">
-			<staticText>
-				<reportElement x="381" y="22" width="139" height="20" uuid="feb76c1c-20c0-4016-ba44-baf6b88e9b27"/>
-				<textElement>
-					<font fontName="Open Sans" size="12"/>
-				</textElement>
-				<text><![CDATA[Pemilik Usaha]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="381" y="2" width="47" height="20" uuid="927d4d40-df65-4857-8b6f-35f18e7eee00"/>
-				<textElement>
-					<font fontName="Open Sans" size="12"/>
-				</textElement>
-				<text><![CDATA[Jakarta,]]></text>
-			</staticText>
-			<textField pattern="dd MMMMM yyyy">
-				<reportElement x="428" y="2" width="92" height="20" uuid="25ad2d28-aae2-4bda-97d4-469e5c1efa3e"/>
-				<textElement>
-					<font fontName="Open Sans" size="12" isBold="false" isItalic="true" isUnderline="false" isStrikeThrough="false"/>
-				</textElement>
-				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="381" y="98" width="139" height="20" uuid="5ef8c2f3-fb6e-4b8e-802d-e016965c923c"/>
-				<textElement>
-					<font fontName="Open Sans" size="12" isBold="true" isUnderline="true"/>
-				</textElement>
-				<text><![CDATA[Joko Anwar Triadi]]></text>
-			</staticText>
-		</band>
+		<band height="60" splitType="Stretch"/>
 	</columnFooter>
 	<pageFooter>
 		<band height="21" splitType="Stretch">
@@ -246,33 +217,61 @@ FROM
 		</band>
 	</pageFooter>
 	<summary>
-		<band height="36" splitType="Stretch">
+		<band height="189" splitType="Stretch">
 			<rectangle>
-				<reportElement x="405" y="0" width="150" height="36" forecolor="#FFFFFF" backcolor="#EAFFFF" uuid="3b0e052b-192e-4c20-9e80-fd9a85977fe4"/>
+				<reportElement x="42" y="0" width="490" height="36" forecolor="#FFFFFF" backcolor="#EAFFFF" uuid="3b0e052b-192e-4c20-9e80-fd9a85977fe4"/>
 				<graphicElement>
 					<pen lineWidth="0.0"/>
 				</graphicElement>
 			</rectangle>
 			<staticText>
-				<reportElement mode="Transparent" x="420" y="6" width="89" height="30" forecolor="#006666" uuid="c34871e8-4f83-469b-a5a1-76a0300d5f4e"/>
+				<reportElement mode="Transparent" x="405" y="6" width="89" height="30" forecolor="#006666" uuid="c34871e8-4f83-469b-a5a1-76a0300d5f4e"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Open Sans" size="10" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Jumlah Supplier :]]></text>
 			</staticText>
 			<textField>
-				<reportElement mode="Transparent" x="520" y="6" width="27" height="30" forecolor="#006666" uuid="46ff6e4b-5cca-4585-b7aa-87cf7a171413"/>
+				<reportElement mode="Transparent" x="505" y="6" width="27" height="30" forecolor="#006666" uuid="46ff6e4b-5cca-4585-b7aa-87cf7a171413"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Open Sans" size="10" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{Kode_Supplier_1}]]></textFieldExpression>
 			</textField>
 			<rectangle>
-				<reportElement x="42" y="0" width="513" height="6" forecolor="#006666" backcolor="#006666" uuid="8cf74d78-d4a5-4ebf-9ced-ff79f0c886e0"/>
+				<reportElement x="42" y="0" width="490" height="6" forecolor="#006666" backcolor="#006666" uuid="8cf74d78-d4a5-4ebf-9ced-ff79f0c886e0"/>
 				<graphicElement>
 					<pen lineWidth="0.0"/>
 				</graphicElement>
 			</rectangle>
+			<staticText>
+				<reportElement x="381" y="93" width="139" height="20" uuid="feb76c1c-20c0-4016-ba44-baf6b88e9b27"/>
+				<textElement>
+					<font fontName="Open Sans" size="12"/>
+				</textElement>
+				<text><![CDATA[Pemilik Usaha]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="381" y="73" width="47" height="20" uuid="927d4d40-df65-4857-8b6f-35f18e7eee00"/>
+				<textElement>
+					<font fontName="Open Sans" size="12"/>
+				</textElement>
+				<text><![CDATA[Jakarta,]]></text>
+			</staticText>
+			<textField pattern="dd MMMMM yyyy">
+				<reportElement x="428" y="73" width="92" height="20" uuid="25ad2d28-aae2-4bda-97d4-469e5c1efa3e"/>
+				<textElement>
+					<font fontName="Open Sans" size="12" isBold="false" isItalic="true" isUnderline="false" isStrikeThrough="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="381" y="169" width="139" height="20" uuid="5ef8c2f3-fb6e-4b8e-802d-e016965c923c"/>
+				<textElement>
+					<font fontName="Open Sans" size="12" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Joko Anwar Triadi]]></text>
+			</staticText>
 		</band>
 	</summary>
 </jasperReport>
