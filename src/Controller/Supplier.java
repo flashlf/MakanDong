@@ -97,6 +97,11 @@ public class Supplier extends javax.swing.JFrame {
 
         txSearch.setText("Search Value......");
         txSearch.setMargin(new java.awt.Insets(2, 7, 2, 2));
+        txSearch.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txSearchFocusGained(evt);
+            }
+        });
 
         btnSearch.setText("Search");
         btnSearch.addActionListener(new java.awt.event.ActionListener() {
@@ -110,7 +115,7 @@ public class Supplier extends javax.swing.JFrame {
 
             },
             new String [] {
-                "sCode", "Supplier", "mCode", "Alamat", "Telephone"
+                "Kode Supplier", "Supplier", "Kode Bahan Baku", "Alamat", "Telephone"
             }
         ) {
             Class[] types = new Class [] {
@@ -437,15 +442,21 @@ public class Supplier extends javax.swing.JFrame {
             reInvent.CONT_RESUPPLY[1] = cbMCode.getSelectedItem().toString();
             reInvent.CONT_RESUPPLY[2] = txDesc.getText();
             reInvent.setVisible(true);
-            int ch = JOptionPane.showConfirmDialog(null, "Restock barang berhasil\nApakah anda ingin melihat laporan supply barang ?");
-            if(ch == 0) {
-                System.out.println("Lihat Laporan");
-            } else {
-                System.out.println("Gajadi liat");
+            if(reInvent.CONFIRMED) {
+                int ch = JOptionPane.showConfirmDialog(null, "Restock barang berhasil\nApakah anda ingin melihat laporan supply barang ?");
+                if(ch == 0) {
+                    System.out.println("Lihat Laporan");
+                } else {
+                    System.out.println("Gajadi liat");
+                }
+                reInvent.CONFIRMED = false;
             }
-            reInvent.CONFIRMED = false;
         }
     }//GEN-LAST:event_btnRestockActionPerformed
+
+    private void txSearchFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txSearchFocusGained
+        txSearch.selectAll();
+    }//GEN-LAST:event_txSearchFocusGained
 
     /**
      * @param args the command line arguments

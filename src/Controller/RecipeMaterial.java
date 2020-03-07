@@ -64,14 +64,14 @@ public class RecipeMaterial extends javax.swing.JDialog {
         txPrice = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Add Material to Recipe");
+        setTitle("Daftar Bahan Baku Resep");
 
         tblDialMat.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Material Code", "Description", "Price"
+                "Kode Bahan Baku", "Nama", "Harga/Satuan"
             }
         ) {
             Class[] types = new Class [] {
@@ -98,11 +98,11 @@ public class RecipeMaterial extends javax.swing.JDialog {
         jScrollPane1.setViewportView(tblDialMat);
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel2.setText("Selected Material");
+        jLabel2.setText("Bahan yg terpilih");
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel3.setText("Qty of Material");
+        jLabel3.setText("Jumlah Bahan");
 
         txMCode.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txMCode.setText("Code");
@@ -119,7 +119,7 @@ public class RecipeMaterial extends javax.swing.JDialog {
         });
 
         btnAddtoRecipe.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
-        btnAddtoRecipe.setText("Add to Recipe");
+        btnAddtoRecipe.setText("Tambahkan");
         btnAddtoRecipe.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAddtoRecipeActionPerformed(evt);
@@ -146,7 +146,7 @@ public class RecipeMaterial extends javax.swing.JDialog {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(32, 32, 32)
+                .addGap(16, 16, 16)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(121, 121, 121)
@@ -167,12 +167,12 @@ public class RecipeMaterial extends javax.swing.JDialog {
                             .addComponent(txDesc, javax.swing.GroupLayout.DEFAULT_SIZE, 152, Short.MAX_VALUE)
                             .addComponent(txPrice)))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(32, Short.MAX_VALUE))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(32, 32, 32)
+                .addGap(16, 16, 16)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(11, 11, 11)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -186,7 +186,7 @@ public class RecipeMaterial extends javax.swing.JDialog {
                     .addComponent(txPrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(11, 11, 11)
                 .addComponent(btnAddtoRecipe)
-                .addContainerGap(26, Short.MAX_VALUE))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
 
         pack();

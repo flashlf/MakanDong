@@ -9,13 +9,14 @@ import Model.*;
 import Model.HandlerComponent.LimitInput;
 import com.sun.glass.events.KeyEvent;
 import java.awt.Image;
-
 import java.awt.event.ItemEvent;
 import java.sql.SQLException;
+import java.sql.ResultSet;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.AbstractDocument;
 /**
@@ -31,6 +32,7 @@ public class Order extends javax.swing.JFrame {
     DefaultTableModel tbModOrder;
     HandlerComponent handlerComp;
     ImageIcon[] food = new ImageIcon[16], beve = new ImageIcon[5];
+    ResultSet RSET;
     public String SQL;
     public static String[] DATAF = new String[50], DATAB = new String[50];
     public int noOrder=1;
@@ -92,6 +94,33 @@ public class Order extends javax.swing.JFrame {
         }
         fdContainer.setIcon(food[0]); bvContainer.setIcon(beve[0]);
     }
+    public int cekInventory() {
+        int result =0;
+        SQL = "SELECT material.Deskripsi, inventory.stock, inventory.needRestock,\n" +
+            "(SELECT COUNT(mCode) FROM (SELECT * FROM inventory\n" +
+            "WHERE stock <= needRestock) Warn) \n" +
+            "FROM inventory, material\n" +
+            "WHERE inventory.mCode = material.mCode\n" +
+            "AND inventory.stock <= inventory.needRestock";
+        try {
+            RSET = db.getSQL(SQL);
+            while(RSET.next()) {
+                result++;
+                System.out.println("Bahan Baku "+RSET.getString(1)+" menipis\n"
+                        + "Stock : "+RSET.getInt(2));
+            }
+        } catch(SQLException ex) {
+            ex.printStackTrace();
+        }
+        return result;
+    }
+    void clearOrder() {
+        txDownPayment.setText("");
+        txOrderCode.setText("");
+        txOrderName.setText("");
+        tbModOrder.setRowCount(0);
+        noOrder = 1;
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -141,6 +170,7 @@ public class Order extends javax.swing.JFrame {
         catering = new javax.swing.JRadioButton();
         jLabel15 = new javax.swing.JLabel();
         txDownPayment = new javax.swing.JTextField();
+        btnCancel = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -172,7 +202,7 @@ public class Order extends javax.swing.JFrame {
         });
 
         jLabel5.setFont(new java.awt.Font("Segoe UI Semibold", 0, 18)); // NOI18N
-        jLabel5.setText("Food");
+        jLabel5.setText("Makanan");
 
         btnAddFood.setText("Add");
         btnAddFood.addActionListener(new java.awt.event.ActionListener() {
@@ -198,7 +228,6 @@ public class Order extends javax.swing.JFrame {
             .addGroup(pnlFoodLayout.createSequentialGroup()
                 .addContainerGap(13, Short.MAX_VALUE)
                 .addGroup(pnlFoodLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(pnlFoodLayout.createSequentialGroup()
                         .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
@@ -212,7 +241,8 @@ public class Order extends javax.swing.JFrame {
                         .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lPriceFood, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(fdContainer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(fdContainer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(13, Short.MAX_VALUE))
         );
         pnlFoodLayout.setVerticalGroup(
@@ -221,7 +251,7 @@ public class Order extends javax.swing.JFrame {
                 .addGap(16, 16, 16)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(fdContainer, javax.swing.GroupLayout.DEFAULT_SIZE, 81, Short.MAX_VALUE)
+                .addComponent(fdContainer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlFoodLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
@@ -258,7 +288,7 @@ public class Order extends javax.swing.JFrame {
         lMenuBeve.setText("Menu");
 
         jLabel6.setFont(new java.awt.Font("Segoe UI Semibold", 0, 18)); // NOI18N
-        jLabel6.setText("Beverage");
+        jLabel6.setText("Minuman");
 
         btnAddBeve.setText("Add");
         btnAddBeve.addActionListener(new java.awt.event.ActionListener() {
@@ -293,14 +323,11 @@ public class Order extends javax.swing.JFrame {
                     .addComponent(bvContainer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(cbMenuBeve, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlDrinkLayout.createSequentialGroup()
-                        .addGroup(pnlDrinkLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel6)
-                            .addGroup(pnlDrinkLayout.createSequentialGroup()
-                                .addComponent(lMenuBeve, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(lPriceBeve, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(lMenuBeve, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(lPriceBeve, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 20, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlDrinkLayout.createSequentialGroup()
                         .addGap(2, 2, 2)
@@ -308,7 +335,8 @@ public class Order extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(txQtyBeve, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnAddBeve)))
+                        .addComponent(btnAddBeve))
+                    .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(16, 16, 16))
         );
         pnlDrinkLayout.setVerticalGroup(
@@ -317,7 +345,7 @@ public class Order extends javax.swing.JFrame {
                 .addGap(16, 16, 16)
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(bvContainer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(bvContainer, javax.swing.GroupLayout.DEFAULT_SIZE, 124, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlDrinkLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lMenuBeve)
@@ -334,7 +362,7 @@ public class Order extends javax.swing.JFrame {
         );
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel4.setText("Order No");
+        jLabel4.setText("Nomor Order");
 
         txOrderCode.setColumns(4);
         txOrderCode.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
@@ -380,14 +408,16 @@ public class Order extends javax.swing.JFrame {
             tblOrder.getColumnModel().getColumn(5).setMaxWidth(0);
         }
 
-        btnRemoveItem.setText("Remove");
+        btnRemoveItem.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
+        btnRemoveItem.setText("Hapus");
         btnRemoveItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRemoveItemActionPerformed(evt);
             }
         });
 
-        btnConfirmItem.setText("Confirm");
+        btnConfirmItem.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
+        btnConfirmItem.setText("Pesan");
         btnConfirmItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnConfirmItemActionPerformed(evt);
@@ -395,7 +425,7 @@ public class Order extends javax.swing.JFrame {
         });
 
         jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel9.setText("Date");
+        jLabel9.setText("Tanggal");
 
         dtChooser.setCurrentView(new datechooser.view.appearance.AppearancesList("Light",
             new datechooser.view.appearance.ViewAppearance("custom",
@@ -453,7 +483,7 @@ public class Order extends javax.swing.JFrame {
     jLabel10.setText("Order Form");
 
     jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-    jLabel11.setText("Order Name");
+    jLabel11.setText("Nama Pemesan");
 
     txOrderName.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
     txOrderName.setText("Lorem Ipsum");
@@ -471,7 +501,7 @@ public class Order extends javax.swing.JFrame {
     lblTotalCost.setPreferredSize(new java.awt.Dimension(90, 16));
 
     jLabel14.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-    jLabel14.setText("Order Type");
+    jLabel14.setText("Tipe Order");
 
     orderType.add(normal);
     normal.setSelected(true);
@@ -502,6 +532,14 @@ public class Order extends javax.swing.JFrame {
         }
     });
 
+    btnCancel.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
+    btnCancel.setText("Batal");
+    btnCancel.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            btnCancelActionPerformed(evt);
+        }
+    });
+
     javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
     getContentPane().setLayout(layout);
     layout.setHorizontalGroup(
@@ -513,50 +551,51 @@ public class Order extends javax.swing.JFrame {
                     .addComponent(jLabel10)
                     .addGap(0, 69, Short.MAX_VALUE))
                 .addGroup(layout.createSequentialGroup()
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(txDownPayment, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel9)
-                            .addComponent(jLabel11)
-                            .addComponent(txOrderCode, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(dtChooser, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                                .addComponent(txOrderName, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE))
-                            .addComponent(jLabel12)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lblTotalCost, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(27, 27, 27)
-                                .addComponent(btnConfirmItem))
-                            .addComponent(jLabel14)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(normal)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(catering))
-                            .addComponent(jLabel15)))
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)))
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(pnlFood, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(pnlDrink, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addComponent(btnRemoveItem, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(txDownPayment, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel4)
+                                .addComponent(jLabel9)
+                                .addComponent(jLabel11)
+                                .addComponent(txOrderCode, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(dtChooser, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                                    .addComponent(txOrderName, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE))
+                                .addComponent(jLabel14)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(normal)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(catering))
+                                .addComponent(jLabel15)))
+                        .addComponent(jLabel12)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(lblTotalCost, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addComponent(pnlFood, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(pnlDrink, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addComponent(btnRemoveItem)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnCancel)
+                    .addGap(18, 18, 18)
+                    .addComponent(btnConfirmItem)))
             .addGap(32, 32, 32))
     );
     layout.setVerticalGroup(
         layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(layout.createSequentialGroup()
             .addGap(32, 32, 32)
-            .addComponent(jLabel10)
-            .addGap(18, 18, 18)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                .addComponent(pnlFood, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
+                    .addComponent(jLabel10)
+                    .addGap(18, 18, 18)
                     .addComponent(jLabel4)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                     .addComponent(txOrderCode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -574,27 +613,29 @@ public class Order extends javax.swing.JFrame {
                     .addComponent(jLabel9)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                     .addComponent(dtChooser, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addComponent(pnlDrink, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(pnlFood, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(pnlDrink, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(4, 4, 4)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnRemoveItem))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(layout.createSequentialGroup()
                     .addGap(11, 11, 11)
                     .addComponent(jLabel15)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                     .addComponent(txDownPayment, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                     .addComponent(jLabel12)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel13)
-                        .addComponent(lblTotalCost, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGap(27, 27, 27)
-                    .addComponent(btnConfirmItem)))
-            .addContainerGap(21, Short.MAX_VALUE))
+                        .addComponent(lblTotalCost, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))))
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(btnRemoveItem)
+                .addComponent(btnConfirmItem)
+                .addComponent(btnCancel))
+            .addContainerGap(32, Short.MAX_VALUE))
     );
 
     pack();
@@ -607,9 +648,9 @@ public class Order extends javax.swing.JFrame {
             String Query = "SELECT * FROM foodbeve\n"
                     + "WHERE fbCode='"+DATAF[pointer]+"'";
             try {
-                java.sql.ResultSet HASIL = db.getSQL(Query);
-                HASIL.first();
-                lPriceFood.setText(""+HASIL.getDouble("harga")); 
+                RSET = db.getSQL(Query);
+                RSET.first();
+                lPriceFood.setText(""+RSET.getDouble("harga")); 
             } catch (SQLException ex) {
                 ex.printStackTrace();
             }
@@ -624,9 +665,9 @@ public class Order extends javax.swing.JFrame {
             String Query = "SELECT * FROM foodbeve\n"
                     + "WHERE fbCode='"+DATAB[pointer]+"'";
             try {
-                java.sql.ResultSet HASIL = db.getSQL(Query);
-                HASIL.first();
-                lPriceBeve.setText(""+HASIL.getDouble("harga")); 
+                RSET = db.getSQL(Query);
+                RSET.first();
+                lPriceBeve.setText(""+RSET.getDouble("harga")); 
             } catch (SQLException ex) {
                 ex.printStackTrace();
             }
@@ -681,30 +722,51 @@ public class Order extends javax.swing.JFrame {
     }//GEN-LAST:event_btnRemoveItemActionPerformed
 
     private void btnConfirmItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmItemActionPerformed
-        SQL = "INSERT INTO orderhead VALUES(?, ?, ?, ?, ?, ?)";
-        Object[] CONT_ORDER = new Object[6], CONT_DETAIL = new Object[3];
-        CONT_ORDER[0] = txOrderCode.getText().trim();
-        CONT_ORDER[1] = (normal.isSelected()) ? "Normal" : "Cathering";
-        CONT_ORDER[2] = txOrderName.getText().trim();
-        CONT_ORDER[3] = dtChooser.getText();
-        CONT_ORDER[4] = (catering.isSelected()) ? Double.valueOf(txDownPayment.getText()) : 0.0;
-        CONT_ORDER[5] = tCost;
+        int ch = cekInventory();
         try {
+            SQL = "INSERT INTO orderhead VALUES(?, ?, ?, ?, ?, ?)";
+            Object[] CONT_ORDER = new Object[6], CONT_DETAIL = new Object[3];
+            CONT_ORDER[0] = txOrderCode.getText().trim();
+            CONT_ORDER[1] = (normal.isSelected()) ? "Normal" : "Cathering";
+            CONT_ORDER[2] = txOrderName.getText().trim();
+            CONT_ORDER[3] = dtChooser.getText();
+            CONT_ORDER[4] = (catering.isSelected()) ? Double.valueOf(txDownPayment.getText()) : 0.0;
+            CONT_ORDER[5] = tCost;
             db.setSTMT(SQL);
-            db.insertSQL(CONT_ORDER,"orderhead","orderID");
-            //input order detail
-            SQL = "INSERT INTO orderdetail VALUES(?, ?, ?)";
-            db.setSTMT(SQL);
-            int size = tblOrder.getRowCount();
-            for(int x=0; x<size; x++) {
-                CONT_DETAIL[0] = CONT_ORDER[0];
-                CONT_DETAIL[1] = tbModOrder.getValueAt(x, 5);
-                CONT_DETAIL[2] = tbModOrder.getValueAt(x, 2);;
-                db.insertSQL(CONT_DETAIL, "orderdetail", "orderID");
+            if(ch!=0) {
+                ch = JOptionPane.showConfirmDialog(this,"Bahan Baku Menipis, harap lakukan restock barang\n"
+                        + "demi kenyamanan pelanggan.\nApakah anda ingin melanjutkan?","Info Bahan Baku",JOptionPane.YES_NO_OPTION,JOptionPane.INFORMATION_MESSAGE);
+                if (ch == 0){
+                    db.insertSQL(CONT_ORDER,"orderhead","orderID");
+                    //input order detail
+                    SQL = "INSERT INTO orderdetail VALUES(?, ?, ?)";
+                    db.setSTMT(SQL);
+                    int size = tblOrder.getRowCount();
+                    for(int x=0; x<size; x++) {
+                        CONT_DETAIL[0] = CONT_ORDER[0];
+                        CONT_DETAIL[1] = tbModOrder.getValueAt(x, 5);
+                        CONT_DETAIL[2] = tbModOrder.getValueAt(x, 2);;
+                        db.insertSQL(CONT_DETAIL, "orderdetail", "orderID");
+                    }
+                }
+            } else {
+                db.insertSQL(CONT_ORDER,"orderhead","orderID");
+                //input order detail
+                SQL = "INSERT INTO orderdetail VALUES(?, ?, ?)";
+                db.setSTMT(SQL);
+                int size = tblOrder.getRowCount();
+                for(int x=0; x<size; x++) {
+                    CONT_DETAIL[0] = CONT_ORDER[0];
+                    CONT_DETAIL[1] = tbModOrder.getValueAt(x, 5);
+                    CONT_DETAIL[2] = tbModOrder.getValueAt(x, 2);;
+                    db.insertSQL(CONT_DETAIL, "orderdetail", "orderID");
+                }
             }
-        } catch (SQLException ex) {
+        } catch(SQLException ex) {
             ex.printStackTrace();
         }
+        clearOrder();
+        txOrderCode.requestFocus();
     }//GEN-LAST:event_btnConfirmItemActionPerformed
 
     private void txOrderCodeKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txOrderCodeKeyTyped
@@ -755,6 +817,10 @@ public class Order extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_normalStateChanged
 
+    private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
+        clearOrder(); txOrderCode.requestFocus();
+    }//GEN-LAST:event_btnCancelActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -793,6 +859,7 @@ public class Order extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddBeve;
     private javax.swing.JButton btnAddFood;
+    private javax.swing.JButton btnCancel;
     private javax.swing.JButton btnConfirmItem;
     private javax.swing.JButton btnRemoveItem;
     private javax.swing.JLabel bvContainer;

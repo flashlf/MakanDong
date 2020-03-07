@@ -110,14 +110,15 @@ public class Recipe extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         lblSPrice = new javax.swing.JLabel();
         btnList = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("MakanDong | Recipe Form");
+        setTitle("MakanDong | Pengelolaan Resep");
         setResizable(false);
 
         jLabel5.setFont(new java.awt.Font("Segoe UI Semibold", 0, 18)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(0, 153, 153));
-        jLabel5.setText("Recipe Code");
+        jLabel5.setText("Kode Resep");
 
         txDesc.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         txDesc.setText("jTextField1");
@@ -130,7 +131,7 @@ public class Recipe extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 153, 153));
-        jLabel1.setText("Description");
+        jLabel1.setText("Nama Resep");
 
         txPrice.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         txPrice.setText("jTextField1");
@@ -143,7 +144,7 @@ public class Recipe extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(0, 153, 153));
-        jLabel2.setText("Price");
+        jLabel2.setText("Harga");
 
         tblMateria.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         tblMateria.setModel(new javax.swing.table.DefaultTableModel(
@@ -151,7 +152,7 @@ public class Recipe extends javax.swing.JFrame {
 
             },
             new String [] {
-                "mCode", "Desc", "Qty", "Price"
+                "Kode Bahan", "Nama Bahan Baku", "Jumlah", "Harga"
             }
         ) {
             Class[] types = new Class [] {
@@ -185,14 +186,16 @@ public class Recipe extends javax.swing.JFrame {
             tblMateria.getColumnModel().getColumn(3).setMaxWidth(150);
         }
 
-        btnRemoveMateria.setText("Remove");
+        btnRemoveMateria.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
+        btnRemoveMateria.setText("Hapus");
         btnRemoveMateria.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRemoveMateriaActionPerformed(evt);
             }
         });
 
-        btnAddMateria.setText("Add");
+        btnAddMateria.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
+        btnAddMateria.setText("Tambahkan");
         btnAddMateria.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAddMateriaActionPerformed(evt);
@@ -201,11 +204,12 @@ public class Recipe extends javax.swing.JFrame {
 
         jLabel6.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(0, 153, 153));
-        jLabel6.setText("Production Cost");
+        jLabel6.setText("Biaya Produksi");
 
         sugestPrice.setFont(new java.awt.Font("Tahoma", 2, 12)); // NOI18N
         sugestPrice.setText("Rp.");
 
+        btnConfirmRecipe.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
         btnConfirmRecipe.setText("Confirm Recipe");
         btnConfirmRecipe.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -245,9 +249,9 @@ public class Recipe extends javax.swing.JFrame {
         binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, txFCode, org.jdesktop.beansbinding.ELProperty.create("${text}"), lblSelectedCode, org.jdesktop.beansbinding.BeanProperty.create("text"));
         bindingGroup.addBinding(binding);
 
-        jLabel7.setFont(new java.awt.Font("Segoe UI Semibold", 0, 16)); // NOI18N
+        jLabel7.setFont(new java.awt.Font("Segoe UI Semilight", 1, 16)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(0, 153, 153));
-        jLabel7.setText("Selected Recipe");
+        jLabel7.setText("Resep yang dipilih");
 
         lblSPrice.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lblSPrice.setText(SPrice.toString());
@@ -258,6 +262,10 @@ public class Recipe extends javax.swing.JFrame {
                 btnListActionPerformed(evt);
             }
         });
+
+        jLabel3.setFont(new java.awt.Font("Segoe UI Semibold", 2, 12)); // NOI18N
+        jLabel3.setText(" Bahan Baku :");
+        jLabel3.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -294,11 +302,12 @@ public class Recipe extends javax.swing.JFrame {
                         .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnClearRecipe))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 375, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(lblSelectedCode, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(lblSelectedDescription, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(lblSelectedDescription, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(32, 32, 32))
         );
         layout.setVerticalGroup(
@@ -306,26 +315,30 @@ public class Recipe extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(31, 31, 31)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel7))
-                        .addGap(2, 2, 2))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(btnClearRecipe)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblSelectedDescription, javax.swing.GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE)
-                    .addComponent(lblSelectedCode, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnList, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(txFCode))
-                .addGap(16, 16, 16)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(31, 31, 31)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel5)
+                                    .addComponent(jLabel7))
+                                .addGap(2, 2, 2))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(btnClearRecipe)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblSelectedDescription, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblSelectedCode, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnList, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txFCode))
+                        .addGap(16, 16, 16)
+                        .addComponent(jLabel1))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createSequentialGroup()
                         .addComponent(txDesc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel2)
@@ -336,14 +349,17 @@ public class Recipe extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(sugestPrice)
-                            .addComponent(lblSPrice))))
-                .addGap(18, 18, 18)
+                            .addComponent(lblSPrice))
+                        .addGap(44, 44, 44))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btnAddMateria)
                         .addComponent(btnRemoveMateria))
                     .addComponent(btnConfirmRecipe))
-                .addGap(32, 32, 32))
+                .addGap(33, 33, 33))
         );
 
         bindingGroup.bind();
@@ -467,8 +483,6 @@ public class Recipe extends javax.swing.JFrame {
             txFCode.setEnabled(false);
             btnList.setEnabled(false);
         }
-        RLDialog.dispose();
-        RLDialog.initTableView();
     }//GEN-LAST:event_btnListActionPerformed
 
     public void addMateriaToTable(Object[] DATA){
@@ -518,6 +532,7 @@ public class Recipe extends javax.swing.JFrame {
     private javax.swing.JButton btnRemoveMateria;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;

@@ -25,11 +25,10 @@ public class RecipeList extends javax.swing.JDialog {
      */
     public RecipeList(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
-        initComponents();
-        initTableView();
+        initComponents(); initTableView();
         this.setLocationRelativeTo(super.rootPane);
     }
-    void initTableView() {
+    public void initTableView() {
         try {
             String SQL = "SELECT fbCode, Deskripsi, Harga From foodbeve";
             hComp = new HandlerComponent();
@@ -51,6 +50,7 @@ public class RecipeList extends javax.swing.JDialog {
         tblRecipe = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Daftar Resep");
 
         tblRecipe.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -87,16 +87,16 @@ public class RecipeList extends javax.swing.JDialog {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(32, 32, 32)
+                .addGap(16, 16, 16)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 309, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(32, Short.MAX_VALUE))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(32, Short.MAX_VALUE)
+                .addGap(16, 16, 16)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 326, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(32, 32, 32))
+                .addGap(16, 16, 16))
         );
 
         pack();
