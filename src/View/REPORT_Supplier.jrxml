@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="REP_SUPPLIER" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" whenResourceMissingType="Empty" uuid="e21b7b94-26e8-4369-af7b-781cf9bd3f81">
 	<property name="ireport.zoom" value="1.6528925619834847"/>
-	<property name="ireport.x" value="305"/>
-	<property name="ireport.y" value="114"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="320"/>
 	<style name="AlternateColor">
 		<conditionalStyle>
 			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 1]]></conditionExpression>
-			<style backcolor="#CCFFFF"/>
+			<style backcolor="#CCCCCC"/>
 		</conditionalStyle>
 	</style>
 	<queryString language="SQL">
@@ -125,7 +125,7 @@ FROM
 	<columnHeader>
 		<band height="38" splitType="Stretch">
 			<rectangle>
-				<reportElement x="42" y="0" width="490" height="35" forecolor="#FFFFFF" backcolor="#006666" uuid="b773be8f-9ce0-4a72-be93-b4e277a2ef47"/>
+				<reportElement x="42" y="0" width="490" height="35" forecolor="#FFFFFF" backcolor="#000000" uuid="b773be8f-9ce0-4a72-be93-b4e277a2ef47"/>
 			</rectangle>
 			<staticText>
 				<reportElement x="305" y="0" width="115" height="35" forecolor="#FFFFFF" uuid="e2110205-d404-4a60-8c6e-b9b8bdccea03"/>
@@ -219,27 +219,27 @@ FROM
 	<summary>
 		<band height="189" splitType="Stretch">
 			<rectangle>
-				<reportElement x="42" y="0" width="490" height="36" forecolor="#FFFFFF" backcolor="#EAFFFF" uuid="3b0e052b-192e-4c20-9e80-fd9a85977fe4"/>
+				<reportElement x="42" y="0" width="490" height="36" forecolor="#FFFFFF" backcolor="#CCCCCC" uuid="3b0e052b-192e-4c20-9e80-fd9a85977fe4"/>
 				<graphicElement>
 					<pen lineWidth="0.0"/>
 				</graphicElement>
 			</rectangle>
 			<staticText>
-				<reportElement mode="Transparent" x="405" y="6" width="89" height="30" forecolor="#006666" uuid="c34871e8-4f83-469b-a5a1-76a0300d5f4e"/>
+				<reportElement mode="Transparent" x="405" y="6" width="89" height="30" forecolor="#000000" uuid="c34871e8-4f83-469b-a5a1-76a0300d5f4e"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Open Sans" size="10" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Jumlah Supplier :]]></text>
 			</staticText>
 			<textField>
-				<reportElement mode="Transparent" x="505" y="6" width="27" height="30" forecolor="#006666" uuid="46ff6e4b-5cca-4585-b7aa-87cf7a171413"/>
+				<reportElement mode="Transparent" x="505" y="6" width="27" height="30" forecolor="#000000" uuid="46ff6e4b-5cca-4585-b7aa-87cf7a171413"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Open Sans" size="10" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{Kode_Supplier_1}]]></textFieldExpression>
 			</textField>
 			<rectangle>
-				<reportElement x="42" y="0" width="490" height="6" forecolor="#006666" backcolor="#006666" uuid="8cf74d78-d4a5-4ebf-9ced-ff79f0c886e0"/>
+				<reportElement x="42" y="0" width="490" height="6" forecolor="#006666" backcolor="#000000" uuid="8cf74d78-d4a5-4ebf-9ced-ff79f0c886e0"/>
 				<graphicElement>
 					<pen lineWidth="0.0"/>
 				</graphicElement>

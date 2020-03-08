@@ -171,14 +171,14 @@ WHERE sr.sCode = $P{supplyCode} AND YEAR(sr.Date) = $P{Tahun} ORDER BY sr.date]]
 		<band height="20">
 			<textField pattern="###0">
 				<reportElement mode="Opaque" x="322" y="0" width="92" height="20" forecolor="#FFFFFF" backcolor="#333333" uuid="fc59872a-9e44-4d18-bff4-9f8086956c5a"/>
-				<textElement>
+				<textElement verticalAlignment="Middle">
 					<font fontName="Segoe UI Semibold"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{SubTotal_1}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement mode="Opaque" x="0" y="0" width="322" height="20" forecolor="#FFFFFF" backcolor="#333333" uuid="0e086285-81d3-4d56-8ff2-d89cd00e0136"/>
-				<textElement textAlignment="Right">
+				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font isItalic="true"/>
 					<paragraph rightIndent="5"/>
 				</textElement>

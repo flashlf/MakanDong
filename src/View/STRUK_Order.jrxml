@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="STK_Order" language="groovy" printOrder="Horizontal" pageWidth="170" pageHeight="156" orientation="Landscape" columnWidth="170" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="c121bef8-97a9-4512-9f35-831e9c066284">
+	<property name="ireport.zoom" value="3.0052592036063133"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="noOrder" class="java.lang.String">
+		<defaultValueExpression><![CDATA[0001]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["F:\\IMAM\\RPL\\PEMROGRAMMAN VISUAL\\MakanDong\\src\\View\\"]]></defaultValueExpression>
+	</parameter>
+	<queryString language="SQL">
+		<![CDATA[SELECT
+     orderhead.`orderID` AS orderhead_orderID,
+     orderhead.`orderType` AS orderhead_orderType,
+     orderhead.`orderName` AS orderhead_orderName,
+     orderhead.`orderDate` AS orderhead_orderDate,
+     orderhead.`orderDP` AS orderhead_orderDP,
+     orderhead.`orderTotal` AS orderhead_orderTotal
+FROM
+     `orderhead` orderhead]]>
+	</queryString>
+	<field name="orderhead_orderID" class="java.lang.String"/>
+	<field name="orderhead_orderType" class="java.lang.String"/>
+	<field name="orderhead_orderName" class="java.lang.String"/>
+	<field name="orderhead_orderDate" class="java.sql.Date"/>
+	<field name="orderhead_orderDP" class="java.lang.Double"/>
+	<field name="orderhead_orderTotal" class="java.lang.Double"/>
+	<background>
+		<band height="156" splitType="Stretch">
+			<image scaleImage="Clip" hAlign="Right">
+				<reportElement x="0" y="59" width="170" height="97" uuid="55fce030-d91f-45b6-a397-45c0b9737585"/>
+				<imageExpression><![CDATA["logopecel-transculent.png"]]></imageExpression>
+			</image>
+		</band>
+	</background>
+	<columnHeader>
+		<band height="35" splitType="Stretch">
+			<staticText>
+				<reportElement x="4" y="4" width="48" height="7" uuid="6ff121c2-ccdd-4053-abe0-f7bdade62e7c"/>
+				<textElement>
+					<font fontName="Segoe UI Semibold" size="5" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Pecel Lele Mas Joko]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="4" y="11" width="66" height="20" uuid="6b0e13be-5e45-4e90-bf1d-f50b8c9e36ec"/>
+				<textElement>
+					<font fontName="Segoe UI" size="4"/>
+				</textElement>
+				<text><![CDATA[Jl. Baung No. 26 RT 10/1 Lenteng Agung, Jagakarsa,  Jakarta Selatan, Indonesia]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="110" y="12" width="21" height="6" uuid="9b6c5045-512b-4b1a-bd02-54f523e32845"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font fontName="Segoe UI" size="4"/>
+				</textElement>
+				<text><![CDATA[Tanggal : ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="110" y="18" width="21" height="6" uuid="88235176-d778-40d0-b1a7-36e7e28e9b4e"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Segoe UI" size="4"/>
+				</textElement>
+				<text><![CDATA[No : ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="131" y="18" width="19" height="6" uuid="713df394-2ccb-4003-b506-7a5e324712a1"/>
+				<textElement verticalAlignment="Middle">
+					<font size="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{noOrder}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd MMMMM yyyy">
+				<reportElement x="131" y="12" width="35" height="6" uuid="a9a44412-cfb4-4c07-a003-a35206e92dec"/>
+				<textElement verticalAlignment="Bottom">
+					<font size="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="110" y="24" width="21" height="6" uuid="aee38090-1a70-4036-86d0-ace5968fa2d1"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Segoe UI" size="4"/>
+				</textElement>
+				<text><![CDATA[Pemesan : ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="131" y="24" width="35" height="6" uuid="35b56154-dd8f-49d7-a830-7189ef2f20d4"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Segoe UI" size="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{orderhead_orderName}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="96" y="4" width="48" height="7" uuid="19cc102c-2283-42b5-918d-697d35476217"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Segoe UI Semibold" size="5" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Struk Pesanan]]></text>
+			</staticText>
+			<line>
+				<reportElement x="96" y="11" width="70" height="1" uuid="d321f294-f9b8-4693-a20b-edbcb2207425"/>
+				<graphicElement>
+					<pen lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="96" y="31" width="70" height="1" uuid="26d123c0-9587-4144-a0c4-c8f603bd4429"/>
+				<graphicElement>
+					<pen lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="81" splitType="Stretch">
+			<subreport>
+				<reportElement x="0" y="0" width="170" height="67" uuid="78e89262-6e82-4ec5-8e44-370015cb535b"/>
+				<subreportParameter name="noOrder">
+					<subreportParameterExpression><![CDATA[$P{noOrder}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "SubSTRUCK.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+</jasperReport>
