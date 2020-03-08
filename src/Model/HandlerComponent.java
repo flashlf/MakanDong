@@ -7,16 +7,20 @@ package Model;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.ResultSet;
-import java.util.Vector;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.JTableHeader;
-import javax.swing.table.TableColumn;
-import javax.swing.table.TableColumnModel;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DocumentFilter;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.view.JasperViewer;
 /**
  * Class untuk membantu konfigurasi setiap COMPONENT
  * yang terdapat pada java dengan koneksi Database.
@@ -188,6 +192,56 @@ public class HandlerComponent {
                 text = text.substring(0, text.length() - overLim);
             if(text.length() > 0)
                 super.replace(fb, offset, length, text, attr);
+        }
+    }
+    
+    public static class Report {
+        private static String fileName;
+        public static Map param;
+        private Connection conn;
+        Database DB;
+        public Report() {
+            fileName = "";
+            param = new HashMap();
+        }
+        
+        public static void setFileName(String aFileName) {
+            fileName = aFileName;
+        }
+        
+        public static void setParam(String paramName, String paramValue) {
+            param.put(paramName, paramValue);
+        }
+        
+        public static void setParam(String paramName, Integer paramValue) {
+            param.put(paramName, paramValue);
+        }
+        
+        public static void setParam(String paramName, Double paramValue) {
+            param.put(paramName, paramValue);
+        }
+        
+        public static void setParam(String paramName, Float paramValue) {
+            param.put(paramName, paramValue);
+        }
+        
+        public static void setParam(String paramName, Date paramValue) {
+            param.put(paramName, paramValue);
+        }
+        
+        public void printReport() {
+            String fName = "src/view/"+fileName+".jrxml";
+            String fFill = "src/view/"+fileName+".jasper";
+            try {
+                DB = new Database();
+                conn = DB.inisiasiDBnoStatic();
+                JasperCompileManager.compileReport(fName);
+                JasperFillManager.fillReport(fFill, param, conn);
+                JasperPrint jp = JasperFillManager.fillReport(fFill, param, conn);
+                JasperViewer.viewReport(jp, false);
+            } catch (SQLException | JRException ex) {
+                ex.printStackTrace();
+            }
         }
     }
 }

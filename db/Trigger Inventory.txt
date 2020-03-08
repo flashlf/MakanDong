@@ -1,0 +1,53 @@
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` 
+TRIGGER `Coba` 
+BEFORE INSERT ON `orderdetail` FOR EACH ROW 
+BEGIN
+	DECLARE done INT DEFAULT FALSE;
+	DECLARE cmCode varchar(4);
+	DECLARE cQty double;
+	DECLARE matCode CURSOR FOR SELECT mCode, Qty FROM recipe WHERE recipe.fbCode = new.fbCode;
+	DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
+    
+	OPEN matCode;
+		ins_loop: LOOP
+			FETCH matCode INTO cmCode, cQty;
+			IF DONE THEN
+				LEAVE ins_loop;
+			END IF;
+			UPDATE inventory SET inventory.stock = inventory.stock - (new.Qty * cQty) WHERE inventory.mCode = cmCode;
+		END LOOP;
+	CLOSE matCode;
+END$$
+DELIMITER ;
+
+
+SubQuery in Aggregate function
+buat liat stock yg mulai abis
+SELECT material.Deskripsi, inventory.stock, inventory.needRestock,
+	(SELECT COUNT(mCode) FROM (SELECT * FROM inventory
+     WHERE stock <= needRestock) Warn) 
+FROM inventory, material
+WHERE inventory.mCode = material.mCode
+AND inventory.stock <= inventory.needRestock
+
+
+/////////// Laporan Pesanan
+SELECT
+     orderhead.`orderID` AS orderhead_orderID,
+     orderhead.`orderDate` AS orderhead_orderDate,
+     orderhead.`orderType` AS orderhead_orderType,
+     (SELECT COUNT(*) FROM orderdetail WHERE orderdetail.orderID = orderhead.orderID) AS jumlahOrder,
+     orderhead.`orderTotal` AS orderhead_orderTotal
+FROM
+     `orderhead` orderhead
+WHERE
+	orderhead.`orderDate` BETWEEN $P{tgl1} AND $P{tgl2}
+
+
+/////////
+
+select * from penjualan where tanggal between $P{tgl1} and $P{tgl2}
+
+////////
+SELECT sr.`date` AS Tanggal, m.`Deskripsi` AS Produk, sr.`Qty` AS Jumlah, m.`Satuan` AS Satuan, m.`Harga` AS Harga, IF(sr.`Qty` IS NULL, 0, (sr.`Qty` * m.`Harga`)) AS SubTotal FROM supplyrecord AS sr LEFT OUTER JOIN supplier s ON sr.sCode = s.sCode LEFT OUTER JOIN material m ON s.mCode = m.mCode WHERE s.sCode="S001" 

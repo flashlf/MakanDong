@@ -16,6 +16,7 @@ import javax.swing.JOptionPane;
  */
 public class Database {
     private static Connection config;
+    private Connection CONFIG;
     private static Driver dm;
     private static String paramConnection;
     public static String DB_HOST, DB_PORT, DB_NAME, DB_USER, DB_PASS, STMT, LOG;
@@ -59,7 +60,11 @@ public class Database {
     public static void setConfig(Connection config) {
         Database.config = config;
     }
-
+    
+    public void setConfigs(Connection config) {
+        CONFIG = config;
+    }
+    
     public static void setSTMT(String STMT) {
         Database.STMT = STMT;
     }
@@ -233,6 +238,32 @@ public class Database {
             JOptionPane.showMessageDialog(null,"Driver untuk Koneksi database tidak ada\nSilahkan nyalakan services MySQL pada XAMPP");
         }
         return config;
+    }
+    
+    public Connection inisiasiDBnoStatic() throws SQLException {
+        if ((Database.DB_NAME == null) || (Database.DB_USER == null) || (Database.DB_PASS == null) || (Database.DB_PORT == null) || (Database.DB_HOST == null)) {
+            JOptionPane.showMessageDialog(null,"Database Belum disetting");
+             if (Database.DB_NAME == null) {
+                 String DBname = JOptionPane.showInputDialog("Nama Database");
+                 Database.DB_NAME = DBname;
+             }
+             if (Database.DB_USER == null) setDB_USER(JOptionPane.showInputDialog("User"));
+             if (Database.DB_PASS == null) Database.DB_PASS = JOptionPane.showInputDialog("Password");
+             if (Database.DB_PORT == null) Database.DB_PORT = JOptionPane.showInputDialog("Port");
+             if (Database.DB_HOST == null) Database.DB_HOST = JOptionPane.showInputDialog("Host");
+             Database.paramConnection = "jdbc:mysql://"+Database.DB_HOST+":"+Database.DB_PORT+"/"+Database.DB_NAME;
+        }
+        try {
+            Database.dm = new com.mysql.jdbc.Driver();
+            Database.paramConnection = "jdbc:mysql://"+Database.DB_HOST+":"+Database.DB_PORT+"/"+Database.DB_NAME;
+            DriverManager.registerDriver(dm);
+            setConfigs(DriverManager.getConnection(Database.paramConnection,Database.DB_USER, Database.DB_PASS));
+            System.out.println("Koneksi Sukses ========================\n DB_NAME : "+DB_NAME);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null,"Driver untuk Koneksi database tidak ada\nSilahkan nyalakan services MySQL pada XAMPP");
+        }
+        return CONFIG;
     }
     
     private void checkConnection() throws SQLException{

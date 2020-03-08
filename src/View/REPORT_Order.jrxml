@@ -207,7 +207,7 @@ ORDER BY
 		</band>
 	</detail>
 	<columnFooter>
-		<band height="49" splitType="Stretch"/>
+		<band height="44" splitType="Stretch"/>
 	</columnFooter>
 	<pageFooter>
 		<band height="20" splitType="Stretch">
