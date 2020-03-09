@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="REP_SUPPLIER" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" whenResourceMissingType="Empty" uuid="e21b7b94-26e8-4369-af7b-781cf9bd3f81">
 	<property name="ireport.zoom" value="1.6528925619834847"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="320"/>
+	<property name="ireport.y" value="0"/>
 	<style name="AlternateColor">
 		<conditionalStyle>
 			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 1]]></conditionExpression>
@@ -28,7 +28,7 @@ FROM
 		<fieldDescription><![CDATA[nomor telfon]]></fieldDescription>
 	</field>
 	<field name="Material" class="java.lang.String"/>
-	<variable name="Kode_Supplier_1" class="java.lang.Integer" resetType="Column" calculation="DistinctCount">
+	<variable name="Kode_Supplier_1" class="java.lang.Integer" calculation="DistinctCount">
 		<variableExpression><![CDATA[$F{Kode_Supplier}]]></variableExpression>
 	</variable>
 	<group name="Kode_Supplier">
@@ -76,14 +76,18 @@ FROM
 				<text><![CDATA[Laporan Data Supplier]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="42" y="68" width="54" height="20" uuid="dc276170-e4b6-4521-88de-9e0a3bff705c"/>
+				<reportElement x="42" y="68" width="54" height="20" uuid="dc276170-e4b6-4521-88de-9e0a3bff705c">
+					<printWhenExpression><![CDATA[$V{PAGE_NUMBER}==1]]></printWhenExpression>
+				</reportElement>
 				<textElement>
 					<font fontName="Open Sans" size="12"/>
 				</textElement>
 				<text><![CDATA[Tanggal]]></text>
 			</staticText>
 			<textField pattern="dd MMMMM yyyy">
-				<reportElement x="152" y="68" width="103" height="20" uuid="f871fd25-8bd2-461f-a549-b7be771e57a8"/>
+				<reportElement x="152" y="68" width="103" height="20" uuid="f871fd25-8bd2-461f-a549-b7be771e57a8">
+					<printWhenExpression><![CDATA[$V{PAGE_NUMBER}==1]]></printWhenExpression>
+				</reportElement>
 				<textElement>
 					<font fontName="Open Sans" size="12" isBold="false" isItalic="true" isUnderline="false" isStrikeThrough="false"/>
 				</textElement>
@@ -93,28 +97,36 @@ FROM
 				<reportElement x="42" y="98" width="490" height="1" uuid="f48e5864-c819-466c-9d53-2fe885c1b6d9"/>
 			</line>
 			<staticText>
-				<reportElement x="42" y="48" width="90" height="20" uuid="aa163012-4696-43e7-8849-a051360d2508"/>
+				<reportElement x="42" y="48" width="90" height="20" uuid="aa163012-4696-43e7-8849-a051360d2508">
+					<printWhenExpression><![CDATA[$V{PAGE_NUMBER}==1]]></printWhenExpression>
+				</reportElement>
 				<textElement>
 					<font fontName="Open Sans" size="12"/>
 				</textElement>
 				<text><![CDATA[Total Halaman]]></text>
 			</staticText>
 			<textField evaluationTime="Report">
-				<reportElement x="152" y="48" width="100" height="20" uuid="14ac6db9-32f8-4e25-8324-53c50e49b9a4"/>
+				<reportElement x="152" y="48" width="100" height="20" uuid="14ac6db9-32f8-4e25-8324-53c50e49b9a4">
+					<printWhenExpression><![CDATA[$V{PAGE_NUMBER}==1]]></printWhenExpression>
+				</reportElement>
 				<textElement>
 					<font fontName="Open Sans" size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}+" Halaman"]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="132" y="68" width="12" height="20" uuid="f8410c9d-aa70-448b-8ee8-26a0425316c7"/>
+				<reportElement x="132" y="68" width="12" height="20" uuid="f8410c9d-aa70-448b-8ee8-26a0425316c7">
+					<printWhenExpression><![CDATA[$V{PAGE_NUMBER}==1]]></printWhenExpression>
+				</reportElement>
 				<textElement>
 					<font fontName="Open Sans" size="12"/>
 				</textElement>
 				<text><![CDATA[:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="132" y="48" width="12" height="20" uuid="ae29e02e-edb6-4a4a-9b85-9bfb96678442"/>
+				<reportElement x="132" y="48" width="12" height="20" uuid="ae29e02e-edb6-4a4a-9b85-9bfb96678442">
+					<printWhenExpression><![CDATA[$V{PAGE_NUMBER}==1]]></printWhenExpression>
+				</reportElement>
 				<textElement>
 					<font fontName="Open Sans" size="12"/>
 				</textElement>
@@ -231,7 +243,7 @@ FROM
 				</textElement>
 				<text><![CDATA[Jumlah Supplier :]]></text>
 			</staticText>
-			<textField>
+			<textField evaluationTime="Report">
 				<reportElement mode="Transparent" x="505" y="6" width="27" height="30" forecolor="#000000" uuid="46ff6e4b-5cca-4585-b7aa-87cf7a171413"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Open Sans" size="10" isBold="true"/>

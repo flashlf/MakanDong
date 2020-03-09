@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="subReport" language="groovy" pageWidth="595" pageHeight="842" whenNoDataType="BlankPage" columnWidth="585" leftMargin="5" rightMargin="5" topMargin="5" bottomMargin="0" whenResourceMissingType="Empty" uuid="dd687c6b-31d4-4c19-9f64-279af4dfc925">
-	<property name="ireport.zoom" value="1.5394743546921197"/>
+	<property name="ireport.zoom" value="0.75"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<style name="AlternateColor" backcolor="#EFEFEF">
+	<style name="AlternateColor" backcolor="#CCCCCC">
 		<conditionalStyle>
 			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2==1]]></conditionExpression>
 			<style backcolor="#F2F2F2"/>
@@ -14,6 +14,9 @@
 	</parameter>
 	<parameter name="Tahun" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[2020]]></defaultValueExpression>
+	</parameter>
+	<parameter name="Bulan" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[1]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[SELECT
@@ -29,7 +32,7 @@ LEFT OUTER JOIN supplier s
 	ON sr.sCode = s.sCode
 LEFT OUTER JOIN material m
 	ON s.mCode = m.mCode
-WHERE sr.sCode = $P{supplyCode} AND YEAR(sr.Date) = $P{Tahun} ORDER BY sr.date]]>
+WHERE sr.sCode = $P{supplyCode} AND (YEAR(sr.Date) = 2020 OR MONTH(sr.Date) = $P{Bulan}) ORDER BY sr.date]]>
 	</queryString>
 	<field name="Tanggal" class="java.sql.Date"/>
 	<field name="Produk" class="java.lang.String"/>
@@ -43,6 +46,10 @@ WHERE sr.sCode = $P{supplyCode} AND YEAR(sr.Date) = $P{Tahun} ORDER BY sr.date]]
 	<field name="SubTotal" class="java.lang.Double"/>
 	<variable name="SubTotal_1" class="java.lang.Double" calculation="Sum">
 		<variableExpression><![CDATA[$F{SubTotal}]]></variableExpression>
+	</variable>
+	<variable name="Total" class="java.lang.Double" resetType="None" incrementType="Report" calculation="Sum">
+		<variableExpression><![CDATA[$V{Total}+=$V{SubTotal_1}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
 	</variable>
 	<columnHeader>
 		<band height="20">

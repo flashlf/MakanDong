@@ -15,19 +15,12 @@ import javax.swing.JOptionPane;
  * @author REDHAT
  */
 public class MainMenu extends javax.swing.JFrame {
-
-    public void setUID(String aUID) {
-        UID = aUID;
-    }
-
-    public void setUSER(String aUSER) {
-        USER = aUSER;
-    }
     Inventory frmInvent;
     Recipe frmRecipe;
     Order frmOrder;
     Supplier frmSupplier;
     Laporan frmLaporan;
+    About frmAbout;
     SimpleDateFormat df;
     Date date;
     String format = "dd MMMMM yyyy";
@@ -56,6 +49,13 @@ public class MainMenu extends javax.swing.JFrame {
         lblUser.setText(User);
         lblUserPlaceHolder.setText("User ID : "+UID);
         setLocationRelativeTo(null);
+    }
+    public void setUID(String aUID) {
+        UID = aUID;
+    }
+
+    public void setUSER(String aUSER) {
+        USER = aUSER;
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -197,6 +197,11 @@ public class MainMenu extends javax.swing.JFrame {
         btnAbout.setMaximumSize(new java.awt.Dimension(97, 97));
         btnAbout.setMinimumSize(new java.awt.Dimension(97, 97));
         btnAbout.setPreferredSize(new java.awt.Dimension(97, 97));
+        btnAbout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAboutActionPerformed(evt);
+            }
+        });
 
         lblLaporan2.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
         lblLaporan2.setForeground(new java.awt.Color(255, 255, 255));
@@ -467,6 +472,10 @@ public class MainMenu extends javax.swing.JFrame {
         this.dispose();
         Login log = new Login(); log.setVisible(true);
     }//GEN-LAST:event_btnLogoutActionPerformed
+
+    private void btnAboutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAboutActionPerformed
+        frmAbout = new About(); frmAbout.setVisible(true);
+    }//GEN-LAST:event_btnAboutActionPerformed
 
     /**
      * @param args the command line arguments

@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="HeadRestockInventory" language="groovy" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" whenResourceMissingType="Empty" uuid="a64fab15-1338-439d-afcb-a6ea95ade6aa">
 	<property name="ireport.zoom" value="1.156629868288595"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="128"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["F:\\IMAM\\RPL\\PEMROGRAMMAN VISUAL\\MakanDong\\src\\View\\"]]></defaultValueExpression>
 	</parameter>
@@ -10,7 +10,14 @@
 		<parameterDescription><![CDATA[Tahun Laporan]]></parameterDescription>
 		<defaultValueExpression><![CDATA[2020]]></defaultValueExpression>
 	</parameter>
-	<queryString language="SQL">
+	<parameter name="KodeSupplier" class="java.lang.String">
+		<defaultValueExpression><![CDATA[0]]></defaultValueExpression>
+	</parameter>
+	<parameter name="Bulan" class="java.lang.Integer">
+		<parameterDescription><![CDATA[Bulan Supply]]></parameterDescription>
+		<defaultValueExpression><![CDATA[1]]></defaultValueExpression>
+	</parameter>
+	<queryString>
 		<![CDATA[SELECT
      supplier.`sCode` AS supplier_sCode,
      supplier.`Deskripsi` AS supplier_Deskripsi,
@@ -18,13 +25,16 @@
      supplier.`Alamat` AS supplier_Alamat,
      supplier.`Telephone` AS supplier_Telephone
 FROM
-     `supplier` supplier]]>
+     `supplier` supplier
+WHERE
+     supplier.`sCode` LIKE '%$P!{KodeSupplier}%']]>
 	</queryString>
 	<field name="supplier_sCode" class="java.lang.String"/>
 	<field name="supplier_Deskripsi" class="java.lang.String"/>
 	<field name="supplier_mCode" class="java.lang.String"/>
 	<field name="supplier_Alamat" class="java.lang.String"/>
 	<field name="supplier_Telephone" class="java.lang.String"/>
+	<variable name="TOTAL" class="java.lang.Double" incrementType="Column"/>
 	<background>
 		<band height="802" splitType="Stretch">
 			<image scaleImage="Clip" hAlign="Right">
@@ -60,7 +70,7 @@ FROM
 	<pageHeader>
 		<band height="35" splitType="Stretch">
 			<staticText>
-				<reportElement x="46" y="0" width="243" height="35" forecolor="#003399" uuid="e83ad3da-7a9b-4758-b9b6-2d33998fcc21"/>
+				<reportElement x="46" y="0" width="242" height="35" forecolor="#003399" uuid="e83ad3da-7a9b-4758-b9b6-2d33998fcc21"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Segoe UI" size="18" isBold="true"/>
 				</textElement>
@@ -146,7 +156,11 @@ FROM
 				<subreportParameter name="supplyCode">
 					<subreportParameterExpression><![CDATA[$F{supplier_sCode}]]></subreportParameterExpression>
 				</subreportParameter>
+				<subreportParameter name="Bulan">
+					<subreportParameterExpression><![CDATA[$P{Bulan}]]></subreportParameterExpression>
+				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<returnValue subreportVariable="Total" toVariable="TOTAL" calculation="Sum"/>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "REPORT_ReInventory.jasper"]]></subreportExpression>
 			</subreport>
 			<textField>
@@ -216,4 +230,28 @@ FROM
 			</staticText>
 		</band>
 	</lastPageFooter>
+	<summary>
+		<band height="23">
+			<textField pattern="#,##0.00">
+				<reportElement x="405" y="2" width="106" height="20" uuid="a433693a-6a70-4ac0-b096-b3c63d75d15e"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Tahoma" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{TOTAL}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="288" y="2" width="117" height="20" uuid="51cec4b6-c7f5-4d97-ae3b-aa7a81a52993"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Tahoma"/>
+				</textElement>
+				<text><![CDATA[Total Pengeluaran : Rp.]]></text>
+			</staticText>
+			<line>
+				<reportElement x="21" y="0" width="533" height="1" uuid="70ebdb82-e909-4bc0-a136-54777ef3e620"/>
+				<graphicElement>
+					<pen lineWidth="2.0" lineStyle="Double"/>
+				</graphicElement>
+			</line>
+		</band>
+	</summary>
 </jasperReport>

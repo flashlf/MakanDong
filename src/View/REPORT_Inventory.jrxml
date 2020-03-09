@@ -2,11 +2,11 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="REP_Inventory" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b8e7868a-bebe-4078-a1d3-f32fed7fc86b">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="7"/>
+	<property name="ireport.y" value="0"/>
 	<style name="AlternativeColor" pattern="">
 		<conditionalStyle>
 			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 1]]></conditionExpression>
-			<style backcolor="#CCFFFF"/>
+			<style backcolor="#CCCCCC"/>
 		</conditionalStyle>
 	</style>
 	<queryString language="SQL">
@@ -70,13 +70,13 @@ FROM
 	<columnHeader>
 		<band height="35" splitType="Stretch">
 			<rectangle>
-				<reportElement x="43" y="0" width="489" height="35" backcolor="#006666" uuid="a3541fa7-18cb-4a36-8fa1-86c409672661"/>
+				<reportElement x="43" y="0" width="489" height="35" backcolor="#000000" uuid="a3541fa7-18cb-4a36-8fa1-86c409672661"/>
 				<graphicElement>
 					<pen lineWidth="0.0"/>
 				</graphicElement>
 			</rectangle>
 			<staticText>
-				<reportElement x="43" y="0" width="68" height="35" forecolor="#FFFFFF" uuid="ac0ae843-18c5-4670-9888-8f3929c3beb0"/>
+				<reportElement mode="Transparent" x="43" y="0" width="68" height="35" forecolor="#FFFFFF" backcolor="#000000" uuid="ac0ae843-18c5-4670-9888-8f3929c3beb0"/>
 				<textElement verticalAlignment="Middle">
 					<font size="14" isBold="true"/>
 					<paragraph leftIndent="10"/>
@@ -84,7 +84,7 @@ FROM
 				<text><![CDATA[Kode]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="111" y="0" width="173" height="35" forecolor="#FFFFFF" uuid="899d5cbd-e807-41a6-8fe0-1d7c2d9c225d"/>
+				<reportElement mode="Transparent" x="111" y="0" width="173" height="35" forecolor="#FFFFFF" backcolor="#000000" uuid="899d5cbd-e807-41a6-8fe0-1d7c2d9c225d"/>
 				<textElement verticalAlignment="Middle">
 					<font size="14" isBold="true"/>
 					<paragraph leftIndent="10"/>
@@ -92,7 +92,7 @@ FROM
 				<text><![CDATA[Nama]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="284" y="0" width="65" height="35" forecolor="#FFFFFF" uuid="8d6cc57e-0f53-44b6-bfba-6535396670c8"/>
+				<reportElement mode="Transparent" x="284" y="0" width="65" height="35" forecolor="#FFFFFF" backcolor="#000000" uuid="8d6cc57e-0f53-44b6-bfba-6535396670c8"/>
 				<textElement verticalAlignment="Middle">
 					<font size="14" isBold="true"/>
 					<paragraph leftIndent="10"/>
@@ -100,7 +100,7 @@ FROM
 				<text><![CDATA[Stok]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="349" y="0" width="76" height="35" forecolor="#FFFFFF" uuid="0ece5924-7258-4101-8658-d2a25260b273"/>
+				<reportElement mode="Transparent" x="349" y="0" width="76" height="35" forecolor="#FFFFFF" backcolor="#000000" uuid="0ece5924-7258-4101-8658-d2a25260b273"/>
 				<textElement verticalAlignment="Middle">
 					<font size="14" isBold="true"/>
 					<paragraph leftIndent="10"/>
@@ -108,7 +108,7 @@ FROM
 				<text><![CDATA[Satuan]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="425" y="0" width="107" height="35" forecolor="#FFFFFF" uuid="7afb739b-0e0e-4f1d-98e2-9a5e2417281d"/>
+				<reportElement mode="Transparent" x="425" y="0" width="107" height="35" forecolor="#FFFFFF" backcolor="#000000" uuid="7afb739b-0e0e-4f1d-98e2-9a5e2417281d"/>
 				<textElement verticalAlignment="Middle">
 					<font size="14" isBold="true"/>
 					<paragraph leftIndent="10"/>

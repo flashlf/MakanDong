@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
+  <Properties>
+    <Property name="defaultCloseOperation" type="int" value="3"/>
+    <Property name="resizable" type="boolean" value="false"/>
+  </Properties>
+  <SyntheticProperties>
+    <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
+    <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
+  </SyntheticProperties>
+  <AuxValues>
+    <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_generateFQN" type="java.lang.Boolean" value="true"/>
+    <AuxValue name="FormSettings_generateMnemonicsCode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_i18nAutoMode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_layoutCodeTarget" type="java.lang.Integer" value="1"/>
+    <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_variablesModifier" type="java.lang.Integer" value="2"/>
+  </AuxValues>
+
+  <Layout>
+    <DimensionLayout dim="0">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
+              <Component id="panelGradient1" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+    <DimensionLayout dim="1">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Component id="panelGradient1" alignment="0" max="32767" attributes="0"/>
+      </Group>
+    </DimensionLayout>
+  </Layout>
+  <SubComponents>
+    <Container class="Model.PanelGradient" name="panelGradient1">
+      <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="ff" green="ff" red="cc" type="rgb"/>
+        </Property>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="ff" green="ff" red="cc" type="rgb"/>
+        </Property>
+        <Property name="backgroundPainted" type="boolean" value="true"/>
+        <Property name="gradientBackgroundColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="cc" green="ff" red="cc" type="rgb"/>
+        </Property>
+        <Property name="gradientFocus" type="int" value="500"/>
+      </Properties>
+      <Events>
+        <EventHandler event="mouseDragged" listener="java.awt.event.MouseMotionListener" parameters="java.awt.event.MouseEvent" handler="panelGradient1MouseDragged"/>
+        <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="panelGradient1MousePressed"/>
+      </Events>
+
+      <Layout>
+        <DimensionLayout dim="0">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                      <Group type="102" attributes="0">
+                          <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
+                          <Component id="btnClose" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <Component id="jLabel1" min="-2" pref="431" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace pref="32" max="32767" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+        <DimensionLayout dim="1">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="btnClose" min="-2" pref="32" max="-2" attributes="0"/>
+                      <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
+                  <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace pref="32" max="32767" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+      </Layout>
+      <SubComponents>
+        <Component class="javax.swing.JLabel" name="jLabel1">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Segoe UI" size="12" style="0"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="&lt;html&gt;  &lt;style&gt;  b {      color: #d65a31; }  i{ padding-left:70px; display:block}  a:link, a:active, a {    text-decoration: none;    color: #d65a31;    font-weight: bold; }  &lt;/style&gt;  &lt;body&gt; &lt;b&gt;MakanDong&lt;/b&gt; merupakan Aplikasi Penjualan untuk Rumah Makan, Program ini dibuat untuk mempermudah pencatatan penjualan serta otomatisasi laporan dan pengelolaan bahan makanan&lt;hr&gt;&lt;br&gt;  Software ini dibuat untuk memenuhi tugas matakuliah &lt;b&gt;Kuliah Kerja Praktek (KKP)&lt;/b&gt; sebagai salah satu syarat untuk menempuh Skripsi S1&lt;br&gt;&lt;center&gt;&lt;h2&gt;Terima Kasih kepada &lt;b&gt;R.E dan R.F&lt;/b&gt; angkatan 2016 atas segala kekompakan dan dukungannya&lt;/h2&gt; Siti Nur Afifah 2016 4350 0317&lt;br&gt;Muhammad Imam Abdullah 2016 4350 0321&lt;br&gt;Majidatun Ni&apos;mah 2016 4350 0326&lt;br&gt;Maulidhya 2016 4350 0329&lt;br&gt;Afrah Fatmawati 2016 4350 0355&lt;br&gt;Shofalina 2016 4350 0385&lt;br&gt;Rizka Lita Syahputri 2016 4350 0388&lt;br&gt;Ersa Putri Utami 2016 4350 0388 &lt;br&gt;&lt;br&gt;&lt;br&gt;  &lt;i&gt;&quot; Buka Mata, Buka Telinga &quot;- LUMEN*&lt;/i&gt; &lt;/center&gt;&lt;br&gt;&lt;hr&gt;&lt;b&gt;CONTACT ME&lt;/b&gt;&lt;br&gt;  &lt;b&gt;Github&lt;/b&gt; : https://github.com/flashlf&lt;br&gt;  &lt;b&gt;Facebook&lt;/b&gt; : https://facebook.com/cmetamorph&lt;br&gt;  &lt;b&gt;Instagram&lt;/b&gt; : @sohpos&lt;br&gt;  &lt;b&gt;E-Mail&lt;/b&gt; : sanghyangismaya@merahputih.id&lt;br&gt;&lt;b&gt;CREDIT Iconpack used&lt;/b&gt;&lt;br&gt; Icons made by &lt;a href=&quot;https://www.flaticon.com/authors/gregor-cresnar&quot; title=&quot;Gregor Cresnar&quot;&gt;Gregor Cresnar&lt;/a&gt; and &lt;a href=&quot;https://www.flaticon.com/authors/freepik&quot; title=&quot;Freepik&quot;&gt;Freepik&lt;/a&gt; from &lt;a href=&quot;https://www.flaticon.com/&quot; title=&quot;Flaticon&quot;&gt; www.flaticon.com&lt;/a&gt;   &lt;/body&gt; &lt;/html&gt;"/>
+            <Property name="verticalAlignment" type="int" value="1"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="jLabel2">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Segoe UI Semibold" size="24" style="0"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="ABOUT MakanDong App"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="btnClose">
+          <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/Img/Icon/32/cancelClicked32.png"/>
+            </Property>
+          </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnCloseMouseClicked"/>
+          </Events>
+        </Component>
+      </SubComponents>
+    </Container>
+  </SubComponents>
+</Form>
