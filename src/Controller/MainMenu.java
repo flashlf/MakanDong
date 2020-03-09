@@ -27,6 +27,7 @@ public class MainMenu extends javax.swing.JFrame {
     Recipe frmRecipe;
     Order frmOrder;
     Supplier frmSupplier;
+    Laporan frmLaporan;
     SimpleDateFormat df;
     Date date;
     String format = "dd MMMMM yyyy";
@@ -419,25 +420,31 @@ public class MainMenu extends javax.swing.JFrame {
     private void btnOrderMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOrderMenuActionPerformed
         frmOrder = new Order();
         frmOrder.setVisible(true);
+        this.setState(ICONIFIED);
     }//GEN-LAST:event_btnOrderMenuActionPerformed
 
     private void btnRecipeMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRecipeMenuActionPerformed
         frmRecipe = new Recipe();
         frmRecipe.setVisible(true);
+        this.setState(ICONIFIED);
     }//GEN-LAST:event_btnRecipeMenuActionPerformed
 
     private void btnInventMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInventMenuActionPerformed
         frmInvent = Inventory.getInstance();
         frmInvent.setVisible(true);
+        this.setState(ICONIFIED);
     }//GEN-LAST:event_btnInventMenuActionPerformed
 
     private void btnSupplierMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSupplierMenuActionPerformed
         frmSupplier = new Supplier();
         frmSupplier.setVisible(true);
+        this.setState(ICONIFIED);
     }//GEN-LAST:event_btnSupplierMenuActionPerformed
 
     private void btnReportMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReportMenuActionPerformed
-        // TODO add your handling code here:
+        frmLaporan = new Laporan();
+        frmLaporan.setVisible(true);
+        this.setState(ICONIFIED);
     }//GEN-LAST:event_btnReportMenuActionPerformed
 
     private void sidePanelMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sidePanelMousePressed
