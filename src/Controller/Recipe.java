@@ -112,12 +112,11 @@ public class Recipe extends javax.swing.JFrame {
         btnList = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("MakanDong | Pengelolaan Resep");
         setResizable(false);
 
         jLabel5.setFont(new java.awt.Font("Segoe UI Semibold", 0, 18)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(0, 153, 153));
         jLabel5.setText("Kode Resep");
 
         txDesc.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
@@ -130,7 +129,6 @@ public class Recipe extends javax.swing.JFrame {
         });
 
         jLabel1.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(0, 153, 153));
         jLabel1.setText("Nama Resep");
 
         txPrice.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
@@ -143,7 +141,6 @@ public class Recipe extends javax.swing.JFrame {
         });
 
         jLabel2.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(0, 153, 153));
         jLabel2.setText("Harga");
 
         tblMateria.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -203,7 +200,6 @@ public class Recipe extends javax.swing.JFrame {
         });
 
         jLabel6.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(0, 153, 153));
         jLabel6.setText("Biaya Produksi");
 
         sugestPrice.setFont(new java.awt.Font("Tahoma", 2, 12)); // NOI18N
@@ -250,7 +246,6 @@ public class Recipe extends javax.swing.JFrame {
         bindingGroup.addBinding(binding);
 
         jLabel7.setFont(new java.awt.Font("Segoe UI Semilight", 1, 16)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(0, 153, 153));
         jLabel7.setText("Resep yang dipilih");
 
         lblSPrice.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
