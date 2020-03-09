@@ -202,7 +202,7 @@ public class ReStockInventory extends javax.swing.JDialog {
        try {
            CONT_RESUPPLY[1] = txTanggal.getText();
            CONT_RESUPPLY[2] = Integer.valueOf(txJumlah.getText().trim());
-           db.insertSQL(CONT_RESUPPLY, "supplyrecord", "sCode");           
+           db.insertSQL(CONT_RESUPPLY, "supplyrecord", "date");           
        } catch(SQLException ex) {
            ex.printStackTrace();
        }

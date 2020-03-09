@@ -78,7 +78,8 @@ public class Supplier extends javax.swing.JFrame {
         cbMCode = new javax.swing.JComboBox<>();
         txMCode = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("MakanDong | Supplier");
         setResizable(false);
 
         txDesc.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -421,10 +422,10 @@ public class Supplier extends javax.swing.JFrame {
         String cari = txSearch.getText();
         try {
             SQL = "SELECT * FROM Supplier WHERE sCode like '%"+cari+"%' "
-                    + "OR mCode like '%"+cari+"%' "
-                    + "OR Deskripsi like '%"+cari+"%' "
-                    + "OR Alamat like '%"+cari+"%' "
-                    + "OR Telephone like '%"+cari+"%' ";
+                + "OR mCode like '%"+cari+"%' "
+                + "OR Deskripsi like '%"+cari+"%' "
+                + "OR Alamat like '%"+cari+"%' "
+                + "OR Telephone like '%"+cari+"%' ";
             tabmode.setRowCount(0);
             tabmode = handlerComp.initTable(tableSupplier, SQL, db, tabmode);
         } catch(Exception ex) {
