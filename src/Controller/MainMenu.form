@@ -174,15 +174,15 @@
                                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                       <Component id="btnInventMenu" max="32767" attributes="0"/>
                                       <Component id="btnRecipeMenu" max="32767" attributes="0"/>
-                                      <Component id="lblLaporan1" alignment="0" min="-2" pref="97" max="-2" attributes="0"/>
-                                      <Component id="lblSupplier1" alignment="0" min="-2" pref="97" max="-2" attributes="0"/>
+                                      <Component id="lblInvent" alignment="0" min="-2" pref="97" max="-2" attributes="0"/>
+                                      <Component id="lblRecipe" alignment="0" min="-2" pref="97" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                       <Component id="btnAbout" max="-2" attributes="0"/>
                                       <Component id="btnOrderMenu" max="-2" attributes="0"/>
-                                      <Component id="lblSupplier2" alignment="0" min="-2" pref="97" max="-2" attributes="0"/>
-                                      <Component id="lblLaporan2" alignment="1" min="-2" pref="97" max="-2" attributes="0"/>
+                                      <Component id="lblOrder" alignment="0" min="-2" pref="97" max="-2" attributes="0"/>
+                                      <Component id="lblAbout" alignment="1" min="-2" pref="97" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
@@ -227,8 +227,8 @@
                   <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="lblSupplier" alignment="3" min="-2" pref="14" max="-2" attributes="0"/>
-                      <Component id="lblSupplier1" alignment="3" min="-2" pref="14" max="-2" attributes="0"/>
-                      <Component id="lblSupplier2" alignment="3" min="-2" pref="14" max="-2" attributes="0"/>
+                      <Component id="lblRecipe" alignment="3" min="-2" pref="14" max="-2" attributes="0"/>
+                      <Component id="lblOrder" alignment="3" min="-2" pref="14" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
@@ -239,8 +239,8 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="lblLaporan" alignment="3" min="-2" pref="14" max="-2" attributes="0"/>
-                      <Component id="lblLaporan1" alignment="3" min="-2" pref="14" max="-2" attributes="0"/>
-                      <Component id="lblLaporan2" alignment="3" min="-2" pref="14" max="-2" attributes="0"/>
+                      <Component id="lblInvent" alignment="3" min="-2" pref="14" max="-2" attributes="0"/>
+                      <Component id="lblAbout" alignment="3" min="-2" pref="14" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
@@ -279,7 +279,7 @@
             <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;a href=&quot;https://github.com/flashlf/MakanDong&quot; style=&quot;text-decoration:none; color:white;&quot;&gt;MakanDongs Apps Version 1.0&lt;/a&gt;&lt;/html&gt;"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="lblLaporan1">
+        <Component class="javax.swing.JLabel" name="lblInvent">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="11" style="0"/>
@@ -328,7 +328,7 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAboutActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JLabel" name="lblLaporan2">
+        <Component class="javax.swing.JLabel" name="lblAbout">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="11" style="0"/>
@@ -443,7 +443,7 @@
             </Property>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="lblSupplier2">
+        <Component class="javax.swing.JLabel" name="lblOrder">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="11" style="0"/>
@@ -519,7 +519,7 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnRecipeMenuActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JLabel" name="lblSupplier1">
+        <Component class="javax.swing.JLabel" name="lblRecipe">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="11" style="0"/>
@@ -528,7 +528,7 @@
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
-            <Property name="text" type="java.lang.String" value="Resep"/>
+            <Property name="text" type="java.lang.String" value="Resep Makanan"/>
             <Property name="horizontalTextPosition" type="int" value="0"/>
             <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
               <Dimension value="[39, 14]"/>

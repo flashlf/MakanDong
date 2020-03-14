@@ -29,6 +29,7 @@ public class Recipe extends javax.swing.JFrame {
     RecipeMaterial RMDialog;
     RecipeList RLDialog;
     Inventory FrmInvent;
+    MainMenu mmInstance;
     
     public static Double SPrice = 0.0;
     public String SQL;
@@ -40,6 +41,7 @@ public class Recipe extends javax.swing.JFrame {
         ((AbstractDocument) txFCode.getDocument()).setDocumentFilter(new HandlerComponent.LimitInput(4));
         RMDialog = new RecipeMaterial(this, true);
         RLDialog = new RecipeList(this, true);
+        setLocationRelativeTo(null);
     }
     
     public void hitungCost() {
@@ -79,6 +81,7 @@ public class Recipe extends javax.swing.JFrame {
                 }
             } catch (SQLException ex) {
                 ex.printStackTrace();
+                JOptionPane.showMessageDialog(null, "Kode resep tidak ditemukan \nHarap gunakan Fitur List Resep.");
             }
     }
     /**
@@ -115,12 +118,16 @@ public class Recipe extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("MakanDong | Pengelolaan Resep");
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jLabel5.setFont(new java.awt.Font("Segoe UI Semibold", 0, 18)); // NOI18N
         jLabel5.setText("Kode Resep");
 
         txDesc.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
-        txDesc.setText("jTextField1");
         txDesc.setMargin(new java.awt.Insets(2, 7, 2, 7));
         txDesc.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
@@ -132,7 +139,6 @@ public class Recipe extends javax.swing.JFrame {
         jLabel1.setText("Nama Resep");
 
         txPrice.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
-        txPrice.setText("jTextField1");
         txPrice.setMargin(new java.awt.Insets(2, 7, 2, 7));
         txPrice.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
@@ -479,6 +485,11 @@ public class Recipe extends javax.swing.JFrame {
             btnList.setEnabled(false);
         }
     }//GEN-LAST:event_btnListActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        mmInstance = MainMenu.getInstance();
+        mmInstance.setState(NORMAL); mmInstance.setVisible(true);
+    }//GEN-LAST:event_formWindowClosing
 
     public void addMateriaToTable(Object[] DATA){
         tabmode.addRow(DATA);

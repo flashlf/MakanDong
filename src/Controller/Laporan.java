@@ -19,35 +19,55 @@ public class Laporan extends javax.swing.JFrame {
     Boolean periode = false;
     Database db = new Database();
     String nmLaporan = "";
+    MainMenu mmInstance;
+    private static Laporan lapInstance = null;
     /**
      * Creates new form Laporan
      */
-    public Laporan() {
+    private Laporan() {
         initComponents();
         this.setLocationRelativeTo(null);
     }
-    void printLaporan() throws SQLException{
+    public static Laporan getInstance() {
+        if(lapInstance == null)
+            lapInstance = new Laporan();
+        return lapInstance;
+    }
+    public int printLaporan() throws SQLException{
         Model.HandlerComponent.Report jReport = new HandlerComponent.Report();
         if(restock.isSelected()) {
             nmLaporan = "REPORT_HeadReInvent";
+            if(!cbTahun.isSelected()) {
+                JOptionPane.showMessageDialog(null, "Silahkan Pilih Tahun Laporan");
+                return 0;
+            } else {
+                jReport.setParam("Tahun", Integer.valueOf(tahun.getText()));                
+            }
+            if(!cbBulan.isSelected()) 
+                jReport.setParam("Bulan", 0);
+            else
+                jReport.setParam("Bulan", bulan.getSelectedIndex()+1);
             jReport.setParam("Tahun", Integer.valueOf(tahun.getText()));
-            jReport.setParam("Bulan", bulan.getSelectedIndex()+1);
             jReport.setParam("KodeSupplier", JOptionPane.showInputDialog("Masukkan Kode Supplier\n*note : kosongkan untuk print semua"));
+            jReport.setFileName(nmLaporan);
+            jReport.printReport();
         }
         if(dataBarang.isSelected()) {
             nmLaporan = "REPORT_Inventory";
-            
+            jReport.setFileName(nmLaporan);
+            jReport.printReport();
         }
         if(dataSupplier.isSelected()) {
             nmLaporan = "REPORT_Supplier";
+            jReport.setFileName(nmLaporan);
+            jReport.printReport();
         }
         if(dataPesanan.isSelected()) {
             nmLaporan = "REPORT_Order";
-            
+            jReport.setFileName(nmLaporan);
+            jReport.printReport();
         }
-        jReport.setFileName(nmLaporan);
-        jReport.printReport();
-            
+        return 1;    
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -67,7 +87,7 @@ public class Laporan extends javax.swing.JFrame {
         restock = new javax.swing.JRadioButton();
         dataSupplier = new javax.swing.JRadioButton();
         jLabel2 = new javax.swing.JLabel();
-        btnClose = new javax.swing.JLabel();
+        lblClose = new javax.swing.JLabel();
         pnlPeriode = new javax.swing.JPanel();
         cbTahun = new javax.swing.JCheckBox();
         cbBulan = new javax.swing.JCheckBox();
@@ -167,13 +187,13 @@ public class Laporan extends javax.swing.JFrame {
         jLabel2.setForeground(new java.awt.Color(0, 0, 51));
         jLabel2.setText("Laporan");
 
-        btnClose.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        btnClose.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/Icon/32/cancel32.png"))); // NOI18N
-        btnClose.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        btnClose.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        btnClose.addMouseListener(new java.awt.event.MouseAdapter() {
+        lblClose.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lblClose.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/Icon/32/cancel32.png"))); // NOI18N
+        lblClose.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        lblClose.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        lblClose.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnCloseMouseClicked(evt);
+                lblCloseMouseClicked(evt);
             }
         });
 
@@ -264,7 +284,7 @@ public class Laporan extends javax.swing.JFrame {
                             .addComponent(pnlTipeLaporan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addComponent(btnPrint, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnClose)
+                .addComponent(lblClose)
                 .addGap(32, 32, 32))
         );
         panelGradient1Layout.setVerticalGroup(
@@ -273,9 +293,9 @@ public class Laporan extends javax.swing.JFrame {
                 .addGap(32, 32, 32)
                 .addGroup(panelGradient1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelGradient1Layout.createSequentialGroup()
-                        .addGroup(panelGradient1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnClose, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(panelGradient1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblClose, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(pnlTipeLaporan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel1))
@@ -300,9 +320,11 @@ public class Laporan extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnCloseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCloseMouseClicked
-        this.dispose();
-    }//GEN-LAST:event_btnCloseMouseClicked
+    private void lblCloseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCloseMouseClicked
+        mmInstance = MainMenu.getInstance();
+        mmInstance.setState(NORMAL); mmInstance.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_lblCloseMouseClicked
 
     private void cbTahunItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbTahunItemStateChanged
         if(!cbTahun.isSelected()){
@@ -325,6 +347,7 @@ public class Laporan extends javax.swing.JFrame {
 
     private void btnPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrintActionPerformed
             try {
+                
                 printLaporan();
             } catch(SQLException ex) {
                 ex.printStackTrace();
@@ -381,7 +404,6 @@ public class Laporan extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel btnClose;
     private javax.swing.JButton btnPrint;
     private javax.swing.JComboBox<String> bulan;
     private javax.swing.JCheckBox cbBulan;
@@ -391,6 +413,7 @@ public class Laporan extends javax.swing.JFrame {
     private javax.swing.JRadioButton dataSupplier;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel lblClose;
     private Model.PanelGradient panelGradient1;
     private javax.swing.JPanel pnlPeriode;
     private javax.swing.JPanel pnlTipeLaporan;

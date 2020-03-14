@@ -34,6 +34,7 @@ public class Order extends javax.swing.JFrame {
     HandlerComponent handlerComp;
     ImageIcon[] food = new ImageIcon[16], beve = new ImageIcon[5];
     ResultSet RSET;
+    MainMenu mmInstance;
     public String SQL;
     public static String[] DATAF = new String[50], DATAB = new String[50];
     public int noOrder=1;
@@ -53,6 +54,7 @@ public class Order extends javax.swing.JFrame {
      */
     public Order() {
         initComponents();
+        mmInstance = MainMenu.getInstance();
         df = new SimpleDateFormat("yyyy-MM-dd");
         dtChooser.setDateFormat(df);
         dtChooser.setText(date.getYear()+"-"+(date.getMonth()+1)+"-"+date.getDate());
@@ -73,6 +75,7 @@ public class Order extends javax.swing.JFrame {
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
+        setLocationRelativeTo(null);
     }
     
     public void hitungCost() {
@@ -180,6 +183,11 @@ public class Order extends javax.swing.JFrame {
         setTitle("MakanDong | Form Pemesanan");
         setBackground(new java.awt.Color(255, 255, 255));
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         pnlFood.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
 
@@ -842,6 +850,10 @@ public class Order extends javax.swing.JFrame {
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
         clearOrder(); txOrderCode.requestFocus();
     }//GEN-LAST:event_btnCancelActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        mmInstance.setState(NORMAL); mmInstance.setVisible(true);
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments

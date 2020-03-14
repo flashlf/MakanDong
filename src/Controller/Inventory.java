@@ -23,7 +23,7 @@ public class Inventory extends javax.swing.JFrame {
     HandlerComponent handlerComp;
     HandlerComponent.LimitInput LI;
     ResultSet RSET;
-    
+    MainMenu mmInstance;
     public String SQL;
     public static boolean getData = false;
     private static Inventory invInstance = null;
@@ -104,6 +104,11 @@ public class Inventory extends javax.swing.JFrame {
         setPreferredSize(new java.awt.Dimension(447, 507));
         setResizable(false);
         setSize(new java.awt.Dimension(447, 510));
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
         addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 formKeyTyped(evt);
@@ -495,6 +500,11 @@ public class Inventory extends javax.swing.JFrame {
             || (vchar == KeyEvent.VK_PERIOD))
             evt.consume();
     }//GEN-LAST:event_txHargaKeyTyped
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        mmInstance = MainMenu.getInstance();
+        mmInstance.setState(NORMAL); mmInstance.setVisible(true);
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments

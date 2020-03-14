@@ -27,10 +27,12 @@ public class MainMenu extends javax.swing.JFrame {
     int mosX, mosY;
     public String UID;
     public String USER;
+    private Integer LEVEL;
+    private static MainMenu mmInstance = null;
     /**
      * Creates new form MainMenu
      */
-    public MainMenu() {   
+    private MainMenu() {   
         date = new Date();
         //UID = "N/A"; USER = "N/A";
         df = new SimpleDateFormat(format, new Locale("id", "ID"));
@@ -50,12 +52,49 @@ public class MainMenu extends javax.swing.JFrame {
         lblUserPlaceHolder.setText("User ID : "+UID);
         setLocationRelativeTo(null);
     }
+    public static MainMenu getInstance() {
+        if(mmInstance == null) 
+            mmInstance = new MainMenu();
+        return mmInstance;
+    }
     public void setUID(String aUID) {
         UID = aUID;
     }
 
     public void setUSER(String aUSER) {
         USER = aUSER;
+    }
+    
+    public void setLEVEL(Integer LEVEL) {
+        this.LEVEL = LEVEL;
+    }
+    
+    private void logout() {
+        setUID(""); setUSER("");
+        setLEVEL(0);
+    }
+    protected void setMenu() {
+        if(LEVEL == 1) {
+            btnSupplierMenu.setVisible(false);
+            lblSupplier.setVisible(false);
+            btnReportMenu.setVisible(false);
+            lblLaporan.setVisible(false);
+        }
+        if(LEVEL == 0 ) {
+            btnSupplierMenu.setVisible(true);
+            lblSupplier.setVisible(true);
+            btnInventMenu.setVisible(true);
+            lblInvent.setVisible(true);
+            btnOrderMenu.setVisible(true);
+            lblOrder.setVisible(true);
+            btnRecipeMenu.setVisible(true);
+            lblRecipe.setVisible(true);
+            btnReportMenu.setVisible(true);
+            lblLaporan.setVisible(true);
+        }
+        if(LEVEL == 2) {
+            
+        }
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -75,17 +114,17 @@ public class MainMenu extends javax.swing.JFrame {
         panelGradient1 = new Model.PanelGradient();
         jLabel4 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        lblLaporan1 = new javax.swing.JLabel();
+        lblInvent = new javax.swing.JLabel();
         btnAbout = new javax.swing.JButton();
-        lblLaporan2 = new javax.swing.JLabel();
+        lblAbout = new javax.swing.JLabel();
         lblLaporan = new javax.swing.JLabel();
         btnReportMenu = new javax.swing.JButton();
         btnSupplierMenu = new javax.swing.JButton();
         lblSupplier = new javax.swing.JLabel();
-        lblSupplier2 = new javax.swing.JLabel();
+        lblOrder = new javax.swing.JLabel();
         btnOrderMenu = new javax.swing.JButton();
         btnRecipeMenu = new javax.swing.JButton();
-        lblSupplier1 = new javax.swing.JLabel();
+        lblRecipe = new javax.swing.JLabel();
         btnInventMenu = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
@@ -180,14 +219,14 @@ public class MainMenu extends javax.swing.JFrame {
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("<html><a href=\"https://github.com/flashlf/MakanDong\" style=\"text-decoration:none; color:white;\">MakanDongs Apps Version 1.0</a></html>");
 
-        lblLaporan1.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
-        lblLaporan1.setForeground(new java.awt.Color(255, 255, 255));
-        lblLaporan1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblLaporan1.setText("Inventory");
-        lblLaporan1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        lblLaporan1.setMaximumSize(new java.awt.Dimension(39, 14));
-        lblLaporan1.setMinimumSize(new java.awt.Dimension(39, 14));
-        lblLaporan1.setPreferredSize(new java.awt.Dimension(39, 14));
+        lblInvent.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
+        lblInvent.setForeground(new java.awt.Color(255, 255, 255));
+        lblInvent.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblInvent.setText("Inventory");
+        lblInvent.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        lblInvent.setMaximumSize(new java.awt.Dimension(39, 14));
+        lblInvent.setMinimumSize(new java.awt.Dimension(39, 14));
+        lblInvent.setPreferredSize(new java.awt.Dimension(39, 14));
 
         btnAbout.setBackground(new java.awt.Color(255, 255, 255));
         btnAbout.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/Icon/64/about64.png"))); // NOI18N
@@ -203,14 +242,14 @@ public class MainMenu extends javax.swing.JFrame {
             }
         });
 
-        lblLaporan2.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
-        lblLaporan2.setForeground(new java.awt.Color(255, 255, 255));
-        lblLaporan2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblLaporan2.setText("Tentang Aplikasi");
-        lblLaporan2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        lblLaporan2.setMaximumSize(new java.awt.Dimension(39, 14));
-        lblLaporan2.setMinimumSize(new java.awt.Dimension(39, 14));
-        lblLaporan2.setPreferredSize(new java.awt.Dimension(39, 14));
+        lblAbout.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
+        lblAbout.setForeground(new java.awt.Color(255, 255, 255));
+        lblAbout.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblAbout.setText("Tentang Aplikasi");
+        lblAbout.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        lblAbout.setMaximumSize(new java.awt.Dimension(39, 14));
+        lblAbout.setMinimumSize(new java.awt.Dimension(39, 14));
+        lblAbout.setPreferredSize(new java.awt.Dimension(39, 14));
 
         lblLaporan.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
         lblLaporan.setForeground(new java.awt.Color(255, 255, 255));
@@ -259,14 +298,14 @@ public class MainMenu extends javax.swing.JFrame {
         lblSupplier.setMinimumSize(new java.awt.Dimension(39, 14));
         lblSupplier.setPreferredSize(new java.awt.Dimension(39, 14));
 
-        lblSupplier2.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
-        lblSupplier2.setForeground(new java.awt.Color(255, 255, 255));
-        lblSupplier2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblSupplier2.setText("Pesanan");
-        lblSupplier2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        lblSupplier2.setMaximumSize(new java.awt.Dimension(39, 14));
-        lblSupplier2.setMinimumSize(new java.awt.Dimension(39, 14));
-        lblSupplier2.setPreferredSize(new java.awt.Dimension(39, 14));
+        lblOrder.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
+        lblOrder.setForeground(new java.awt.Color(255, 255, 255));
+        lblOrder.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblOrder.setText("Pesanan");
+        lblOrder.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        lblOrder.setMaximumSize(new java.awt.Dimension(39, 14));
+        lblOrder.setMinimumSize(new java.awt.Dimension(39, 14));
+        lblOrder.setPreferredSize(new java.awt.Dimension(39, 14));
 
         btnOrderMenu.setBackground(new java.awt.Color(255, 204, 204));
         btnOrderMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/Icon/64/shopping64.png"))); // NOI18N
@@ -296,14 +335,14 @@ public class MainMenu extends javax.swing.JFrame {
             }
         });
 
-        lblSupplier1.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
-        lblSupplier1.setForeground(new java.awt.Color(255, 255, 255));
-        lblSupplier1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblSupplier1.setText("Resep");
-        lblSupplier1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        lblSupplier1.setMaximumSize(new java.awt.Dimension(39, 14));
-        lblSupplier1.setMinimumSize(new java.awt.Dimension(39, 14));
-        lblSupplier1.setPreferredSize(new java.awt.Dimension(39, 14));
+        lblRecipe.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
+        lblRecipe.setForeground(new java.awt.Color(255, 255, 255));
+        lblRecipe.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblRecipe.setText("Resep Makanan");
+        lblRecipe.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        lblRecipe.setMaximumSize(new java.awt.Dimension(39, 14));
+        lblRecipe.setMinimumSize(new java.awt.Dimension(39, 14));
+        lblRecipe.setPreferredSize(new java.awt.Dimension(39, 14));
 
         btnInventMenu.setBackground(new java.awt.Color(204, 204, 204));
         btnInventMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/Icon/64/box64.png"))); // NOI18N
@@ -344,14 +383,14 @@ public class MainMenu extends javax.swing.JFrame {
                                 .addGroup(panelGradient1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(btnInventMenu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(btnRecipeMenu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(lblLaporan1, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lblSupplier1, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(lblInvent, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lblRecipe, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(35, 35, 35)
                                 .addGroup(panelGradient1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(btnAbout, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(btnOrderMenu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lblSupplier2, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lblLaporan2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(lblOrder, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lblAbout, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(35, 35, 35)
                                 .addGroup(panelGradient1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(btnSupplierMenu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -384,8 +423,8 @@ public class MainMenu extends javax.swing.JFrame {
                 .addGap(9, 9, 9)
                 .addGroup(panelGradient1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblSupplier, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblSupplier1, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblSupplier2, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblRecipe, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblOrder, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(39, 39, 39)
                 .addGroup(panelGradient1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnAbout, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -394,8 +433,8 @@ public class MainMenu extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelGradient1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblLaporan, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblLaporan1, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblLaporan2, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblInvent, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblAbout, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(32, 32, 32)
                 .addGroup(panelGradient1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -447,7 +486,7 @@ public class MainMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSupplierMenuActionPerformed
 
     private void btnReportMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReportMenuActionPerformed
-        frmLaporan = new Laporan();
+        frmLaporan = Laporan.getInstance();
         frmLaporan.setVisible(true);
         this.setState(ICONIFIED);
     }//GEN-LAST:event_btnReportMenuActionPerformed
@@ -526,12 +565,12 @@ public class MainMenu extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JLabel lblAbout;
+    private javax.swing.JLabel lblInvent;
     private javax.swing.JLabel lblLaporan;
-    private javax.swing.JLabel lblLaporan1;
-    private javax.swing.JLabel lblLaporan2;
+    private javax.swing.JLabel lblOrder;
+    private javax.swing.JLabel lblRecipe;
     private javax.swing.JLabel lblSupplier;
-    private javax.swing.JLabel lblSupplier1;
-    private javax.swing.JLabel lblSupplier2;
     private javax.swing.JLabel lblUser;
     private javax.swing.JLabel lblUserPlaceHolder;
     private Model.PanelGradient panelGradient1;

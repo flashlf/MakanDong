@@ -21,7 +21,7 @@ public class Login extends javax.swing.JFrame {
     private static String USERNAME, PASSWORD;
     Connection CONN;
     Database db = new Database();
-    //MainMenu mm = new MainMenu();
+    MainMenu mm;
     public static String getUSERNAME() {
         return USERNAME;
     }
@@ -71,9 +71,11 @@ public class Login extends javax.swing.JFrame {
             SQL = db.getSQL();
             if(SQL.first()) {
                 lblUser.setText("Logged in with UID : "+SQL.getString(1));
-                MainMenu mm = new MainMenu(SQL.getString(2),SQL.getString(1));
+                mm = MainMenu.getInstance();
                 mm.setUID(SQL.getString(1));
                 mm.setUSER(SQL.getString(2));
+                mm.setLEVEL(SQL.getInt(4));
+                mm.setMenu();
                 mm.setVisible(true);
                 this.dispose();
             } else {

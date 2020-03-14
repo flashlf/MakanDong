@@ -33,7 +33,11 @@ public class About extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         btnClose = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setMaximumSize(new java.awt.Dimension(500, 596));
+        setMinimumSize(new java.awt.Dimension(500, 596));
+        setUndecorated(true);
+        setPreferredSize(new java.awt.Dimension(500, 596));
         setResizable(false);
 
         panelGradient1.setBackground(new java.awt.Color(204, 255, 255));
@@ -41,6 +45,9 @@ public class About extends javax.swing.JFrame {
         panelGradient1.setBackgroundPainted(true);
         panelGradient1.setGradientBackgroundColor(new java.awt.Color(204, 255, 204));
         panelGradient1.setGradientFocus(500);
+        panelGradient1.setMaximumSize(new java.awt.Dimension(500, 596));
+        panelGradient1.setMinimumSize(new java.awt.Dimension(500, 596));
+        panelGradient1.setPreferredSize(new java.awt.Dimension(500, 596));
         panelGradient1.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseDragged(java.awt.event.MouseEvent evt) {
                 panelGradient1MouseDragged(evt);
@@ -78,7 +85,7 @@ public class About extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnClose))
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 431, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(32, Short.MAX_VALUE))
+                .addContainerGap(37, Short.MAX_VALUE))
         );
         panelGradient1Layout.setVerticalGroup(
             panelGradient1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -89,7 +96,7 @@ public class About extends javax.swing.JFrame {
                     .addComponent(jLabel2))
                 .addGap(19, 19, 19)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(32, Short.MAX_VALUE))
+                .addContainerGap(35, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
