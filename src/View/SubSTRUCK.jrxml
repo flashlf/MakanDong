@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="subStruckOrder" language="groovy" pageWidth="226" pageHeight="255" orientation="Landscape" columnWidth="226" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="13def9d4-cb1b-41eb-8ebe-cad86b53127a">
-	<property name="ireport.zoom" value="5.856400000000005"/>
-	<property name="ireport.x" value="13"/>
+	<property name="ireport.zoom" value="3.0"/>
+	<property name="ireport.x" value="163"/>
 	<property name="ireport.y" value="0"/>
 	<style name="AlternateColor">
 		<conditionalStyle>
@@ -75,9 +75,9 @@ WHERE
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="13">
+		<band height="11">
 			<textField>
-				<reportElement style="AlternateColor" mode="Opaque" x="19" y="0" width="85" height="13" uuid="0fd1fdff-3369-46f2-88c0-590e2098613c"/>
+				<reportElement style="AlternateColor" mode="Opaque" x="19" y="0" width="85" height="10" uuid="0fd1fdff-3369-46f2-88c0-590e2098613c"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Segoe UI" size="5"/>
 					<paragraph leftIndent="10"/>
@@ -85,7 +85,7 @@ WHERE
 				<textFieldExpression><![CDATA[$F{Makanan}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="AlternateColor" mode="Opaque" x="104" y="0" width="28" height="13" uuid="920a8d5b-1662-420b-89ef-241046f25b79"/>
+				<reportElement style="AlternateColor" mode="Opaque" x="104" y="0" width="28" height="10" uuid="920a8d5b-1662-420b-89ef-241046f25b79"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Segoe UI" size="5"/>
 					<paragraph leftIndent="5"/>
@@ -93,7 +93,7 @@ WHERE
 				<textFieldExpression><![CDATA[$F{Jumlah}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0">
-				<reportElement style="AlternateColor" mode="Opaque" x="132" y="0" width="46" height="13" uuid="ddce0ad7-0114-479f-9f1e-d357a6b98f5d"/>
+				<reportElement style="AlternateColor" mode="Opaque" x="132" y="0" width="46" height="10" uuid="ddce0ad7-0114-479f-9f1e-d357a6b98f5d"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Segoe UI" size="5"/>
 					<paragraph leftIndent="5"/>
@@ -101,7 +101,7 @@ WHERE
 				<textFieldExpression><![CDATA[$F{Harga}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0">
-				<reportElement style="AlternateColor" mode="Opaque" x="178" y="0" width="48" height="13" uuid="4b2a77fe-b2ff-458e-b4e8-2e85a4237d86"/>
+				<reportElement style="AlternateColor" mode="Opaque" x="178" y="0" width="48" height="10" uuid="4b2a77fe-b2ff-458e-b4e8-2e85a4237d86"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Segoe UI" size="5"/>
 					<paragraph leftIndent="5"/>
@@ -109,13 +109,19 @@ WHERE
 				<textFieldExpression><![CDATA[$F{Jumlah}*$F{Harga}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="AlternateColor" mode="Opaque" x="0" y="0" width="19" height="13" uuid="864b88ab-d6d8-4387-89e0-7a0d903e6d0f"/>
+				<reportElement style="AlternateColor" mode="Opaque" x="0" y="0" width="19" height="10" uuid="864b88ab-d6d8-4387-89e0-7a0d903e6d0f"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Segoe UI" size="5"/>
 					<paragraph leftIndent="5"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{COLUMN_COUNT}]]></textFieldExpression>
 			</textField>
+			<line>
+				<reportElement x="0" y="10" width="226" height="1" uuid="a0fced49-1b22-4373-a72a-8249f383aece"/>
+				<graphicElement>
+					<pen lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
 		</band>
 	</detail>
 </jasperReport>

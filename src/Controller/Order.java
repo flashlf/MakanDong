@@ -35,6 +35,7 @@ public class Order extends javax.swing.JFrame {
     ImageIcon[] food = new ImageIcon[16], beve = new ImageIcon[5];
     ResultSet RSET;
     MainMenu mmInstance;
+    int mosX, mosY;
     public String SQL;
     public static String[] DATAF = new String[50], DATAB = new String[50];
     public int noOrder=1;
@@ -72,6 +73,7 @@ public class Order extends javax.swing.JFrame {
             handlerComp.initComboBox(cbMenuBeve, SQL, db, DATAB);
             status = true;
             System.out.println(date.toString());
+            txOrderCode.setText(db.generateOrderID());
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
@@ -119,13 +121,13 @@ public class Order extends javax.swing.JFrame {
         return result;
     }
     void clearOrder() {
-        txDownPayment.setText("");
-        txOrderCode.setText("\r");
-        txOrderName.setText("");
-        tbModOrder.setRowCount(0); lblTotalCost.setText("0.0");
-        txQtyBeve.setText("0"); txQtyFood.setText("0");
-        cbMenuBeve.setSelectedIndex(0); cbMenuFood.setSelectedIndex(0);
-        noOrder = 1;
+            txDownPayment.setText("");        
+            txOrderCode.setText(db.generateOrderID());
+            txOrderName.setText("");
+            tbModOrder.setRowCount(0); lblTotalCost.setText("0.0");
+            txQtyBeve.setText("1"); txQtyFood.setText("1");
+            cbMenuBeve.setSelectedIndex(0); cbMenuFood.setSelectedIndex(0);
+            noOrder = 1;            
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -137,6 +139,8 @@ public class Order extends javax.swing.JFrame {
     private void initComponents() {
 
         orderType = new javax.swing.ButtonGroup();
+        pnlMain = new Model.PanelGradient();
+        jLabel10 = new javax.swing.JLabel();
         pnlFood = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         txQtyFood = new javax.swing.JTextField();
@@ -157,31 +161,32 @@ public class Order extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         lPriceBeve = new javax.swing.JLabel();
         bvContainer = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        txOrderCode = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblOrder = new javax.swing.JTable();
-        btnRemoveItem = new javax.swing.JButton();
-        btnConfirmItem = new javax.swing.JButton();
-        jLabel9 = new javax.swing.JLabel();
+        lblNomorOrder = new javax.swing.JLabel();
+        txOrderCode = new javax.swing.JTextField();
+        lblTanggal = new javax.swing.JLabel();
         dtChooser = new datechooser.beans.DateChooserCombo();
-        jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         txOrderName = new javax.swing.JTextField();
-        jLabel12 = new javax.swing.JLabel();
+        lblSumCost = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         lblTotalCost = new javax.swing.JLabel();
-        jLabel14 = new javax.swing.JLabel();
+        lblTipeOrder = new javax.swing.JLabel();
         normal = new javax.swing.JRadioButton();
         catering = new javax.swing.JRadioButton();
         jLabel15 = new javax.swing.JLabel();
         txDownPayment = new javax.swing.JTextField();
+        btnConfirmItem = new javax.swing.JButton();
         btnCancel = new javax.swing.JButton();
-        jLabel16 = new javax.swing.JLabel();
+        btnRemoveItem = new javax.swing.JButton();
+        lblDaftarPesanan = new javax.swing.JLabel();
+        btnClose = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("MakanDong | Form Pemesanan");
         setBackground(new java.awt.Color(255, 255, 255));
+        setUndecorated(true);
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
@@ -189,14 +194,34 @@ public class Order extends javax.swing.JFrame {
             }
         });
 
-        pnlFood.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        pnlMain.setBackground(new java.awt.Color(157, 11, 11));
+        pnlMain.setGradientBackgroundColor(new java.awt.Color(235, 130, 66));
+        pnlMain.setGradientFocus(300);
+        pnlMain.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                pnlMainMouseDragged(evt);
+            }
+        });
+        pnlMain.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                pnlMainMousePressed(evt);
+            }
+        });
+
+        jLabel10.setFont(new java.awt.Font("Segoe UI Semibold", 0, 24)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel10.setText("Order Form");
+
+        pnlFood.setBackground(new java.awt.Color(218, 45, 45));
+        pnlFood.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(157, 11, 11), 1, true));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(246, 218, 99));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel1.setText("Qty");
 
         txQtyFood.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        txQtyFood.setText("0");
+        txQtyFood.setText("1");
         txQtyFood.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txQtyFoodKeyTyped(evt);
@@ -204,6 +229,7 @@ public class Order extends javax.swing.JFrame {
         });
 
         jLabel3.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(246, 218, 99));
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel3.setText("Menu");
         jLabel3.setPreferredSize(new java.awt.Dimension(45, 20));
@@ -216,9 +242,10 @@ public class Order extends javax.swing.JFrame {
         });
 
         jLabel5.setFont(new java.awt.Font("Segoe UI Semibold", 0, 18)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(246, 218, 99));
         jLabel5.setText("Makanan");
 
-        btnAddFood.setText("Add");
+        btnAddFood.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/Icon/16/add16.png"))); // NOI18N
         btnAddFood.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAddFoodActionPerformed(evt);
@@ -226,13 +253,16 @@ public class Order extends javax.swing.JFrame {
         });
 
         jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(246, 218, 99));
         jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel8.setText("Rp.");
 
         lPriceFood.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        lPriceFood.setForeground(new java.awt.Color(246, 218, 99));
         lPriceFood.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lPriceFood.setText("5000.0");
 
+        fdContainer.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         fdContainer.setIconTextGap(0);
 
         javax.swing.GroupLayout pnlFoodLayout = new javax.swing.GroupLayout(pnlFood);
@@ -284,9 +314,11 @@ public class Order extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        pnlDrink.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        pnlDrink.setBackground(new java.awt.Color(218, 45, 45));
+        pnlDrink.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(157, 11, 11), 1, true));
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(246, 218, 99));
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel2.setText("Rp.");
 
@@ -298,13 +330,15 @@ public class Order extends javax.swing.JFrame {
         });
 
         lMenuBeve.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
+        lMenuBeve.setForeground(new java.awt.Color(246, 218, 99));
         lMenuBeve.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lMenuBeve.setText("Menu");
 
         jLabel6.setFont(new java.awt.Font("Segoe UI Semibold", 0, 18)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(246, 218, 99));
         jLabel6.setText("Minuman");
 
-        btnAddBeve.setText("Add");
+        btnAddBeve.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/Icon/16/add16.png"))); // NOI18N
         btnAddBeve.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAddBeveActionPerformed(evt);
@@ -312,7 +346,12 @@ public class Order extends javax.swing.JFrame {
         });
 
         txQtyBeve.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        txQtyBeve.setText("0");
+        txQtyBeve.setText("1");
+        txQtyBeve.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txQtyBeveActionPerformed(evt);
+            }
+        });
         txQtyBeve.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txQtyBeveKeyTyped(evt);
@@ -320,12 +359,16 @@ public class Order extends javax.swing.JFrame {
         });
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(246, 218, 99));
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel7.setText("Qty");
 
         lPriceBeve.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        lPriceBeve.setForeground(new java.awt.Color(246, 218, 99));
         lPriceBeve.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lPriceBeve.setText("3000.0");
+
+        bvContainer.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
         javax.swing.GroupLayout pnlDrinkLayout = new javax.swing.GroupLayout(pnlDrink);
         pnlDrink.setLayout(pnlDrinkLayout);
@@ -336,21 +379,21 @@ public class Order extends javax.swing.JFrame {
                 .addGroup(pnlDrinkLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(bvContainer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(cbMenuBeve, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlDrinkLayout.createSequentialGroup()
                         .addComponent(lMenuBeve, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(lPriceBeve, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 20, Short.MAX_VALUE))
+                        .addGap(0, 8, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlDrinkLayout.createSequentialGroup()
                         .addGap(2, 2, 2)
                         .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(txQtyBeve, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnAddBeve))
-                    .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(btnAddBeve, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(16, 16, 16))
         );
         pnlDrinkLayout.setVerticalGroup(
@@ -359,7 +402,7 @@ public class Order extends javax.swing.JFrame {
                 .addGap(16, 16, 16)
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(bvContainer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(bvContainer, javax.swing.GroupLayout.DEFAULT_SIZE, 85, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlDrinkLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lMenuBeve)
@@ -374,17 +417,6 @@ public class Order extends javax.swing.JFrame {
                     .addComponent(btnAddBeve))
                 .addContainerGap())
         );
-
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel4.setText("Nomor Order");
-
-        txOrderCode.setColumns(4);
-        txOrderCode.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
-        txOrderCode.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txOrderCodeKeyTyped(evt);
-            }
-        });
 
         tblOrder.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -422,24 +454,21 @@ public class Order extends javax.swing.JFrame {
             tblOrder.getColumnModel().getColumn(5).setMaxWidth(0);
         }
 
-        btnRemoveItem.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
-        btnRemoveItem.setText("Hapus");
-        btnRemoveItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRemoveItemActionPerformed(evt);
+        lblNomorOrder.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lblNomorOrder.setForeground(new java.awt.Color(255, 255, 255));
+        lblNomorOrder.setText("Nomor Order");
+
+        txOrderCode.setColumns(4);
+        txOrderCode.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        txOrderCode.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txOrderCodeKeyTyped(evt);
             }
         });
 
-        btnConfirmItem.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
-        btnConfirmItem.setText("Pesan");
-        btnConfirmItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnConfirmItemActionPerformed(evt);
-            }
-        });
-
-        jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel9.setText("Tanggal");
+        lblTanggal.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lblTanggal.setForeground(new java.awt.Color(255, 255, 255));
+        lblTanggal.setText("Tanggal");
 
         dtChooser.setCurrentView(new datechooser.view.appearance.AppearancesList("Light",
             new datechooser.view.appearance.ViewAppearance("custom",
@@ -493,33 +522,37 @@ public class Order extends javax.swing.JFrame {
     dtChooser.setNavigateFont(new java.awt.Font("Segoe UI", java.awt.Font.PLAIN, 11));
     dtChooser.setShowOneMonth(true);
 
-    jLabel10.setFont(new java.awt.Font("Segoe UI Semibold", 0, 18)); // NOI18N
-    jLabel10.setText("Order Form");
-
     jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+    jLabel11.setForeground(new java.awt.Color(255, 255, 255));
     jLabel11.setText("Nama Pemesan");
 
     txOrderName.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
-    txOrderName.setText("Lorem Ipsum");
 
-    jLabel12.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-    jLabel12.setText("Total Cost");
+    lblSumCost.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+    lblSumCost.setForeground(new java.awt.Color(255, 255, 255));
+    lblSumCost.setText("Total Cost");
 
     jLabel13.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+    jLabel13.setForeground(new java.awt.Color(255, 255, 255));
     jLabel13.setText("Rp.");
 
     lblTotalCost.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+    lblTotalCost.setForeground(new java.awt.Color(255, 255, 255));
     lblTotalCost.setText("1.234.567,00");
     lblTotalCost.setMaximumSize(new java.awt.Dimension(90, 16));
     lblTotalCost.setMinimumSize(new java.awt.Dimension(90, 16));
     lblTotalCost.setPreferredSize(new java.awt.Dimension(90, 16));
 
-    jLabel14.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-    jLabel14.setText("Tipe Order");
+    lblTipeOrder.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+    lblTipeOrder.setForeground(new java.awt.Color(255, 255, 255));
+    lblTipeOrder.setText("Tipe Order");
 
     orderType.add(normal);
+    normal.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+    normal.setForeground(new java.awt.Color(255, 255, 255));
     normal.setSelected(true);
     normal.setText("Normal");
+    normal.setOpaque(false);
     normal.addChangeListener(new javax.swing.event.ChangeListener() {
         public void stateChanged(javax.swing.event.ChangeEvent evt) {
             normalStateChanged(evt);
@@ -527,7 +560,10 @@ public class Order extends javax.swing.JFrame {
     });
 
     orderType.add(catering);
+    catering.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+    catering.setForeground(new java.awt.Color(255, 255, 255));
     catering.setText("Catering");
+    catering.setOpaque(false);
     catering.addChangeListener(new javax.swing.event.ChangeListener() {
         public void stateChanged(javax.swing.event.ChangeEvent evt) {
             cateringStateChanged(evt);
@@ -535,6 +571,7 @@ public class Order extends javax.swing.JFrame {
     });
 
     jLabel15.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+    jLabel15.setForeground(new java.awt.Color(255, 255, 255));
     jLabel15.setText("Down Payment");
 
     txDownPayment.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
@@ -546,7 +583,18 @@ public class Order extends javax.swing.JFrame {
         }
     });
 
+    btnConfirmItem.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
+    btnConfirmItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/Icon/32/order32.png"))); // NOI18N
+    btnConfirmItem.setText("Pesan");
+    btnConfirmItem.setIconTextGap(10);
+    btnConfirmItem.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            btnConfirmItemActionPerformed(evt);
+        }
+    });
+
     btnCancel.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
+    btnCancel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/Icon/16/cancel16.png"))); // NOI18N
     btnCancel.setText("Batal");
     btnCancel.addActionListener(new java.awt.event.ActionListener() {
         public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -554,74 +602,95 @@ public class Order extends javax.swing.JFrame {
         }
     });
 
-    jLabel16.setFont(new java.awt.Font("Segoe UI Semibold", 2, 12)); // NOI18N
-    jLabel16.setText(" Daftar Pesanan :");
-    jLabel16.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
+    btnRemoveItem.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
+    btnRemoveItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/Icon/16/delete16.png"))); // NOI18N
+    btnRemoveItem.setText("Hapus");
+    btnRemoveItem.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            btnRemoveItemActionPerformed(evt);
+        }
+    });
 
-    javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-    getContentPane().setLayout(layout);
-    layout.setHorizontalGroup(
-        layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+    lblDaftarPesanan.setFont(new java.awt.Font("Segoe UI Semibold", 2, 12)); // NOI18N
+    lblDaftarPesanan.setForeground(new java.awt.Color(255, 255, 255));
+    lblDaftarPesanan.setText(" Daftar Pesanan :");
+    lblDaftarPesanan.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
+
+    btnClose.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+    btnClose.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/Icon/32/cancel32.png"))); // NOI18N
+    btnClose.addMouseListener(new java.awt.event.MouseAdapter() {
+        public void mouseClicked(java.awt.event.MouseEvent evt) {
+            btnCloseMouseClicked(evt);
+        }
+    });
+
+    javax.swing.GroupLayout pnlMainLayout = new javax.swing.GroupLayout(pnlMain);
+    pnlMain.setLayout(pnlMainLayout);
+    pnlMainLayout.setHorizontalGroup(
+        pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(pnlMainLayout.createSequentialGroup()
             .addGap(32, 32, 32)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
+            .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(pnlMainLayout.createSequentialGroup()
                     .addComponent(jLabel10)
-                    .addGap(0, 69, Short.MAX_VALUE))
-                .addGroup(layout.createSequentialGroup()
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGap(0, 0, Short.MAX_VALUE))
+                .addGroup(pnlMainLayout.createSequentialGroup()
+                    .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(txDownPayment, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel4)
-                                .addComponent(jLabel9)
+                            .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(lblNomorOrder)
+                                .addComponent(lblTanggal)
                                 .addComponent(jLabel11)
                                 .addComponent(txOrderCode, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                     .addComponent(dtChooser, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                                    .addComponent(txOrderName, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE))
-                                .addComponent(jLabel14)
-                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(txOrderName, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(lblTipeOrder)
+                                .addGroup(pnlMainLayout.createSequentialGroup()
                                     .addComponent(normal)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                     .addComponent(catering))
                                 .addComponent(jLabel15)))
-                        .addComponent(jLabel12)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(lblTotalCost, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(lblSumCost)
+                        .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(btnConfirmItem, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlMainLayout.createSequentialGroup()
+                                .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lblTotalCost, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)))
+            .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlMainLayout.createSequentialGroup()
                     .addComponent(pnlFood, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addGap(18, 18, 18)
                     .addComponent(pnlDrink, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                    .addComponent(btnRemoveItem)
+                .addGroup(pnlMainLayout.createSequentialGroup()
+                    .addComponent(btnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnCancel)
-                    .addGap(18, 18, 18)
-                    .addComponent(btnConfirmItem))
-                .addComponent(jLabel16, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGap(32, 32, 32))
+                    .addComponent(btnRemoveItem, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(lblDaftarPesanan, javax.swing.GroupLayout.PREFERRED_SIZE, 406, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnClose, javax.swing.GroupLayout.Alignment.TRAILING))
+            .addContainerGap(32, Short.MAX_VALUE))
     );
-    layout.setVerticalGroup(
-        layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addGroup(layout.createSequentialGroup()
+    pnlMainLayout.setVerticalGroup(
+        pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlMainLayout.createSequentialGroup()
             .addGap(32, 32, 32)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                .addGroup(layout.createSequentialGroup()
-                    .addComponent(jLabel10)
-                    .addGap(18, 18, 18)
-                    .addComponent(jLabel4)
+            .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE)
+                .addComponent(btnClose, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
+            .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlMainLayout.createSequentialGroup()
+                    .addComponent(lblNomorOrder)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                     .addComponent(txOrderCode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(jLabel14)
+                    .addComponent(lblTipeOrder)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(normal)
                         .addComponent(catering))
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -629,35 +698,48 @@ public class Order extends javax.swing.JFrame {
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                     .addComponent(txOrderName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                    .addComponent(jLabel9))
-                .addComponent(pnlFood, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(pnlDrink, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(lblTanggal)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(dtChooser, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(pnlFood, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(pnlDrink, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                .addComponent(dtChooser, javax.swing.GroupLayout.DEFAULT_SIZE, 27, Short.MAX_VALUE)
-                .addComponent(jLabel16, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(17, 17, 17)
+            .addComponent(lblDaftarPesanan, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(pnlMainLayout.createSequentialGroup()
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(btnRemoveItem)
+                        .addComponent(btnCancel)))
+                .addGroup(pnlMainLayout.createSequentialGroup()
                     .addComponent(jLabel15)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                     .addComponent(txDownPayment, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                    .addComponent(jLabel12)
+                    .addComponent(lblSumCost)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel13)
-                        .addComponent(lblTotalCost, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGroup(layout.createSequentialGroup()
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)))
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(btnRemoveItem)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnConfirmItem)
-                    .addComponent(btnCancel)))
-            .addContainerGap(32, Short.MAX_VALUE))
+                        .addComponent(lblTotalCost, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(btnConfirmItem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+            .addGap(28, 28, 28))
+    );
+
+    javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+    getContentPane().setLayout(layout);
+    layout.setHorizontalGroup(
+        layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGap(0, 0, Short.MAX_VALUE)
+            .addComponent(pnlMain, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+    );
+    layout.setVerticalGroup(
+        layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addComponent(pnlMain, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
     );
 
     pack();
@@ -788,7 +870,7 @@ public class Order extends javax.swing.JFrame {
             Model.HandlerComponent.Report jReport = new HandlerComponent.Report();
             jReport.setFileName("STRUK_Order");
             jReport.setParam("noOrder", txOrderCode.getText());
-            ch = JOptionPane.showConfirmDialog(null, "Print","Apakah anda ingin melihat\nStruk Pesanan Pelanggan ?", 0);
+            ch = JOptionPane.showConfirmDialog(null, "Apakah anda ingin melihat\nStruk Pesanan Pelanggan ?","Print", 0);
             if(ch==0) {
                 jReport.printReport();
             }
@@ -855,6 +937,25 @@ public class Order extends javax.swing.JFrame {
         mmInstance.setState(NORMAL); mmInstance.setVisible(true);
     }//GEN-LAST:event_formWindowClosing
 
+    private void txQtyBeveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txQtyBeveActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txQtyBeveActionPerformed
+
+    private void btnCloseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCloseMouseClicked
+        mmInstance.setState(NORMAL); mmInstance.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_btnCloseMouseClicked
+
+    private void pnlMainMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlMainMousePressed
+        mosX = evt.getX();
+        mosY = evt.getY();
+    }//GEN-LAST:event_pnlMainMousePressed
+
+    private void pnlMainMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlMainMouseDragged
+        int coordX = evt.getXOnScreen(), coordY = evt.getYOnScreen();
+        this.setLocation(coordX-mosX, coordY-mosY);
+    }//GEN-LAST:event_pnlMainMouseDragged
+
     /**
      * @param args the command line arguments
      */
@@ -894,6 +995,7 @@ public class Order extends javax.swing.JFrame {
     private javax.swing.JButton btnAddBeve;
     private javax.swing.JButton btnAddFood;
     private javax.swing.JButton btnCancel;
+    private javax.swing.JLabel btnClose;
     private javax.swing.JButton btnConfirmItem;
     private javax.swing.JButton btnRemoveItem;
     private javax.swing.JLabel bvContainer;
@@ -905,28 +1007,29 @@ public class Order extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lMenuBeve;
     private javax.swing.JLabel lPriceBeve;
     private javax.swing.JLabel lPriceFood;
+    private javax.swing.JLabel lblDaftarPesanan;
+    private javax.swing.JLabel lblNomorOrder;
+    private javax.swing.JLabel lblSumCost;
+    private javax.swing.JLabel lblTanggal;
+    private javax.swing.JLabel lblTipeOrder;
     private javax.swing.JLabel lblTotalCost;
     private javax.swing.JRadioButton normal;
     private javax.swing.ButtonGroup orderType;
     private javax.swing.JPanel pnlDrink;
     private javax.swing.JPanel pnlFood;
+    private Model.PanelGradient pnlMain;
     private javax.swing.JTable tblOrder;
     private javax.swing.JTextField txDownPayment;
     private javax.swing.JTextField txOrderCode;

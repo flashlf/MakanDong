@@ -53,18 +53,24 @@ public class RecipeMaterial extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        panelGradient1 = new Model.PanelGradient();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblDialMat = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
         txMCode = new javax.swing.JTextField();
-        txQty = new javax.swing.JTextField();
-        btnAddtoRecipe = new javax.swing.JButton();
         txDesc = new javax.swing.JTextField();
         txPrice = new javax.swing.JTextField();
+        txQty = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        btnAddtoRecipe = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Daftar Bahan Baku Resep");
+
+        panelGradient1.setBackground(new java.awt.Color(83, 126, 197));
+        panelGradient1.setGradientBackgroundColor(new java.awt.Color(41, 58, 128));
+        panelGradient1.setMaximumSize(new java.awt.Dimension(383, 415));
+        panelGradient1.setMinimumSize(new java.awt.Dimension(383, 415));
 
         tblDialMat.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -97,42 +103,28 @@ public class RecipeMaterial extends javax.swing.JDialog {
         });
         jScrollPane1.setViewportView(tblDialMat);
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel2.setText("Bahan yg terpilih");
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setText("Bahan Baku");
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel3.setText("Jumlah Bahan");
-
+        txMCode.setBackground(new java.awt.Color(1, 0, 56));
         txMCode.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txMCode.setText("Code");
+        txMCode.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         txMCode.setEnabled(false);
         txMCode.setMargin(new java.awt.Insets(2, 7, 2, 7));
 
-        txQty.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        txQty.setText("0");
-        txQty.setMargin(new java.awt.Insets(2, 7, 2, 7));
-        txQty.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txQtyActionPerformed(evt);
-            }
-        });
-
-        btnAddtoRecipe.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
-        btnAddtoRecipe.setText("Tambahkan");
-        btnAddtoRecipe.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAddtoRecipeActionPerformed(evt);
-            }
-        });
-
+        txDesc.setBackground(new java.awt.Color(1, 0, 56));
         txDesc.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txDesc.setText("Description");
+        txDesc.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         txDesc.setEnabled(false);
         txDesc.setMargin(new java.awt.Insets(2, 7, 2, 7));
 
+        txPrice.setBackground(new java.awt.Color(1, 0, 56));
         txPrice.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txPrice.setText("0");
+        txPrice.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         txPrice.setEnabled(false);
         txPrice.setMargin(new java.awt.Insets(2, 7, 2, 7));
         txPrice.addActionListener(new java.awt.event.ActionListener() {
@@ -141,52 +133,95 @@ public class RecipeMaterial extends javax.swing.JDialog {
             }
         });
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(16, 16, 16)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(121, 121, 121)
-                        .addComponent(btnAddtoRecipe))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txMCode, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txQty)))
+        txQty.setBackground(new java.awt.Color(1, 0, 56));
+        txQty.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txQty.setForeground(new java.awt.Color(243, 148, 34));
+        txQty.setText("0");
+        txQty.setMargin(new java.awt.Insets(2, 7, 2, 7));
+        txQty.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txQtyActionPerformed(evt);
+            }
+        });
+
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel3.setText("Jumlah Bahan");
+
+        btnAddtoRecipe.setBackground(new java.awt.Color(204, 204, 204));
+        btnAddtoRecipe.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
+        btnAddtoRecipe.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/Icon/32/add32.png"))); // NOI18N
+        btnAddtoRecipe.setText("Tambahkan");
+        btnAddtoRecipe.setIconTextGap(10);
+        btnAddtoRecipe.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddtoRecipeActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout panelGradient1Layout = new javax.swing.GroupLayout(panelGradient1);
+        panelGradient1.setLayout(panelGradient1Layout);
+        panelGradient1Layout.setHorizontalGroup(
+            panelGradient1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelGradient1Layout.createSequentialGroup()
+                .addGroup(panelGradient1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelGradient1Layout.createSequentialGroup()
                         .addGap(16, 16, 16)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txDesc, javax.swing.GroupLayout.DEFAULT_SIZE, 152, Short.MAX_VALUE)
-                            .addComponent(txPrice)))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(15, Short.MAX_VALUE))
+                        .addGroup(panelGradient1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(panelGradient1Layout.createSequentialGroup()
+                                .addGap(10, 10, 10)
+                                .addGroup(panelGradient1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelGradient1Layout.createSequentialGroup()
+                                        .addComponent(jLabel2)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(txMCode, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(panelGradient1Layout.createSequentialGroup()
+                                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(txQty, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(16, 16, 16)
+                                .addGroup(panelGradient1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(txDesc)
+                                    .addComponent(txPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(panelGradient1Layout.createSequentialGroup()
+                        .addGap(118, 118, 118)
+                        .addComponent(btnAddtoRecipe)))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(16, 16, 16)
+        panelGradient1Layout.setVerticalGroup(
+            panelGradient1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelGradient1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(11, 11, 11)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(panelGradient1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(txMCode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txDesc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(panelGradient1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(txQty, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txPrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(11, 11, 11)
                 .addComponent(btnAddtoRecipe)
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addGap(16, 16, 16))
+        );
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(0, 0, 0)
+                .addComponent(panelGradient1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(0, 0, 0))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(panelGradient1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -266,6 +301,7 @@ public class RecipeMaterial extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
+    private Model.PanelGradient panelGradient1;
     private javax.swing.JTable tblDialMat;
     private javax.swing.JTextField txDesc;
     private javax.swing.JTextField txMCode;

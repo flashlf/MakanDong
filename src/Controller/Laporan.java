@@ -7,6 +7,7 @@ package Controller;
 
 import Model.Database;
 import Model.HandlerComponent;
+import java.awt.Color;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
@@ -101,7 +102,7 @@ public class Laporan extends javax.swing.JFrame {
         setResizable(false);
 
         panelGradient1.setBackground(new java.awt.Color(82, 187, 239));
-        panelGradient1.setGradientBackgroundColor(new java.awt.Color(255, 175, 16));
+        panelGradient1.setGradientBackgroundColor(new java.awt.Color(0, 0, 102));
         panelGradient1.setGradientFocus(1000);
         panelGradient1.setMaximumSize(new java.awt.Dimension(639, 435));
         panelGradient1.setMinimumSize(new java.awt.Dimension(639, 435));
@@ -118,6 +119,7 @@ public class Laporan extends javax.swing.JFrame {
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/Icon/128/report128.png"))); // NOI18N
 
+        pnlTipeLaporan.setBackground(new java.awt.Color(0, 0, 0));
         pnlTipeLaporan.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Jenis Laporan", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI Semibold", 0, 18), new java.awt.Color(0, 51, 51))); // NOI18N
         pnlTipeLaporan.setOpaque(false);
 
@@ -197,6 +199,7 @@ public class Laporan extends javax.swing.JFrame {
             }
         });
 
+        pnlPeriode.setBackground(new java.awt.Color(0, 0, 0));
         pnlPeriode.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Periode Laporan", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI Semibold", 0, 18), new java.awt.Color(0, 0, 51))); // NOI18N
         pnlPeriode.setEnabled(false);
         pnlPeriode.setOpaque(false);
@@ -357,11 +360,14 @@ public class Laporan extends javax.swing.JFrame {
     private void restockItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_restockItemStateChanged
         if(!restock.isSelected()) {
             pnlPeriode.setEnabled(false);
+            pnlPeriode.setBackground(Color.GRAY);
             cbTahun.setEnabled(false); cbBulan.setEnabled(false);
             tahun.setEnabled(false); bulan.setEnabled(false);
+            cbTahun.setSelected(false); cbBulan.setSelected(false);
             periode = false;
         } else {
             pnlPeriode.setEnabled(true);
+            pnlPeriode.setBackground(Color.BLACK);
             cbTahun.setEnabled(true);
             tahun.setEnabled(true);
             periode = true;

@@ -5,9 +5,11 @@
  */
 package Controller;
 
+import java.awt.Image;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 /**
@@ -38,18 +40,6 @@ public class MainMenu extends javax.swing.JFrame {
         df = new SimpleDateFormat(format, new Locale("id", "ID"));
         df.format(date);
         initComponents();
-        lblUser.setText(USER);
-        lblUserPlaceHolder.setText("User ID : "+UID);
-        setLocationRelativeTo(null);
-    }
-    public MainMenu(String User, String UID) {
-        date = new Date();
-        //UID = "N/A"; USER = "N/A";
-        df = new SimpleDateFormat(format, new Locale("id", "ID"));
-        df.format(date);
-        initComponents();
-        lblUser.setText(User);
-        lblUserPlaceHolder.setText("User ID : "+UID);
         setLocationRelativeTo(null);
     }
     public static MainMenu getInstance() {
@@ -74,13 +64,19 @@ public class MainMenu extends javax.swing.JFrame {
         setLEVEL(0);
     }
     protected void setMenu() {
+        String imgPath; ImageIcon img;
         if(LEVEL == 1) {
+            imgPath = "/Img/Icon/128/accountant128.png";
+            img = new ImageIcon(new ImageIcon(getClass().getResource(imgPath)).getImage().getScaledInstance(imgContainer.getWidth(), imgContainer.getHeight(), Image.SCALE_SMOOTH));
             btnSupplierMenu.setVisible(false);
             lblSupplier.setVisible(false);
             btnReportMenu.setVisible(false);
             lblLaporan.setVisible(false);
+            imgContainer.setIcon(img);
         }
         if(LEVEL == 0 ) {
+            imgPath = "/Img/Icon/128/admin-ui128.png";
+            img = new ImageIcon(new ImageIcon(getClass().getResource(imgPath)).getImage().getScaledInstance(imgContainer.getWidth(), imgContainer.getHeight(), Image.SCALE_SMOOTH));
             btnSupplierMenu.setVisible(true);
             lblSupplier.setVisible(true);
             btnInventMenu.setVisible(true);
@@ -91,10 +87,14 @@ public class MainMenu extends javax.swing.JFrame {
             lblRecipe.setVisible(true);
             btnReportMenu.setVisible(true);
             lblLaporan.setVisible(true);
+            imgContainer.setIcon(img);
         }
         if(LEVEL == 2) {
             
         }
+        
+        lblUser.setText(USER);
+        lblUserPlaceHolder.setText("User ID : "+UID);
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -106,7 +106,7 @@ public class MainMenu extends javax.swing.JFrame {
     private void initComponents() {
 
         sidePanel = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        imgContainer = new javax.swing.JLabel();
         lblUserPlaceHolder = new javax.swing.JLabel();
         lblUser = new javax.swing.JLabel();
         btnLogout = new javax.swing.JButton();
@@ -147,8 +147,8 @@ public class MainMenu extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/Icon/128/user128.png"))); // NOI18N
+        imgContainer.setForeground(new java.awt.Color(255, 255, 255));
+        imgContainer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/Icon/128/user128.png"))); // NOI18N
 
         lblUserPlaceHolder.setForeground(new java.awt.Color(255, 255, 255));
         lblUserPlaceHolder.setText("User ID :");
@@ -181,7 +181,7 @@ public class MainMenu extends javax.swing.JFrame {
             .addGroup(sidePanelLayout.createSequentialGroup()
                 .addGap(34, 34, 34)
                 .addGroup(sidePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(imgContainer, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblUserPlaceHolder, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(lblUser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnLogout, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -192,7 +192,7 @@ public class MainMenu extends javax.swing.JFrame {
             sidePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(sidePanelLayout.createSequentialGroup()
                 .addGap(50, 50, 50)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(imgContainer, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblUserPlaceHolder, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(3, 3, 3)
@@ -513,7 +513,7 @@ public class MainMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_btnLogoutActionPerformed
 
     private void btnAboutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAboutActionPerformed
-        frmAbout = new About(); frmAbout.setVisible(true);
+        frmAbout = new About(); frmAbout.setVisible(true); logout();
     }//GEN-LAST:event_btnAboutActionPerformed
 
     /**
@@ -559,7 +559,7 @@ public class MainMenu extends javax.swing.JFrame {
     private javax.swing.JButton btnRecipeMenu;
     private javax.swing.JButton btnReportMenu;
     private javax.swing.JButton btnSupplierMenu;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel imgContainer;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;

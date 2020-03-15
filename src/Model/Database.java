@@ -285,4 +285,32 @@ public class Database {
         }
         return result;
     }
+    
+    public String generateOrderID() {
+        try {
+            checkConnection();
+            String temp;
+            RES = getSQL("SELECT orderID FROM orderhead ORDER BY orderID");
+            LOG = STMT;
+            RES.last();
+            temp = RES.getString("orderID");
+            int increase = Integer.parseInt(temp);
+            int digit = String.valueOf(increase).length();
+            switch (digit) {
+                case 1: {increase++;temp = "000"+increase;}
+                    break;
+                case 2: {increase++;temp = "00"+increase;}
+                    break;
+                case 3: {increase++;temp = "0"+increase;}
+                    break;
+                default: {increase++;temp = ""+increase;}
+                    break;
+            }
+            RES.close();
+            return temp;            
+        } catch(SQLException ex) {
+            ex.printStackTrace();
+        }
+        return "";
+    }
 }

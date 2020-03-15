@@ -37,7 +37,6 @@ public class About extends javax.swing.JFrame {
         setMaximumSize(new java.awt.Dimension(500, 596));
         setMinimumSize(new java.awt.Dimension(500, 596));
         setUndecorated(true);
-        setPreferredSize(new java.awt.Dimension(500, 596));
         setResizable(false);
 
         panelGradient1.setBackground(new java.awt.Color(204, 255, 255));

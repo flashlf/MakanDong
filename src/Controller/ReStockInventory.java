@@ -26,6 +26,7 @@ public class ReStockInventory extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         txTanggal.setDateFormat(df);
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -110,7 +111,6 @@ public class ReStockInventory extends javax.swing.JDialog {
     txTanggal.setLocale(new java.util.Locale("in", "ID", ""));
 
     txJumlah.setFont(new java.awt.Font("Segoe UI Light", 0, 14)); // NOI18N
-    txJumlah.setText("jTextField1");
     txJumlah.setPreferredSize(new java.awt.Dimension(59, 35));
 
     btnOk.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
@@ -133,10 +133,10 @@ public class ReStockInventory extends javax.swing.JDialog {
     jLabel4.setText("Bahan Baku");
 
     lblSupplier.setFont(new java.awt.Font("Segoe UI", 2, 14)); // NOI18N
-    lblSupplier.setText("jLabel5");
+    lblSupplier.setText(" ");
 
     lblBahanBaku.setFont(new java.awt.Font("Segoe UI", 2, 14)); // NOI18N
-    lblBahanBaku.setText("jLabel6");
+    lblBahanBaku.setText(" ");
 
     javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
     getContentPane().setLayout(layout);
@@ -161,8 +161,8 @@ public class ReStockInventory extends javax.swing.JDialog {
                         .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 136, Short.MAX_VALUE))
                     .addGap(18, 18, 18)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(txTanggal, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(txTanggal, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))))
             .addGap(16, 16, 16))
     );
     layout.setVerticalGroup(
