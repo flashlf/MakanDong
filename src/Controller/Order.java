@@ -10,6 +10,7 @@ import Model.HandlerComponent.LimitInput;
 import com.sun.glass.events.KeyEvent;
 import java.awt.Image;
 import java.awt.event.ItemEvent;
+import java.io.File;
 import java.sql.SQLException;
 import java.sql.ResultSet;
 import java.text.DateFormat;
@@ -869,7 +870,9 @@ public class Order extends javax.swing.JFrame {
             
             Model.HandlerComponent.Report jReport = new HandlerComponent.Report();
             jReport.setFileName("STRUK_Order");
+            File f = new File("src/view/SubSTRUCK.jasper");
             jReport.setParam("noOrder", txOrderCode.getText());
+            jReport.setParam("SUBPATH", f.getAbsolutePath());
             ch = JOptionPane.showConfirmDialog(null, "Apakah anda ingin melihat\nStruk Pesanan Pelanggan ?","Print", 0);
             if(ch==0) {
                 jReport.printReport();

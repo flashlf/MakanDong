@@ -8,6 +8,8 @@ package Controller;
 import Model.Database;
 import Model.HandlerComponent;
 import java.awt.Color;
+import java.io.File;
+import java.io.PrintStream;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
@@ -50,6 +52,9 @@ public class Laporan extends javax.swing.JFrame {
                 jReport.setParam("Bulan", bulan.getSelectedIndex()+1);
             jReport.setParam("Tahun", Integer.valueOf(tahun.getText()));
             jReport.setParam("KodeSupplier", JOptionPane.showInputDialog("Masukkan Kode Supplier\n*note : kosongkan untuk print semua"));
+            File f = new File("src/view/REPORT_ReInventory.jasper");
+            System.out.println(f.getAbsolutePath());
+            jReport.setParam("SUBPATH",f.getAbsolutePath());
             jReport.setFileName(nmLaporan);
             jReport.printReport();
         }
@@ -349,12 +354,18 @@ public class Laporan extends javax.swing.JFrame {
     }//GEN-LAST:event_panelGradient1MousePressed
 
     private void btnPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrintActionPerformed
-            try {
-                
-                printLaporan();
-            } catch(SQLException ex) {
-                ex.printStackTrace();
-            }
+        try {
+            PrintStream fileErr = new PrintStream("./LaporanErrorLog.txt");
+            System.setErr(fileErr);
+            //File f = new File("src/View/REPORT_ReInventory.jrxml");
+            //System.out.println(f.getAbsolutePath());
+            printLaporan();
+        } catch (Exception ex) {
+            System.err.println(ex);
+            JOptionPane.showMessageDialog(null, ex);
+            System.setErr(System.err);
+            ex.printStackTrace();
+        }    
     }//GEN-LAST:event_btnPrintActionPerformed
 
     private void restockItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_restockItemStateChanged

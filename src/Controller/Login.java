@@ -6,6 +6,7 @@
 package Controller;
 
 import Model.Database;
+import Model.HandlerComponent;
 import com.sun.glass.events.KeyEvent;
 import java.awt.Color;
 import java.sql.Connection;
@@ -19,6 +20,7 @@ import javax.swing.JOptionPane;
 public class Login extends javax.swing.JFrame {
     //private static Login logInstance = null;
     private static String USERNAME, PASSWORD;
+    HandlerComponent hCOMP;
     Connection CONN;
     Database db = new Database();
     MainMenu mm;
@@ -47,6 +49,8 @@ public class Login extends javax.swing.JFrame {
         db.setDB_PORT("3306");
         db.setDB_USER("root");
         try {
+            hCOMP = new HandlerComponent();
+            hCOMP.initiateResourceFile();
             CONN = (Connection)Database.inisiasiDB();
         } catch (SQLException ex) {
             ex.printStackTrace();

@@ -4,6 +4,12 @@
  * and open the template in the editor.
  */
 package Model;
+import java.io.File;
+import java.io.InputStream;
+import java.io.PrintStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.ResultSet;
@@ -11,6 +17,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.AttributeSet;
@@ -34,12 +41,55 @@ public class HandlerComponent {
     protected ResultSet HANDLER_RES;
     public String[] COLUMN_TYPE, COLUMN_NAME;
     public Object[] RES_OBJ;
+    protected File[] REPORT_JASPER = new File[7];
+    protected String[] 
+    FILE_PATH = {"/View/REPORT_HeadReInvent",
+        "/View/REPORT_Inventory",
+        "/View/REPORT_Order",
+        "/View/REPORT_ReInventory",
+        "/View/STRUK_Order",
+        "/View/REPORT_Supplier",
+        "/View/SubSTRUCK"};
     
     public HandlerComponent() throws SQLException{
         CONN = new Database().inisiasiDB();
-       
+        REPORT_JASPER[0] = new File("/View/REPORT_HeadReInvent.jrxml");
+        REPORT_JASPER[1] = new File("/View/REPORT_Inventory.jrxml");
+        REPORT_JASPER[2] = new File("/View/REPORT_Order.jrxml");
+        REPORT_JASPER[3] = new File("/View/REPORT_ReInventory.jrxml");
+        REPORT_JASPER[4] = new File("/View/REPORT_Supplier.jrxml");
+        REPORT_JASPER[5] = new File("/View/STRUK_Order.jrxml");
+        REPORT_JASPER[6] = new File("/View/SubSTRUCK.jrxml");
     }
     
+    public void initiateResourceFile() {
+        for(int x=0; x<7; x++) {
+            copyFile(getClass().getResourceAsStream(FILE_PATH[x]+".jrxml"), "src"+FILE_PATH[x]+".jrxml");
+            copyFile(getClass().getResourceAsStream(FILE_PATH[x]+".jasper"), "src"+FILE_PATH[x]+".jasper");
+        }
+        copyFile(getClass().getResourceAsStream("/View/Logo.jpg"), "src/View/Logo.jpg");
+        copyFile(getClass().getResourceAsStream("/View/logopecel-transculent.png"), "src/View/logopecel-transculent.png");
+        copyFile(getClass().getResourceAsStream("/View/logopecel.png"), "src/View/logopecel.png");
+    }
+    
+    public static boolean copyFile(InputStream SOURCE, String DESTINATION) {
+        boolean success = false;
+        try {
+            PrintStream fileErr = new PrintStream("./InitiateFileErrorLog.txt");
+            System.setErr(fileErr);
+            System.out.println("Copying ->" + SOURCE + "\n\tto ->" + DESTINATION);
+            File fl = new File(DESTINATION);
+            fl.getParentFile().mkdirs();
+            Files.copy(SOURCE, Paths.get(DESTINATION), StandardCopyOption.REPLACE_EXISTING);
+            success = true;
+        } catch (Exception ex) {
+            System.err.println(ex);
+            JOptionPane.showMessageDialog(null, ex);
+            System.setErr(System.err);
+            ex.printStackTrace();
+        }   
+        return success;
+    }
     // The Old Way to Initiate Table
     /*
         Object[] baris = {"ID Supplier", "Nama Supplier", "Alamat","No. Telepon"}; //buat di tabel form
@@ -230,8 +280,10 @@ public class HandlerComponent {
         }
         
         public void printReport() {
-            String fName = "src/view/"+fileName+".jrxml";
-            String fFill = "src/view/"+fileName+".jasper";
+            String fName = "src/View/"+fileName+".jrxml";
+            String fFill = "src/View/"+fileName+".jasper";
+            File fNAME = new File(fName);
+            File fFILL = new File(fFill);
             try {
                 DB = new Database();
                 conn = DB.inisiasiDBnoStatic();

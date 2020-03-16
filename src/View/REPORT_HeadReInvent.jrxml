@@ -4,7 +4,7 @@
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="1"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["F:\\IMAM\\RPL\\PEMROGRAMMAN VISUAL\\MakanDong\\src\\View\\"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["\\src\\View\\"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="Tahun" class="java.lang.Integer">
 		<parameterDescription><![CDATA[Tahun Laporan]]></parameterDescription>
@@ -17,6 +17,7 @@
 		<parameterDescription><![CDATA[Bulan Supply]]></parameterDescription>
 		<defaultValueExpression><![CDATA[1]]></defaultValueExpression>
 	</parameter>
+	<parameter name="SUBPATH" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[SELECT
      supplier.`sCode` AS supplier_sCode,
@@ -161,7 +162,7 @@ WHERE
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<returnValue subreportVariable="Total" toVariable="TOTAL" calculation="Sum"/>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "REPORT_ReInventory.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA[$P{SUBPATH}]]></subreportExpression>
 			</subreport>
 			<textField>
 				<reportElement x="93" y="11" width="163" height="20" uuid="7152c969-b411-4c38-8cdb-40e88b63a782"/>

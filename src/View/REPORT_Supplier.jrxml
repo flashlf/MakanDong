@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="REP_SUPPLIER" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" whenResourceMissingType="Empty" uuid="e21b7b94-26e8-4369-af7b-781cf9bd3f81">
 	<property name="ireport.zoom" value="1.6528925619834847"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="1792"/>
 	<style name="AlternateColor">
 		<conditionalStyle>
 			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 1]]></conditionExpression>
@@ -38,7 +38,7 @@ FROM
 		<band height="801" splitType="Stretch">
 			<image scaleImage="Clip" hAlign="Right" isUsingCache="false">
 				<reportElement x="0" y="477" width="264" height="324" uuid="4d30b0d2-06ef-40ad-80b5-9369caff1724"/>
-				<imageExpression><![CDATA["F:\\IMAM\\RPL\\PEMROGRAMMAN VISUAL\\MakanDong\\src\\View\\logopecel-transculent.png"]]></imageExpression>
+				<imageExpression><![CDATA["logopecel-transculent.png"]]></imageExpression>
 			</image>
 		</band>
 	</background>
@@ -46,7 +46,7 @@ FROM
 		<band height="111" splitType="Stretch">
 			<image scaleImage="RetainShape" hAlign="Center" vAlign="Middle">
 				<reportElement x="0" y="0" width="131" height="111" uuid="46bc47ee-db00-4a69-a6dd-215b7d6c5a3c"/>
-				<imageExpression><![CDATA["F:\\IMAM\\RPL\\PEMROGRAMMAN VISUAL\\MakanDong\\src\\View\\Logo.jpg"]]></imageExpression>
+				<imageExpression><![CDATA["Logo.jpg"]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="192" y="23" width="228" height="34" uuid="76d0dfd8-a612-49ae-8d00-cb16d7c147ac">
